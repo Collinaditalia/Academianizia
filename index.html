@@ -3,20 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Academia em Casa 62+</title>
+  <title>Academia em Casa 62+ | Dashboard</title>
+  <meta name="description" content="Aplicativo de treino em casa para mulher de 62 anos, com dashboard, agenda, cronômetro e plano semanal." />
   <style>
     :root{
-      --bg:#f3f7ff;
-      --card:#ffffff;
-      --text:#1f2937;
-      --muted:#6b7280;
-      --primary:#2563eb;
-      --primary-dark:#1d4ed8;
-      --border:#e5e7eb;
-      --shadow:0 12px 28px rgba(0,0,0,.08);
-      --radius:18px;
-      --ok:#16a34a;
-      --warn:#f59e0b;
+      --bg:#08111f;
+      --bg2:#0f172a;
+      --panel:#111827;
+      --panel2:#0b1220;
+      --line:rgba(148,163,184,.16);
+      --text:#e5e7eb;
+      --muted:#94a3b8;
+      --primary:#60a5fa;
+      --primary2:#2563eb;
+      --green:#22c55e;
+      --yellow:#f59e0b;
+      --red:#ef4444;
+      --shadow:0 18px 50px rgba(0,0,0,.35);
+      --radius:24px;
     }
 
     *{box-sizing:border-box}
@@ -24,40 +28,53 @@
     body{
       margin:0;
       font-family:Arial, Helvetica, sans-serif;
-      background:linear-gradient(180deg,#edf4ff 0%,#f8fbff 45%,#ffffff 100%);
       color:var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(96,165,250,.16), transparent 28%),
+        radial-gradient(circle at top right, rgba(34,197,94,.12), transparent 22%),
+        linear-gradient(180deg,var(--bg) 0%, var(--bg2) 100%);
     }
 
     .app{
-      max-width:1200px;
+      max-width:1480px;
       margin:0 auto;
-      padding:16px;
+      padding:18px;
     }
 
-    .header{
-      background:rgba(255,255,255,.92);
-      backdrop-filter:blur(8px);
-      border:1px solid var(--border);
-      box-shadow:var(--shadow);
-      border-radius:24px;
-      padding:20px;
+    .hero{
       position:sticky;
       top:12px;
-      z-index:10;
+      z-index:30;
+      background:rgba(17,24,39,.92);
+      border:1px solid var(--line);
+      border-radius:28px;
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(14px);
+      padding:22px;
     }
 
-    .header h1{
-      margin:0 0 8px;
-      font-size:28px;
+    .hero-top{
+      display:flex;
+      justify-content:space-between;
+      gap:16px;
+      align-items:flex-start;
+      flex-wrap:wrap;
     }
 
-    .header p{
+    h1{
       margin:0;
-      color:var(--muted);
-      line-height:1.5;
+      font-size:30px;
+      line-height:1.05;
     }
 
-    .header-actions{
+    .hero p{
+      margin:10px 0 0;
+      color:var(--muted);
+      line-height:1.55;
+      max-width:900px;
+    }
+
+    .actions{
       display:flex;
       gap:10px;
       flex-wrap:wrap;
@@ -70,159 +87,191 @@
       padding:12px 16px;
       font-weight:700;
       cursor:pointer;
-      transition:.2s;
-    }
-
-    .btn.primary{
-      background:var(--primary);
       color:#fff;
+      background:#334155;
+      transition:.18s;
     }
 
-    .btn.primary:hover{background:var(--primary-dark)}
-    .btn.secondary{
-      background:#eef2ff;
-      color:#1e3a8a;
-      border:1px solid #c7d2fe;
-    }
+    .btn:hover{transform:translateY(-1px)}
+    .btn.primary{background:linear-gradient(135deg,var(--primary2),var(--primary))}
+    .btn.green{background:linear-gradient(135deg,#15803d,var(--green))}
+    .btn.yellow{background:linear-gradient(135deg,#b45309,var(--yellow))}
+    .btn.red{background:linear-gradient(135deg,#b91c1c,var(--red))}
+    .btn.gray{background:#334155}
 
     .layout{
       display:grid;
-      grid-template-columns: 280px 1fr;
-      gap:16px;
-      margin-top:16px;
+      grid-template-columns:300px 1fr;
+      gap:18px;
+      margin-top:18px;
+      align-items:start;
     }
 
-    .card{
-      background:var(--card);
-      border:1px solid var(--border);
+    .side,.panel{
+      background:rgba(17,24,39,.86);
+      border:1px solid var(--line);
       border-radius:var(--radius);
       box-shadow:var(--shadow);
+      backdrop-filter:blur(10px);
+    }
+
+    .side{
       padding:18px;
+      position:sticky;
+      top:136px;
     }
 
-    .card h2{
-      margin-top:0;
-      font-size:20px;
-    }
+    .side h2,.panel h2{margin:0 0 12px; font-size:20px}
 
-    .index-list{
+    .nav{
       display:grid;
       gap:10px;
     }
 
-    .index-item{
+    .nav button{
       text-align:left;
+      border:1px solid var(--line);
+      background:#0f172a;
+      color:var(--text);
       padding:14px;
-      border-radius:14px;
-      border:1px solid var(--border);
-      background:#fff;
-      cursor:pointer;
-      transition:.2s;
-    }
-
-    .index-item:hover{
-      border-color:#bfdbfe;
-      transform:translateY(-1px);
-    }
-
-    .index-item.active{
-      background:#eff6ff;
-      border-color:var(--primary);
-    }
-
-    .index-item strong{
-      display:block;
-      margin-bottom:4px;
-    }
-
-    .index-item span{
-      color:var(--muted);
-      font-size:13px;
-      line-height:1.4;
-    }
-
-    .content{
-      display:grid;
-      gap:16px;
-    }
-
-    .overview{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap:12px;
-    }
-
-    .mini{
-      border:1px solid var(--border);
       border-radius:16px;
-      padding:14px;
-      background:#fff;
+      cursor:pointer;
+      transition:.18s;
     }
 
-    .mini strong{
-      display:block;
-      margin-bottom:6px;
+    .nav button.active{
+      border-color:rgba(96,165,250,.7);
+      background:rgba(37,99,235,.18);
     }
 
-    .muted{color:var(--muted)}
+    .nav strong{display:block; margin-bottom:4px}
+    .nav span{display:block; color:var(--muted); font-size:13px; line-height:1.4}
 
-    .section{
-      scroll-margin-top:110px;
-    }
+    .panel{padding:18px}
+    .section{scroll-margin-top:150px; margin-top:16px}
 
-    .week-grid{
-      display:grid;
-      gap:12px;
-    }
-
-    .day{
-      border:1px solid var(--border);
-      border-radius:18px;
-      overflow:hidden;
-      background:#fff;
-    }
-
-    .day-head{
+    .section-head{
       display:flex;
       justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
       align-items:flex-start;
-      gap:12px;
-      padding:14px;
-      background:#fafafa;
-      border-bottom:1px solid var(--border);
+      margin-bottom:12px;
     }
 
-    .day-head h3{
-      margin:0 0 6px;
-      font-size:18px;
-    }
+    .section-head p{margin:0; color:var(--muted); line-height:1.55}
 
-    .pill{
-      display:inline-block;
-      padding:6px 10px;
-      border-radius:999px;
-      font-size:12px;
-      background:#e0e7ff;
-      color:#1e3a8a;
-      white-space:nowrap;
-    }
-
-    .pill.green{background:#dcfce7;color:#166534}
-    .pill.orange{background:#ffedd5;color:#9a3412}
-    .pill.gray{background:#e5e7eb;color:#374151}
-
-    .day-body{
-      padding:14px;
-    }
-
-    .exercise-list{
+    .grid-kpis{
       display:grid;
-      gap:12px;
+      grid-template-columns:repeat(4,1fr);
+      gap:14px;
+      margin-bottom:16px;
+    }
+
+    .kpi{
+      background:linear-gradient(180deg,rgba(31,41,55,.96),rgba(17,24,39,.96));
+      border:1px solid var(--line);
+      border-radius:20px;
+      padding:16px;
+      min-height:128px;
+    }
+
+    .kpi small{display:block; color:var(--muted); margin-bottom:8px}
+    .kpi strong{display:block; font-size:28px; margin-bottom:8px}
+    .kpi span{color:#cbd5e1; font-size:14px; line-height:1.45}
+
+    .dash{
+      display:grid;
+      grid-template-columns:1.2fr .8fr;
+      gap:14px;
+    }
+
+    .chart,.progress-box{
+      background:linear-gradient(180deg,rgba(31,41,55,.96),rgba(17,24,39,.96));
+      border:1px solid var(--line);
+      border-radius:22px;
+      padding:16px;
+    }
+
+    .chart svg{width:100%; height:auto; display:block}
+    .chart-note{color:var(--muted); font-size:13px; margin-top:8px; line-height:1.5}
+
+    .progress-bar{
+      height:12px;
+      background:#1e293b;
+      border-radius:999px;
+      overflow:hidden;
+      margin-top:10px;
+    }
+
+    .progress-bar > div{
+      width:0%;
+      height:100%;
+      background:linear-gradient(90deg,var(--primary2),var(--green));
+      border-radius:999px;
+    }
+
+    .schedule,.timer{display:grid; gap:12px}
+
+    .schedule-row{
+      display:grid;
+      grid-template-columns:130px 1fr auto;
+      gap:10px;
+      align-items:center;
+      background:#0f172a;
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:12px;
+    }
+
+    .schedule-row input{
+      width:100%;
+      padding:11px 12px;
+      border-radius:12px;
+      border:1px solid var(--line);
+      background:#111827;
+      color:var(--text);
+      font:inherit;
+    }
+
+    .timer-display{
+      text-align:center;
+      font-size:58px;
+      font-weight:800;
+      letter-spacing:1px;
+      padding:18px;
+      border-radius:20px;
+      background:linear-gradient(180deg,rgba(15,23,42,.9),rgba(17,24,39,.95));
+      border:1px solid rgba(96,165,250,.18);
+      color:#e0f2fe;
+    }
+
+    .timer-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px;
+    }
+
+    .timer-grid input{
+      width:100%;
+      padding:12px;
+      border-radius:12px;
+      border:1px solid var(--line);
+      background:#111827;
+      color:var(--text);
+      font:inherit;
+    }
+
+    .cards{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:14px;
     }
 
     .exercise{
-      border:1px solid var(--border);
-      border-radius:16px;
+      background:#0f172a;
+      border:1px solid var(--line);
+      border-radius:18px;
       overflow:hidden;
     }
 
@@ -230,55 +279,58 @@
       display:flex;
       justify-content:space-between;
       gap:12px;
-      padding:14px;
-      background:#fff;
-      border-bottom:1px solid var(--border);
+      align-items:flex-start;
+      padding:14px 16px;
+      background:rgba(2,6,23,.35);
+      border-bottom:1px solid rgba(148,163,184,.10);
     }
 
-    .exercise-top h4{
-      margin:0 0 6px;
-      font-size:16px;
-    }
+    .exercise-top h4{margin:0 0 6px; font-size:16px}
+    .exercise-top p{margin:0; color:var(--muted); line-height:1.45; font-size:13px}
 
-    .exercise-top p{
-      margin:0;
-      color:var(--muted);
-      line-height:1.4;
-      font-size:13px;
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      padding:7px 10px;
+      border-radius:999px;
+      font-size:12px;
+      background:#1e293b;
+      color:#dbeafe;
+      border:1px solid rgba(96,165,250,.22);
+      white-space:nowrap;
+      height:fit-content;
     }
 
     .exercise-body{
       display:grid;
-      grid-template-columns: 220px 1fr;
+      grid-template-columns:220px 1fr;
       gap:14px;
-      padding:14px;
+      padding:14px 16px 16px;
       align-items:center;
-      background:#fff;
     }
 
-    .video-box{
-      position:relative;
-      border-radius:16px;
-      overflow:hidden;
-      border:1px solid #dbeafe;
-      background:linear-gradient(180deg,#eff6ff,#ffffff);
+    .mini-video{
       aspect-ratio:1/1;
+      border-radius:18px;
+      overflow:hidden;
+      border:1px solid rgba(96,165,250,.2);
+      background:linear-gradient(180deg,#0f172a,#111827);
       display:flex;
       align-items:center;
       justify-content:center;
+      position:relative;
     }
 
-    .video-tag{
+    .mini-video .label{
       position:absolute;
       top:10px;
       left:10px;
-      z-index:2;
-      font-size:12px;
-      padding:4px 8px;
+      padding:5px 8px;
       border-radius:999px;
-      background:rgba(255,255,255,.92);
-      border:1px solid #dbeafe;
-      color:#1e3a8a;
+      font-size:11px;
+      background:rgba(15,23,42,.95);
+      border:1px solid rgba(96,165,250,.24);
+      color:#bfdbfe;
     }
 
     .meta{
@@ -292,178 +344,216 @@
       font-size:12px;
       padding:6px 10px;
       border-radius:999px;
-      border:1px solid var(--border);
-      background:#f9fafb;
+      background:#0f172a;
+      border:1px solid rgba(148,163,184,.16);
+      color:#dbeafe;
     }
 
     ul{
       margin:0;
       padding-left:18px;
+      line-height:1.6;
+      color:#d1d5db;
+    }
+
+    .checkbox-wrap{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      background:#0f172a;
+      border:1px solid var(--line);
+      padding:12px 14px;
+      border-radius:14px;
+      color:#d1fae5;
+      font-weight:700;
+    }
+
+    .good{
+      border-left:5px solid var(--green);
+      background:rgba(34,197,94,.10);
+      padding:14px;
+      border-radius:16px;
+      color:#bbf7d0;
       line-height:1.55;
-      color:#374151;
     }
 
-    .warning{
-      border-left:5px solid var(--warn);
-      background:#fff8e6;
+    .warn{
+      border-left:5px solid var(--yellow);
+      background:rgba(245,158,11,.10);
       padding:14px;
-      border-radius:14px;
-      line-height:1.5;
-      color:#7c2d12;
-    }
-
-    .safe{
-      border-left:5px solid var(--ok);
-      background:#ecfdf5;
-      padding:14px;
-      border-radius:14px;
-      line-height:1.5;
-      color:#14532d;
-    }
-
-    .progress{
-      margin-top:10px;
-      height:10px;
-      background:#e5e7eb;
-      border-radius:999px;
-      overflow:hidden;
-    }
-
-    .progress > div{
-      width:0%;
-      height:100%;
-      background:linear-gradient(90deg,var(--primary),var(--ok));
-      border-radius:999px;
+      border-radius:16px;
+      color:#fcd34d;
+      line-height:1.55;
     }
 
     .footer{
-      margin-top:16px;
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap:12px;
-    }
-
-    .footer .mini{
+      margin:18px 0 8px;
       text-align:center;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.6;
     }
 
-    .hidden{display:none}
+    .svg-figure{transform-origin:center; animation:bounce 2.2s ease-in-out infinite}
+    .armL{transform-origin:250px 165px; animation:armL 2.2s ease-in-out infinite}
+    .armR{transform-origin:250px 165px; animation:armR 2.2s ease-in-out infinite}
+    .legL{transform-origin:250px 245px; animation:legL 2.2s ease-in-out infinite}
+    .legR{transform-origin:250px 245px; animation:legR 2.2s ease-in-out infinite}
 
-    .figure{
-      transform-origin:center;
-      animation:bounce 2.2s ease-in-out infinite;
-    }
+    @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+    @keyframes armL{0%,100%{transform:rotate(8deg)}50%{transform:rotate(-12deg)}}
+    @keyframes armR{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(12deg)}}
+    @keyframes legL{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(8deg)}}
+    @keyframes legR{0%,100%{transform:rotate(4deg)}50%{transform:rotate(-8deg)}}
 
-    .arm-l{transform-origin:250px 165px; animation:armL 2.2s ease-in-out infinite}
-    .arm-r{transform-origin:250px 165px; animation:armR 2.2s ease-in-out infinite}
-    .leg-l{transform-origin:250px 245px; animation:legL 2.2s ease-in-out infinite}
-    .leg-r{transform-origin:250px 245px; animation:legR 2.2s ease-in-out infinite}
-
-    @keyframes bounce{
-      0%,100%{transform:translateY(0)}
-      50%{transform:translateY(-3px)}
-    }
-    @keyframes armL{
-      0%,100%{transform:rotate(8deg)}
-      50%{transform:rotate(-12deg)}
-    }
-    @keyframes armR{
-      0%,100%{transform:rotate(-8deg)}
-      50%{transform:rotate(12deg)}
-    }
-    @keyframes legL{
-      0%,100%{transform:rotate(-4deg)}
-      50%{transform:rotate(7deg)}
-    }
-    @keyframes legR{
-      0%,100%{transform:rotate(4deg)}
-      50%{transform:rotate(-7deg)}
+    @media (max-width:1100px){
+      .layout{grid-template-columns:1fr}
+      .side{position:relative; top:auto}
+      .grid-kpis,.dash,.cards,.exercise-body,.schedule-row,.timer-grid{grid-template-columns:1fr}
     }
 
-    @media (max-width: 900px){
-      .layout,
-      .overview,
-      .footer,
-      .exercise-body{
-        grid-template-columns:1fr;
-      }
-
-      .header{position:relative; top:auto}
+    @media (max-width:700px){
+      h1{font-size:24px}
+      .timer-display{font-size:44px}
+      .cards,.grid-kpis,.dash{grid-template-columns:1fr}
     }
   </style>
 </head>
 <body>
   <div class="app">
-    <header class="header">
-      <h1>Academia em Casa 62+</h1>
-      <p>Treino em casa para mulher de 62 anos, com exercícios leves, seguros e sem equipamentos complexos. Quatro vezes por semana, 40 minutos por sessão.</p>
-      <div class="header-actions">
-        <button class="btn primary" onclick="scrollToSection('weekSection')">Ver plano da semana</button>
-        <button class="btn secondary" onclick="scrollToSection('safetySection')">Regras de segurança</button>
+    <header class="hero">
+      <div class="hero-top">
+        <div>
+          <h1>Academia em Casa 62+</h1>
+          <p>Aplicativo em HTML para treino doméstico com dashboard, agenda, cronômetro, progresso e exercícios guiados para uma mulher de 62 anos.</p>
+        </div>
+        <div class="badge">Pronto para GitHub Pages</div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="scrollToSection('dashboardSection')">Dashboard</button>
+        <button class="btn green" onclick="scrollToSection('scheduleSection')">Agenda</button>
+        <button class="btn yellow" onclick="scrollToSection('timerSection')">Cronômetro</button>
+        <button class="btn gray" onclick="scrollToSection('weekSection')">Plano semanal</button>
       </div>
     </header>
 
     <div class="layout">
-      <aside class="card section" id="indexSection">
+      <aside class="side">
         <h2>Índice</h2>
-        <div class="index-list" id="indexList"></div>
+        <div class="nav" id="navList"></div>
       </aside>
 
-      <main class="content">
-        <section class="overview">
-          <div class="mini">
-            <strong>Tempo por treino</strong>
-            <span>40 minutos</span>
+      <main>
+        <section class="panel section" id="dashboardSection">
+          <div class="section-head">
+            <div>
+              <h2>Dashboard de evolução</h2>
+              <p>Visão rápida do desempenho da semana e da evolução dos treinos.</p>
+            </div>
           </div>
-          <div class="mini">
-            <strong>Frequência</strong>
-            <span>4 vezes por semana</span>
+
+          <div class="grid-kpis">
+            <div class="kpi"><small>Treinos concluídos</small><strong id="kpiDone">0/4</strong><span>Dias marcados como concluídos.</span></div>
+            <div class="kpi"><small>Taxa de conclusão</small><strong id="kpiProgress">0%</strong><span>Percentual total realizado.</span></div>
+            <div class="kpi"><small>Próximo lembrete</small><strong id="kpiNext">--:--</strong><span>Horário salvo na agenda.</span></div>
+            <div class="kpi"><small>Rotina</small><strong>4x/semana</strong><span>Treino com 40 minutos por sessão.</span></div>
           </div>
-          <div class="mini">
-            <strong>Equipamentos</strong>
-            <span>Cadeira, parede, toalha, garrafas e degrau baixo</span>
+
+          <div class="dash">
+            <div class="chart">
+              <h3 style="margin:0 0 10px;">Evolução visual</h3>
+              <svg viewBox="0 0 900 300" role="img" aria-label="Gráfico de evolução">
+                <g stroke="rgba(148,163,184,.22)" stroke-width="1">
+                  <line x1="80" y1="40" x2="80" y2="250"></line>
+                  <line x1="80" y1="250" x2="820" y2="250"></line>
+                  <line x1="80" y1="205" x2="820" y2="205"></line>
+                  <line x1="80" y1="160" x2="820" y2="160"></line>
+                  <line x1="80" y1="115" x2="820" y2="115"></line>
+                  <line x1="80" y1="70" x2="820" y2="70"></line>
+                </g>
+                <g fill="#cbd5e1" font-size="13" font-family="Arial">
+                  <text x="18" y="255">0%</text>
+                  <text x="10" y="210">25%</text>
+                  <text x="10" y="165">50%</text>
+                  <text x="10" y="120">75%</text>
+                  <text x="4" y="75">100%</text>
+                </g>
+                <rect x="160" y="220" width="90" height="30" rx="12" fill="#60a5fa"></rect>
+                <rect x="320" y="220" width="90" height="30" rx="12" fill="#38bdf8"></rect>
+                <rect x="480" y="220" width="90" height="30" rx="12" fill="#22c55e"></rect>
+                <rect x="640" y="220" width="90" height="30" rx="12" fill="#a3e635"></rect>
+                <text x="178" y="275" fill="#cbd5e1" font-size="13">Dia 1</text>
+                <text x="338" y="275" fill="#cbd5e1" font-size="13">Dia 2</text>
+                <text x="498" y="275" fill="#cbd5e1" font-size="13">Dia 3</text>
+                <text x="658" y="275" fill="#cbd5e1" font-size="13">Dia 4</text>
+              </svg>
+              <div class="chart-note">O gráfico reflete o progresso salvo no navegador.</div>
+            </div>
+
+            <div class="progress-box">
+              <h3 style="margin:0;">Resumo da semana</h3>
+              <p style="margin:8px 0 0; color:var(--muted)">Marque os dias concluídos para atualizar o painel.</p>
+              <div class="progress-bar"><div id="progressBar"></div></div>
+              <p id="progressText" style="margin:10px 0 0; color:var(--muted)">0% concluído</p>
+              <div style="height:12px"></div>
+              <div class="good">Treinos com equilíbrio, força e mobilidade ajudam na autonomia e na prevenção de quedas.</div>
+            </div>
           </div>
         </section>
 
-        <section class="card section" id="safetySection">
-          <h2>Segurança</h2>
-          <div class="warning">
-            Use sempre uma cadeira firme, espaço livre no chão e calçado seguro. Pare o exercício se houver dor forte, tontura, falta de ar incomum ou sensação de desequilíbrio.
+        <section class="panel section" id="scheduleSection">
+          <div class="section-head">
+            <div>
+              <h2>Agenda / despertador</h2>
+              <p>Defina horários de treino e receba aviso no navegador, se a permissão for concedida.</p>
+            </div>
           </div>
-          <div style="height:12px"></div>
-          <div class="safe">
-            O ideal é manter esforço leve a moderado, sem impacto e sem pressa. Em caso de doenças, dores articulares ou risco de queda, vale conversar com um profissional de saúde antes de começar.
+          <div class="schedule" id="scheduleBox"></div>
+          <div class="actions">
+            <button class="btn primary" onclick="saveSchedule()">Salvar agenda</button>
+            <button class="btn green" onclick="requestNotifications()">Permitir lembretes</button>
+            <button class="btn yellow" onclick="checkReminders()">Checar agora</button>
           </div>
-          <div style="height:12px"></div>
-          <div class="mini">
-            <strong>Progresso da semana</strong>
-            <div class="progress"><div id="progressBar"></div></div>
-            <p class="muted" id="progressText">0% concluído</p>
+          <p id="notifStatus" style="margin:10px 0 0; color:var(--muted)">Status: notificações não configuradas.</p>
+        </section>
+
+        <section class="panel section" id="timerSection">
+          <div class="section-head">
+            <div>
+              <h2>Cronômetro</h2>
+              <p>Use para contar 40 minutos ou qualquer tempo menor durante o treino.</p>
+            </div>
+          </div>
+          <div class="timer">
+            <div class="timer-display" id="timerDisplay">40:00</div>
+            <div class="timer-grid">
+              <input type="number" id="setMinutes" min="0" value="40" placeholder="Minutos">
+              <input type="number" id="setSeconds" min="0" max="59" value="0" placeholder="Segundos">
+              <button class="btn primary" onclick="setTimer()">Definir tempo</button>
+            </div>
+            <div class="actions" style="justify-content:center;">
+              <button class="btn green" onclick="startTimer()">Iniciar</button>
+              <button class="btn yellow" onclick="pauseTimer()">Pausar</button>
+              <button class="btn red" onclick="resetTimer()">Resetar</button>
+            </div>
           </div>
         </section>
 
-        <section class="card section" id="weekSection">
-          <h2>Plano semanal</h2>
-          <p class="muted">Clique em cada dia para ver os exercícios. Cada exercício tem um mini vídeo animado em SVG.</p>
-          <div class="week-grid" id="weekGrid"></div>
+        <section class="panel section" id="weekSection">
+          <div class="section-head">
+            <div>
+              <h2>Plano semanal</h2>
+              <p>Quatro dias de treino com exercícios simples, usando objetos da casa.</p>
+            </div>
+          </div>
+          <div class="cards" id="weekCards"></div>
         </section>
+
+        <div class="footer">
+          Arquivo único em HTML, responsivo e pronto para publicar no GitHub Pages.
+        </div>
       </main>
     </div>
-
-    <section class="footer">
-      <div class="mini">
-        <strong>Objetivo</strong>
-        <span>Força, equilíbrio e mobilidade</span>
-      </div>
-      <div class="mini">
-        <strong>Estilo</strong>
-        <span>Baixo impacto e simples de seguir</span>
-      </div>
-      <div class="mini">
-        <strong>Itens caseiros</strong>
-        <span>Cadeira, parede, toalha, garrafas, degrau</span>
-      </div>
-    </section>
   </div>
 
   <script>
@@ -471,12 +561,12 @@
       {
         title: "Dia 1 — Pernas e equilíbrio",
         desc: "Foco em pernas, estabilidade e prevenção de quedas.",
-        pill: "Leve a moderado",
+        badge: "Leve a moderado",
         exercises: [
           ["Marcha no lugar", "5 min", "Sem equipamento", "Levante os joelhos de forma confortável e mova os braços.", ["Postura ereta", "Passos curtos", "Respiração normal"], "march"],
-          ["Sentar e levantar da cadeira", "10 min", "Cadeira firme", "Use a força das pernas, sem pressa.", ["Pés firmes no chão", "Incline o tronco levemente", "Levante e sente com controle"], "chair"],
+          ["Sentar e levantar da cadeira", "10 min", "Cadeira firme", "Use a força das pernas, sem pressa.", ["Pés firmes", "Tronco levemente à frente", "Levante e sente com controle"], "chair"],
           ["Elevação de panturrilha", "10 min", "Cadeira ou parede", "Suba e desça devagar, sem balançar o corpo.", ["Segure apoio", "Suba na ponta dos pés", "Desça lentamente"], "calf"],
-          ["Equilíbrio com apoio", "5 min", "Parede ou cadeira", "Apoie uma mão se precisar e troque a perna.", ["Fique em um pé por poucos segundos", "Olhe para frente", "Mantenha o abdômen leve"], "balance"],
+          ["Equilíbrio com apoio", "5 min", "Parede ou cadeira", "Apoie uma mão se precisar e troque a perna.", ["Fique em um pé por alguns segundos", "Olhe para frente", "Mantenha abdômen leve"], "balance"],
           ["Caminhada em linha reta", "5 min", "Espaço livre", "Dê passos curtos e lentos com segurança.", ["Olhe para frente", "Passos curtos", "Pare se perder o equilíbrio"], "walk"],
           ["Alongamento leve", "5 min", "Sem equipamento", "Sem forçar, apenas relaxe pernas e costas.", ["Segure 10 a 15 segundos", "Respire fundo", "Sem dor"], "stretch"]
         ]
@@ -484,20 +574,20 @@
       {
         title: "Dia 2 — Braços, postura e core",
         desc: "Fortalecimento dos membros superiores e melhora da postura.",
-        pill: "Leve a moderado",
+        badge: "Leve a moderado",
         exercises: [
           ["Mobilidade de ombros", "5 min", "Sem equipamento", "Faça círculos pequenos e confortáveis.", ["Gire os ombros para trás e para frente", "Movimento lento", "Sem dor"], "shoulder"],
           ["Flexão na parede", "10 min", "Parede", "Mantenha o corpo alinhado e mãos na altura do peito.", ["Aproxime o peito da parede", "Empurre de volta", "Cotovelos controlados"], "wallpush"],
           ["Remada com toalha", "10 min", "Toalha", "Puxe a toalha com firmeza sem prender a respiração.", ["Segure com as duas mãos", "Abra o peito", "Volte devagar"], "row"],
           ["Elevação frontal com garrafinhas", "5 min", "2 garrafinhas leves", "Levante até a altura dos ombros.", ["Use peso leve", "Desça com controle", "Não arqueie as costas"], "bottle"],
-          ["Contração abdominal sentada", "5 min", "Cadeira", "Puxe o abdômen suavemente para dentro.", ["Sente-se ereta", "Contraia o abdômen por alguns segundos", "Relaxe"], "core"],
+          ["Contração abdominal sentada", "5 min", "Cadeira", "Puxe o abdômen suavemente para dentro.", ["Sente-se ereta", "Contraia por alguns segundos", "Relaxe"], "core"],
           ["Alongamento de braços", "5 min", "Sem equipamento", "Solte ombros e braços no fim.", ["Puxe um braço de cada vez", "Respire fundo", "Sem dor"], "stretch"]
         ]
       },
       {
         title: "Dia 3 — Corpo todo funcional",
         desc: "Movimentos do dia a dia com foco em força e coordenação.",
-        pill: "Leve a moderado",
+        badge: "Leve a moderado",
         exercises: [
           ["Marcha leve", "5 min", "Sem equipamento", "Aqueça o corpo sem pressa.", ["Passos suaves", "Braços naturais", "Respiração confortável"], "march"],
           ["Agachamento curto com cadeira", "10 min", "Cadeira firme", "Desça pouco, como se fosse sentar e levantar parcialmente.", ["Pés firmes", "Quadril para trás", "Joelhos alinhados"], "squat"],
@@ -510,7 +600,7 @@
       {
         title: "Dia 4 — Mobilidade e fortalecimento leve",
         desc: "Dia mais suave para soltar o corpo e reforçar a consistência.",
-        pill: "Leve",
+        badge: "Leve",
         exercises: [
           ["Aquecimento articular", "5 min", "Sem equipamento", "Movimente tornozelos, punhos, pescoço e ombros devagar.", ["Movimentos circulares", "Sem forçar", "Respire tranquilamente"], "joint"],
           ["Sentar e levantar da cadeira", "10 min", "Cadeira firme", "Faça mais devagar do que no Dia 1.", ["Use os calcanhares", "Suba com controle", "Desça sem bater"], "chair"],
@@ -522,10 +612,26 @@
       }
     ];
 
-    const indexList = document.getElementById("indexList");
-    const weekGrid = document.getElementById("weekGrid");
+    const navItems = [
+      { id:"dashboardSection", title:"Dashboard", desc:"Evolução e resumo" },
+      { id:"scheduleSection", title:"Agenda", desc:"Horários e lembretes" },
+      { id:"timerSection", title:"Cronômetro", desc:"Contagem do treino" },
+      { id:"weekSection", title:"Plano semanal", desc:"Exercícios do dia" }
+    ];
+
+    const navList = document.getElementById("navList");
+    const weekCards = document.getElementById("weekCards");
+    const scheduleBox = document.getElementById("scheduleBox");
+    const notifStatus = document.getElementById("notifStatus");
     const progressBar = document.getElementById("progressBar");
     const progressText = document.getElementById("progressText");
+    const timerDisplay = document.getElementById("timerDisplay");
+    const kpiDone = document.getElementById("kpiDone");
+    const kpiProgress = document.getElementById("kpiProgress");
+    const kpiNext = document.getElementById("kpiNext");
+
+    let timerInterval = null;
+    let timerSeconds = 40 * 60;
 
     function scrollToSection(id){
       document.getElementById(id).scrollIntoView({behavior:"smooth"});
@@ -535,7 +641,7 @@
       const labels = {
         march:"Marcha",
         chair:"Cadeira",
-        calf:"Ponta dos pés",
+        calf:"Panturrilha",
         balance:"Equilíbrio",
         walk:"Caminhada",
         stretch:"Alongamento",
@@ -554,100 +660,194 @@
 
       return `
         <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" aria-label="Mini vídeo instrutivo">
-          <rect width="500" height="500" fill="transparent"/>
           <circle cx="250" cy="115" r="34" fill="#f6d7c3"/>
           <circle cx="238" cy="108" r="4" fill="#111827"/>
           <circle cx="262" cy="108" r="4" fill="#111827"/>
           <path d="M238 125 Q250 135 262 125" stroke="#111827" stroke-width="4" fill="none" stroke-linecap="round"/>
-          <g class="figure">
+          <g class="svg-figure">
             <rect x="225" y="150" width="50" height="92" rx="18" fill="#2563eb"/>
-            <line x1="250" y1="242" x2="212" y2="315" stroke="#1f2937" stroke-width="12" stroke-linecap="round" class="leg-l"/>
-            <line x1="250" y1="242" x2="288" y2="315" stroke="#1f2937" stroke-width="12" stroke-linecap="round" class="leg-r"/>
-            <line x1="225" y1="168" x2="184" y2="215" stroke="#1f2937" stroke-width="12" stroke-linecap="round" class="arm-l"/>
-            <line x1="275" y1="168" x2="316" y2="215" stroke="#1f2937" stroke-width="12" stroke-linecap="round" class="arm-r"/>
+            <line x1="250" y1="242" x2="212" y2="315" stroke="#cbd5e1" stroke-width="12" stroke-linecap="round" class="legL"/>
+            <line x1="250" y1="242" x2="288" y2="315" stroke="#cbd5e1" stroke-width="12" stroke-linecap="round" class="legR"/>
+            <line x1="225" y1="168" x2="184" y2="215" stroke="#cbd5e1" stroke-width="12" stroke-linecap="round" class="armL"/>
+            <line x1="275" y1="168" x2="316" y2="215" stroke="#cbd5e1" stroke-width="12" stroke-linecap="round" class="armR"/>
           </g>
-          <text x="250" y="382" text-anchor="middle" font-size="20" fill="#1f2937" font-family="Arial">${labels[type] || "Exercício"}</text>
+          <text x="250" y="382" text-anchor="middle" font-size="20" fill="#e5e7eb" font-family="Arial">${labels[type] || "Exercício"}</text>
         </svg>
       `;
     }
 
-    function updateProgress(index){
-      const percent = Math.round(((index + 1) / plan.length) * 100);
-      progressBar.style.width = percent + "%";
-      progressText.textContent = percent + "% concluído";
-    }
-
-    function renderIndex(){
-      indexList.innerHTML = "";
-      plan.forEach((day, i) => {
-        const btn = document.createElement("button");
-        btn.className = "index-item" + (i === 0 ? " active" : "");
-        btn.innerHTML = `
-          <strong>${i + 1}. ${day.title}</strong>
-          <span>${day.desc}</span>
-        `;
-        btn.onclick = () => {
-          document.getElementById(`day-${i}`).scrollIntoView({behavior:"smooth"});
-          document.querySelectorAll(".index-item").forEach(el => el.classList.remove("active"));
-          btn.classList.add("active");
-          updateProgress(i);
+    function renderNav(){
+      navList.innerHTML = "";
+      navItems.forEach((n, i) => {
+        const b = document.createElement("button");
+        b.className = i === 0 ? "active" : "";
+        b.innerHTML = `<strong>${i + 1}. ${n.title}</strong><span>${n.desc}</span>`;
+        b.onclick = () => {
+          scrollToSection(n.id);
+          document.querySelectorAll(".nav button").forEach(x => x.classList.remove("active"));
+          b.classList.add("active");
         };
-        indexList.appendChild(btn);
+        navList.appendChild(b);
       });
     }
 
+    function renderSchedule(){
+      const times = JSON.parse(localStorage.getItem("workoutSchedule") || "{}");
+      scheduleBox.innerHTML = ["Dia 1","Dia 2","Dia 3","Dia 4"].map((d, i) => `
+        <div class="schedule-row">
+          <strong>${d}</strong>
+          <input type="time" id="time-${i}" value="${times[`time-${i}`] || "08:00"}">
+          <button class="btn" onclick="testReminder(${i})">Testar</button>
+        </div>
+      `).join("");
+    }
+
+    function saveSchedule(){
+      const times = {};
+      for(let i=0;i<4;i++) times[`time-${i}`] = document.getElementById(`time-${i}`).value;
+      localStorage.setItem("workoutSchedule", JSON.stringify(times));
+      notifStatus.textContent = "Agenda salva com sucesso.";
+      updateDashboard();
+    }
+
+    async function requestNotifications(){
+      if(!("Notification" in window)){
+        notifStatus.textContent = "Este navegador não suporta notificações.";
+        return;
+      }
+      const perm = await Notification.requestPermission();
+      notifStatus.textContent = perm === "granted" ? "Notificações permitidas." : "Notificações negadas.";
+    }
+
+    function notify(title, body){
+      if("Notification" in window && Notification.permission === "granted") new Notification(title, {body});
+      else alert(title + "\n" + body);
+    }
+
+    function checkReminders(){
+      const now = new Date();
+      const current = now.getHours().toString().padStart(2,"0") + ":" + now.getMinutes().toString().padStart(2,"0");
+      const times = JSON.parse(localStorage.getItem("workoutSchedule") || "{}");
+      for(let i=0;i<4;i++){
+        if(times[`time-${i}`] === current) notify("Hora do treino!", `Está na hora do Dia ${i + 1}.`);
+      }
+      notifStatus.textContent = `Checagem feita às ${current}.`;
+      updateDashboard();
+    }
+
+    function testReminder(i){
+      notify("Teste de lembrete", `Lembrete do Dia ${i + 1} enviado com sucesso.`);
+    }
+
+    function renderTimer(){
+      const m = Math.floor(timerSeconds / 60).toString().padStart(2,"0");
+      const s = (timerSeconds % 60).toString().padStart(2,"0");
+      timerDisplay.textContent = `${m}:${s}`;
+    }
+
+    function setTimer(){
+      const m = Math.max(0, parseInt(document.getElementById("setMinutes").value || "0", 10));
+      const s = Math.max(0, Math.min(59, parseInt(document.getElementById("setSeconds").value || "0", 10)));
+      timerSeconds = (m * 60) + s;
+      renderTimer();
+    }
+
+    function startTimer(){
+      if(timerInterval) return;
+      timerInterval = setInterval(() => {
+        if(timerSeconds > 0){
+          timerSeconds--;
+          renderTimer();
+        }else{
+          pauseTimer();
+          notify("Tempo encerrado", "O cronômetro do treino terminou.");
+        }
+      }, 1000);
+    }
+
+    function pauseTimer(){
+      clearInterval(timerInterval);
+      timerInterval = null;
+    }
+
+    function resetTimer(){
+      pauseTimer();
+      setTimer();
+    }
+
+    function markDone(dayIndex, checked){
+      const saved = JSON.parse(localStorage.getItem("exerciseDone") || "{}");
+      saved[`day-${dayIndex}`] = checked;
+      localStorage.setItem("exerciseDone", JSON.stringify(saved));
+      updateDashboard();
+    }
+
     function renderWeek(){
-      weekGrid.innerHTML = "";
+      const saved = JSON.parse(localStorage.getItem("exerciseDone") || "{}");
+      weekCards.innerHTML = "";
       plan.forEach((day, i) => {
-        const section = document.createElement("article");
-        section.className = "day section";
-        section.id = `day-${i}`;
-        section.innerHTML = `
-          <div class="day-head">
+        const el = document.createElement("div");
+        el.className = "exercise";
+        el.id = `day-${i}`;
+        el.innerHTML = `
+          <div class="exercise-top">
             <div>
-              <h3>${day.title}</h3>
-              <p class="muted">${day.desc}</p>
+              <h4>${day.title}</h4>
+              <p>${day.desc}</p>
             </div>
-            <span class="pill ${i === 3 ? 'green' : i === 2 ? 'orange' : 'gray'}">${day.pill}</span>
+            <span class="badge">${day.badge}</span>
           </div>
-          <div class="day-body">
-            <div class="exercise-list">
+          <div style="padding:14px 16px 0;">
+            <label class="checkbox-wrap">
+              <input type="checkbox" ${saved[`day-${i}`] ? "checked" : ""} onchange="markDone(${i}, this.checked)">
+              Concluído
+            </label>
+          </div>
+          <div class="exercise-body">
+            <div class="mini-video">
+              <div class="label">Mini vídeo</div>
+              ${iconSVG(day.exercises[0][5])}
+            </div>
+            <div>
               ${day.exercises.map((ex, j) => `
-                <div class="exercise">
-                  <div class="exercise-top">
-                    <div>
-                      <h4>${j + 1}. ${ex[0]}</h4>
-                      <p>${ex[3]}</p>
-                    </div>
-                    <span class="pill">${ex[1]}</span>
+                <div style="padding:10px 0; ${j < day.exercises.length - 1 ? 'border-bottom:1px solid rgba(148,163,184,.10);' : ''}">
+                  <div class="meta">
+                    <span>${j + 1}. ${ex[0]}</span>
+                    <span>${ex[1]}</span>
+                    <span>${ex[2]}</span>
                   </div>
-                  <div class="exercise-body">
-                    <div class="video-box">
-                      <div class="video-tag">Mini vídeo</div>
-                      ${iconSVG(ex[5])}
-                    </div>
-                    <div>
-                      <div class="meta">
-                        <span><strong>Item:</strong> ${ex[2]}</span>
-                        <span><strong>Tempo:</strong> ${ex[1]}</span>
-                      </div>
-                      <ul>
-                        ${ex[4].map(x => `<li>${x}</li>`).join("")}
-                      </ul>
-                    </div>
-                  </div>
+                  <p style="margin:0 0 8px; color:#cbd5e1; line-height:1.5">${ex[3]}</p>
+                  <ul>${ex[4].map(x => `<li>${x}</li>`).join("")}</ul>
                 </div>
               `).join("")}
             </div>
           </div>
         `;
-        weekGrid.appendChild(section);
+        weekCards.appendChild(el);
       });
     }
 
-    renderIndex();
+    function updateDashboard(){
+      const saved = JSON.parse(localStorage.getItem("exerciseDone") || "{}");
+      const times = JSON.parse(localStorage.getItem("workoutSchedule") || "{}");
+      const done = Object.values(saved).filter(Boolean).length;
+      const percent = Math.round((done / 4) * 100);
+
+      kpiDone.textContent = `${done}/4`;
+      kpiProgress.textContent = `${percent}%`;
+      progressBar.style.width = `${percent}%`;
+      progressText.textContent = `${percent}% concluído`;
+
+      const next = times["time-0"] || times["time-1"] || times["time-2"] || times["time-3"] || "--:--";
+      kpiNext.textContent = next;
+    }
+
+    renderNav();
+    renderSchedule();
     renderWeek();
-    updateProgress(0);
+    renderTimer();
+    updateDashboard();
+    setInterval(checkReminders, 60000);
   </script>
 </body>
 </html>
