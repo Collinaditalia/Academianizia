@@ -1,16 +1,19 @@
+
+## `index.html` completo com nomes exatos dos arquivos
+
+```html
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Academia da Nizia | Dashboard</title>
-  <meta name="description" content="Treino em casa com agenda, cronômetro, progresso e vídeos de exercícios." />
+  <title>Academia da Nizia</title>
+  <meta name="description" content="Treino em casa com agenda semanal, cronômetro, progresso e exercícios guiados com GIFs ou imagens." />
   <style>
     :root{
       --bg:#07111f;
       --bg2:#0f172a;
       --panel:#111827;
-      --panel2:#0b1220;
       --line:rgba(148,163,184,.16);
       --text:#e5e7eb;
       --muted:#94a3b8;
@@ -27,12 +30,11 @@
     html{scroll-behavior:smooth}
     body{
       margin:0;
-      font-family:Inter, Arial, Helvetica, sans-serif;
+      font-family:Arial,sans-serif;
       color:var(--text);
-      background:
-        radial-gradient(circle at top left, rgba(96,165,250,.16), transparent 28%),
-        radial-gradient(circle at top right, rgba(34,197,94,.12), transparent 22%),
-        linear-gradient(180deg,var(--bg) 0%, var(--bg2) 100%);
+      background:radial-gradient(circle at top left, rgba(96,165,250,.16), transparent 28%),
+                 radial-gradient(circle at top right, rgba(34,197,94,.12), transparent 22%),
+                 linear-gradient(180deg,var(--bg) 0%, var(--bg2) 100%);
     }
 
     .app{
@@ -69,23 +71,20 @@
 
     .hero p{
       margin:10px 0 0;
-      color:var(--muted);
-      line-height:1.55;
       max-width:900px;
+      line-height:1.55;
+      color:var(--muted);
     }
 
     .badge{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:8px 12px;
+      padding:10px 14px;
       border-radius:999px;
-      background:#1e293b;
-      color:#dbeafe;
+      background:rgba(37,99,235,.18);
       border:1px solid rgba(96,165,250,.22);
-      font-size:12px;
-      font-weight:700;
+      color:#dbeafe;
+      font-size:13px;
       white-space:nowrap;
+      height:fit-content;
     }
 
     .actions{
@@ -105,6 +104,7 @@
       background:#334155;
       transition:.18s;
     }
+
     .btn:hover{transform:translateY(-1px)}
     .btn.primary{background:linear-gradient(135deg,var(--primary2),var(--primary))}
     .btn.green{background:linear-gradient(135deg,#15803d,var(--green))}
@@ -134,15 +134,9 @@
       top:136px;
     }
 
-    .side h2,.section h2{
-      margin:0 0 12px;
-      font-size:20px;
-    }
+    .side h2,.section h2{margin:0 0 12px; font-size:20px;}
 
-    .nav{
-      display:grid;
-      gap:10px;
-    }
+    .nav{display:grid; gap:10px;}
 
     .nav button{
       text-align:left;
@@ -168,9 +162,8 @@
 
     .nav button span{
       display:block;
-      color:var(--muted);
       font-size:12px;
-      line-height:1.35;
+      color:var(--muted);
     }
 
     .section{
@@ -198,23 +191,9 @@
       min-height:128px;
     }
 
-    .kpi small{
-      display:block;
-      margin-bottom:8px;
-      color:var(--muted);
-    }
-
-    .kpi strong{
-      display:block;
-      font-size:28px;
-      margin-bottom:8px;
-    }
-
-    .kpi span{
-      color:#cbd5e1;
-      font-size:14px;
-      line-height:1.45;
-    }
+    .kpi small{display:block; margin-bottom:8px; color:var(--muted);}
+    .kpi strong{display:block; font-size:28px; margin-bottom:8px;}
+    .kpi span{color:#cbd5e1; font-size:14px; line-height:1.45;}
 
     .dash{
       display:grid;
@@ -264,9 +243,7 @@
       padding:12px;
     }
 
-    .schedule-row strong{
-      font-size:14px;
-    }
+    .schedule-row strong{font-size:14px;}
 
     .schedule-row input{
       width:100%;
@@ -342,17 +319,8 @@
       border-bottom:1px solid rgba(148,163,184,.10);
     }
 
-    .day-head h3{
-      margin:0 0 6px;
-      font-size:18px;
-    }
-
-    .day-head p{
-      margin:0;
-      color:var(--muted);
-      line-height:1.45;
-      font-size:13px;
-    }
+    .day-head h3{margin:0 0 6px; font-size:18px;}
+    .day-head p{margin:0; color:var(--muted); line-height:1.45; font-size:13px;}
 
     .day-pill{
       padding:6px 10px;
@@ -367,91 +335,53 @@
 
     .exercise{
       display:grid;
-      grid-template-columns:120px 1fr;
+      grid-template-columns:160px 1fr;
       gap:14px;
       padding:16px;
       border-top:1px solid rgba(148,163,184,.10);
-      align-items:start;
     }
 
-    .exercise:first-of-type{border-top:none}
-
-    .icon-box{
-      width:120px;
+    .media-box{
+      width:160px;
       aspect-ratio:1/1;
       border-radius:20px;
       background:linear-gradient(180deg,#111827,#0f172a);
       border:1px solid rgba(148,163,184,.12);
+      overflow:hidden;
       display:flex;
       align-items:center;
       justify-content:center;
-      overflow:hidden;
-      position:relative;
+      padding:8px;
     }
 
-    .icon-box svg{
-      width:84px;
-      height:84px;
-      display:block;
-    }
-
-    .exercise h4{
-      margin:0 0 6px;
-      font-size:16px;
-    }
-
-    .exercise .meta{
-      color:#cbd5e1;
-      font-size:13px;
-      margin-bottom:8px;
-    }
-
-    .exercise p{
-      margin:0 0 10px;
-      color:var(--muted);
-      line-height:1.45;
-      font-size:13px;
-    }
-
-    .exercise ul{
-      margin:0;
-      padding-left:18px;
-      color:#dbeafe;
-    }
-
-    .exercise li{
-      font-size:12px;
-      line-height:1.45;
-      margin-bottom:4px;
-    }
-
-    .video-grid{
-      display:grid;
-      grid-template-columns:repeat(2, minmax(0, 1fr));
-      gap:10px;
-      margin-top:12px;
-    }
-
-    .video-card{
-      background:#0b1220;
-      border:1px solid var(--line);
-      border-radius:16px;
-      overflow:hidden;
-    }
-
-    .video-card iframe{
+    .media-box img{
       width:100%;
-      aspect-ratio:16/9;
-      border:0;
+      height:100%;
+      object-fit:cover;
+      border-radius:14px;
       display:block;
     }
 
-    .video-card .caption{
-      padding:10px 12px;
-      font-size:12px;
-      color:var(--muted);
-      line-height:1.4;
+    .media-seq{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:6px;
+      width:100%;
+      height:100%;
     }
+
+    .media-seq img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      border-radius:10px;
+      display:block;
+    }
+
+    .meta{color:var(--muted); font-size:13px; margin:6px 0 10px;}
+    .exercise p{margin:0 0 10px; line-height:1.5;}
+    .exercise ul{margin:0; padding-left:18px; color:#dbeafe;}
+    .exercise li{margin:4px 0;}
 
     footer{
       margin-top:20px;
@@ -460,20 +390,17 @@
       color:var(--muted);
     }
 
-    @media (max-width: 1100px){
+    @media(max-width:1100px){
       .layout{grid-template-columns:1fr}
       .side{position:relative; top:auto}
       .grid-kpis,.dash{grid-template-columns:1fr}
-      .video-grid{grid-template-columns:1fr}
     }
 
-    @media (max-width: 700px){
-      .hero{padding:18px}
+    @media(max-width:700px){
       h1{font-size:24px}
-      .section{padding:16px}
-      .exercise{grid-template-columns:1fr}
-      .icon-box{width:100%; max-width:150px}
       .timer-display{font-size:44px; min-width:180px}
+      .exercise{grid-template-columns:1fr}
+      .media-box{width:100%; aspect-ratio:16/9}
       .schedule-row{grid-template-columns:1fr}
     }
   </style>
@@ -484,7 +411,7 @@
       <div class="hero-top">
         <div>
           <h1>Academia da Nizia</h1>
-          <p>Aplicativo leve em HTML para treino em casa, com dashboard, agenda, cronômetro, progresso, ícones mais limpos e vídeos separados por exercício.</p>
+          <p>Treino em casa com agenda semanal de segunda a domingo às 16:00, cronômetro, progresso e exercícios com GIFs ou imagens locais.</p>
         </div>
         <div class="badge">Pronto para GitHub Pages</div>
       </div>
@@ -500,39 +427,22 @@
     <div class="layout">
       <aside class="side">
         <h2>Índice</h2>
-        <div class="nav" id="navLista"></div>
+        <div id="navLista" class="nav"></div>
       </aside>
 
       <main>
         <section id="dashboard" class="section">
-          <h2>Dashboard de evolução</h2>
-
+          <h2>Dashboard</h2>
           <div class="grid-kpis">
-            <div class="kpi">
-              <small>Treinos</small>
-              <strong id="concluidos">0/4</strong>
-              <span>Dias concluídos na semana</span>
-            </div>
-            <div class="kpi">
-              <small>Progresso</small>
-              <strong id="percentual">0%</strong>
-              <span>Percentual do plano semanal</span>
-            </div>
-            <div class="kpi">
-              <small>Próximo treino</small>
-              <strong id="next">--:--</strong>
-              <span>Horário salvo na agenda</span>
-            </div>
-            <div class="kpi">
-              <small>Rotina</small>
-              <strong>4x/semana</strong>
-              <span>Duração sugerida: 40 minutos</span>
-            </div>
+            <div class="kpi"><small>Treinos</small><strong id="concluidos">0/7</strong><span>Dias concluídos</span></div>
+            <div class="kpi"><small>Progresso</small><strong id="percentual">0%</strong><span>Percentual total</span></div>
+            <div class="kpi"><small>Próximo</small><strong id="next">16:00</strong><span>Horário na agenda</span></div>
+            <div class="kpi"><small>Rotina</small><strong>7x/semana</strong><span>Treino diário às 16:00</span></div>
           </div>
 
           <div class="dash">
             <div class="chart">
-              <h3 style="margin:0 0 10px;">Evolução visual</h3>
+              <h3>Evolução</h3>
               <svg viewBox="0 0 900 300" role="img" aria-label="Gráfico de evolução">
                 <g stroke="rgba(148,163,184,.22)" stroke-width="1">
                   <line x1="80" y1="40" x2="80" y2="250"></line>
@@ -549,21 +459,27 @@
                   <text x="10" y="120">75%</text>
                   <text x="4" y="75">100%</text>
                 </g>
-                <rect x="160" y="220" width="90" height="30" rx="12" fill="#60a5fa"></rect>
-                <rect x="320" y="220" width="90" height="30" rx="12" fill="#38bdf8"></rect>
-                <rect x="480" y="220" width="90" height="30" rx="12" fill="#22c55e"></rect>
-                <rect x="640" y="220" width="90" height="30" rx="12" fill="#a3e635"></rect>
-                <text x="178" y="275" fill="#cbd5e1" font-size="13">Dia 1</text>
-                <text x="338" y="275" fill="#cbd5e1" font-size="13">Dia 2</text>
-                <text x="498" y="275" fill="#cbd5e1" font-size="13">Dia 3</text>
-                <text x="658" y="275" fill="#cbd5e1" font-size="13">Dia 4</text>
+                <rect x="120" y="220" width="70" height="30" rx="12" fill="#60a5fa"></rect>
+                <rect x="230" y="220" width="70" height="30" rx="12" fill="#38bdf8"></rect>
+                <rect x="340" y="220" width="70" height="30" rx="12" fill="#22c55e"></rect>
+                <rect x="450" y="220" width="70" height="30" rx="12" fill="#a3e635"></rect>
+                <rect x="560" y="220" width="70" height="30" rx="12" fill="#f59e0b"></rect>
+                <rect x="670" y="220" width="70" height="30" rx="12" fill="#fb7185"></rect>
+                <rect x="780" y="220" width="70" height="30" rx="12" fill="#c084fc"></rect>
+                <text x="132" y="275" fill="#cbd5e1" font-size="13">Seg</text>
+                <text x="242" y="275" fill="#cbd5e1" font-size="13">Ter</text>
+                <text x="350" y="275" fill="#cbd5e1" font-size="13">Qua</text>
+                <text x="458" y="275" fill="#cbd5e1" font-size="13">Qui</text>
+                <text x="570" y="275" fill="#cbd5e1" font-size="13">Sex</text>
+                <text x="680" y="275" fill="#cbd5e1" font-size="13">Sáb</text>
+                <text x="792" y="275" fill="#cbd5e1" font-size="13">Dom</text>
               </svg>
-              <div class="chart-note">Atualiza conforme os dias marcados na agenda.</div>
+              <div class="chart-note">Marque os dias concluídos na agenda.</div>
             </div>
 
             <div class="progress-box">
-              <h3 style="margin:0 0 10px;">Resumo semanal</h3>
-              <div style="margin-bottom:8px; font-size:13px; color:var(--muted);">Marque os dias feitos</div>
+              <h3>Resumo</h3>
+              <div style="margin-bottom:8px; font-size:13px; color:var(--muted);">Marque os dias concluídos</div>
               <div class="progress-bar"><div id="progressFill"></div></div>
               <div id="percentu" style="margin-top:10px; font-size:13px; color:var(--muted);">0%</div>
             </div>
@@ -571,33 +487,26 @@
         </section>
 
         <section id="schedule" class="section">
-          <h2>Agenda / lembretes</h2>
-          <p style="margin-top:0; color:var(--muted);">Defina até 4 horários e salve no navegador com <strong>localStorage</strong>.</p>
-
-          <div class="schedule-list" id="scheduleItems"></div>
-
+          <h2>Agenda</h2>
+          <p>Treino configurado para <strong>segunda a domingo às 16:00</strong>.</p>
+          <div id="scheduleItems" class="schedule-list"></div>
           <div class="actions" style="margin-top:14px;">
             <button class="btn primary" onclick="saveSchedule()">Salvar agenda</button>
             <button class="btn green" onclick="requestNotification()">Permitir notificações</button>
             <button class="btn yellow" onclick="checkRemind()">Checar agora</button>
           </div>
-
-          <div id="statusReminder" style="margin-top:10px;font-size:13px;color:var(--muted);">
-            Status: não configurado
-          </div>
+          <div id="statusReminder" style="margin-top:10px;font-size:13px;">Status: não configurado</div>
         </section>
 
         <section id="timer" class="section">
           <h2>Cronômetro</h2>
           <div class="timer">
             <div id="displayTimer" class="timer-display">40:00</div>
-
             <div class="timer-grid">
-              <input id="min" type="number" min="0" value="40" placeholder="Min" />
-              <input id="sec" type="number" min="0" max="59" value="0" placeholder="Seg" />
+              <input id="min" type="number" min="0" value="40" />
+              <input id="sec" type="number" min="0" max="59" value="0" />
             </div>
-
-            <div class="controls">
+            <div class="controls" style="margin-top:12px;">
               <button class="btn green" onclick="startChrono()">Iniciar</button>
               <button class="btn yellow" onclick="pauseChrono()">Pausar</button>
               <button class="btn red" onclick="resetChrono()">Resetar</button>
@@ -607,163 +516,165 @@
 
         <section id="semana" class="section">
           <h2>Plano semanal</h2>
-          <p style="margin-top:0; color:var(--muted);">Quatro dias com exercícios simples e vídeos reais separados por movimento.</p>
           <div id="weekCards"></div>
         </section>
 
-        <footer>
-          Publicável como página estática no GitHub Pages.
-        </footer>
+        <footer>Pronto para GitHub Pages.</footer>
       </main>
     </div>
   </div>
 
-  <audio id="finishSound" preload="auto">
-    <source src="https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg" type="audio/ogg" />
-    <source src="https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg" type="audio/ogg" />
-  </audio>
+  <audio id="finishSound" preload="auto" src="https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg"></audio>
 
   <script>
+    const scheduleDays = [
+      "Segunda-feira",
+      "Terça-feira",
+      "Quarta-feira",
+      "Quinta-feira",
+      "Sexta-feira",
+      "Sábado",
+      "Domingo"
+    ];
+
     const plan = [
       {
-        title: "Dia 1 — Pernas e equilíbrio",
-        desc: "Foco em pernas, estabilidade e prevenção de quedas.",
-        badge: "Leve a moderado",
+        title: "Segunda-feira",
+        desc: "Treino de mobilidade, cardio leve e ativação do corpo.",
         exercises: [
           {
             name: "Marcha no lugar",
             duration: "5 min",
             equipment: "Sem equipamento",
-            desc: "Levante os joelhos e mova os braços com ritmo confortável.",
-            tips: ["Postura ereta", "Passos curtos", "Respiração normal"],
-            icon: "walk",
-            video: "https://www.youtube.com/embed/1nN6yZq6lYo"
-          },
-          {
-            name: "Sentar e levantar",
-            duration: "10 min",
-            equipment: "Cadeira",
-            desc: "Use as pernas para subir e descer com controle.",
-            tips: ["Pés apoiados", "Tronco levemente inclinado", "Movimento controlado"],
-            icon: "chair",
-            video: "https://www.youtube.com/embed/4pKly2JojMw"
-          },
-          {
-            name: "Elevação de panturrilha",
-            duration: "10 min",
-            equipment: "Cadeira ou parede",
-            desc: "Eleve os calcanhares lentamente e desça sem pressa.",
-            tips: ["Suba devagar", "Segure o apoio", "Desça com controle"],
-            icon: "calf",
-            video: "https://www.youtube.com/embed/0F4j1r5w5KQ"
-          }
-        ]
-      },
-      {
-        title: "Dia 2 — Braços e postura",
-        desc: "Mobilidade, postura e força leve para o tronco superior.",
-        badge: "Leve a moderado",
-        exercises: [
-          {
-            name: "Círculos com os ombros",
-            duration: "5 min",
-            equipment: "Sem equipamento",
-            desc: "Faça movimentos circulares suaves com os ombros.",
-            tips: ["Movimento lento", "Sem forçar o pescoço", "Respiração solta"],
-            icon: "shoulders",
-            video: "https://www.youtube.com/embed/2L2lnxIcNmo"
-          },
-          {
-            name: "Flexões na parede",
-            duration: "10 min",
-            equipment: "Parede",
-            desc: "Flexione os cotovelos lentamente e retorne.",
-            tips: ["Mãos na altura do peito", "Corpo alinhado", "Controle ao voltar"],
-            icon: "push",
-            video: "https://www.youtube.com/embed/tm2k2qf5XU4"
-          },
-          {
-            name: "Remada com toalha",
-            duration: "10 min",
-            equipment: "Toalha",
-            desc: "Puxe a toalha com firmeza, mantendo ombros estáveis.",
-            tips: ["Segure firme", "Puxe sem trancos", "Ative as costas"],
-            icon: "row",
-            video: "https://www.youtube.com/embed/YyQqB2gA1K8"
-          }
-        ]
-      },
-      {
-        title: "Dia 3 — Movimento do dia a dia",
-        desc: "Treino funcional com coordenação e equilíbrio.",
-        badge: "Leve a moderado",
-        exercises: [
-          {
-            name: "Marcha com braços",
-            duration: "5 min",
-            equipment: "Sem equipamento",
-            desc: "Passos suaves com movimento coordenado dos braços.",
-            tips: ["Sem impacto", "Ritmo constante", "Olhar à frente"],
-            icon: "walk2",
-            video: "https://www.youtube.com/embed/9nG5u4V8lbo"
+            desc: "Aquecimento leve para elevar a frequência cardíaca.",
+            mediaType: "gif",
+            media: "assets/gifs/marcha-no-lugar.gif",
+            tips: ["Mantenha postura ereta.", "Respire de forma contínua.", "Aumente o ritmo aos poucos."]
           },
           {
             name: "Agachamento na cadeira",
-            duration: "10 min",
+            duration: "3x10",
             equipment: "Cadeira",
-            desc: "Sente e levante com controle, usando a força das pernas.",
-            tips: ["Pés firmes", "Joelhos alinhados", "Sem pressa"],
-            icon: "squat",
-            video: "https://www.youtube.com/embed/aclHkVaku9U"
-          },
-          {
-            name: "Subida no degrau",
-            duration: "5 min",
-            equipment: "Degrau",
-            desc: "Suba com apoio e desça com segurança.",
-            tips: ["Use corrimão se precisar", "Suba alternando pernas", "Movimento estável"],
-            icon: "step",
-            video: "https://www.youtube.com/embed/SAhrWZQ5Yj0"
+            desc: "Movimento simples para pernas e glúteos.",
+            mediaType: "gif",
+            media: "assets/gifs/agachamento-cadeira.gif",
+            tips: ["Desça com controle.", "Apoie o peso nos calcanhares.", "Use a cadeira como referência."]
           }
         ]
       },
       {
-        title: "Dia 4 — Mobilidade leve",
-        desc: "Sessão mais suave para soltar o corpo e recuperar.",
-        badge: "Leve",
+        title: "Terça-feira",
+        desc: "Treino de membros superiores e postura.",
         exercises: [
           {
-            name: "Aquecimento articular",
-            duration: "5 min",
-            equipment: "Sem equipamento",
-            desc: "Movimentos suaves de tornozelos, punhos, pescoço e quadris.",
-            tips: ["Sem dor", "Movimentos pequenos", "Respiração calma"],
-            icon: "mobility",
-            video: "https://www.youtube.com/embed/9iJzvlBfP6Q"
-          },
+            name: "Flexão na parede",
+            duration: "3x12",
+            equipment: "Parede",
+            desc: "Exercício adaptado para peitoral, ombros e tríceps.",
+            mediaType: "sequence",
+            media: [
+              "assets/imagens/flexao-1.png",
+              "assets/imagens/flexao-2.png",
+              "assets/imagens/flexao-3.png"
+            ],
+            tips: ["Mantenha abdômen firme.", "Não force o pescoço.", "Controle a descida."]
+          }
+        ]
+      },
+      {
+        title: "Quarta-feira",
+        desc: "Treino de pernas e panturrilhas.",
+        exercises: [
           {
-            name: "Alongamento de pernas",
+            name: "Elevação de panturrilha",
+            duration: "3x15",
+            equipment: "Sem equipamento",
+            desc: "Fortalece panturrilhas e melhora estabilidade.",
+            mediaType: "gif",
+            media: "assets/gifs/elevacao-panturrilha.gif",
+            tips: ["Suba devagar.", "Pause no alto.", "Desça sem impacto."]
+          }
+        ]
+      },
+      {
+        title: "Quinta-feira",
+        desc: "Treino de costas, postura e mobilidade.",
+        exercises: [
+          {
+            name: "Remada com toalha",
+            duration: "3x12",
+            equipment: "Toalha firme",
+            desc: "Trabalho de costas com movimento controlado.",
+            mediaType: "sequence",
+            media: [
+              "assets/imagens/remada-1.png",
+              "assets/imagens/remada-2.png",
+              "assets/imagens/remada-3.png"
+            ],
+            tips: ["Puxe com as costas.", "Mantenha ombros baixos.", "Evite movimentos bruscos."]
+          }
+        ]
+      },
+      {
+        title: "Sexta-feira",
+        desc: "Treino de corpo inteiro com foco em resistência.",
+        exercises: [
+          {
+            name: "Passada curta",
+            duration: "3x10 cada perna",
+            equipment: "Sem equipamento",
+            desc: "Exercício funcional para pernas e equilíbrio.",
+            mediaType: "gif",
+            media: "assets/gifs/passada-curta.gif",
+            tips: ["Dê passos curtos.", "Mantenha o tronco estável.", "Faça com ritmo constante."]
+          }
+        ]
+      },
+      {
+        title: "Sábado",
+        desc: "Treino leve de mobilidade e recuperação ativa.",
+        exercises: [
+          {
+            name: "Alongamento guiado",
             duration: "10 min",
             equipment: "Sem equipamento",
-            desc: "Alongamento suave para posterior, panturrilha e coxa.",
-            tips: ["Segure sem forçar", "Respire fundo", "Sem rebote"],
-            icon: "stretch",
-            video: "https://www.youtube.com/embed/2RrX2wqF0fQ"
+            desc: "Mobilidade para relaxar a musculatura.",
+            mediaType: "sequence",
+            media: [
+              "assets/imagens/alongamento-1.png",
+              "assets/imagens/alongamento-2.png",
+              "assets/imagens/alongamento-3.png"
+            ],
+            tips: ["Não force a amplitude.", "Respire fundo.", "Mantenha cada posição por alguns segundos."]
+          }
+        ]
+      },
+      {
+        title: "Domingo",
+        desc: "Treino leve para consistência e rotina diária.",
+        exercises: [
+          {
+            name: "Caminhada leve ou marcha",
+            duration: "15 a 20 min",
+            equipment: "Sem equipamento",
+            desc: "Manutenção da rotina com intensidade moderada.",
+            mediaType: "gif",
+            media: "assets/gifs/marcha-no-lugar.gif",
+            tips: ["Mantenha um ritmo confortável.", "Use o dia para ativação leve.", "Evite excesso de intensidade."]
           }
         ]
       }
     ];
 
     const navItems = [
-      { id:"dashboard", title:"Dashboard", desc:"Evolução e progresso" },
-      { id:"schedule", title:"Agenda", desc:"Horários salvos no navegador" },
-      { id:"timer", title:"Cronômetro", desc:"Contagem regressiva com som" },
-      { id:"semana", title:"Plano semanal", desc:"Exercícios e vídeos" }
+      { id:"dashboard", title:"Dashboard" },
+      { id:"schedule", title:"Agenda" },
+      { id:"timer", title:"Cronômetro" },
+      { id:"semana", title:"Plano semanal" }
     ];
 
     let timerSeconds = 0;
     let chronoInterval = null;
-    const finishSound = document.getElementById("finishSound");
 
     const navLista = document.getElementById("navLista");
     const weekCards = document.getElementById("weekCards");
@@ -771,183 +682,81 @@
     const progressFill = document.getElementById("progressFill");
     const percentu = document.getElementById("percentu");
     const displayTimer = document.getElementById("displayTimer");
+    const finishSound = document.getElementById("finishSound");
 
     function goTo(id){
       document.getElementById(id).scrollIntoView({behavior:"smooth"});
-      document.querySelectorAll("#navLista button").forEach(b => b.classList.remove("active"));
-      const active = [...document.querySelectorAll("#navLista button")].find(b => b.dataset.target === id);
-      if(active) active.classList.add("active");
+      document.querySelectorAll("#navLista button").forEach(b=>b.classList.remove("active"));
+      const a = [...document.querySelectorAll("#navLista button")].find(b=>b.dataset.target===id);
+      if(a) a.classList.add("active");
     }
 
     function renderNav(){
       navLista.innerHTML = "";
-      navItems.forEach((item, i) => {
-        const btn = document.createElement("button");
-        btn.dataset.target = item.id;
-        btn.innerHTML = `<strong>${i+1}. ${item.title}</strong><span>${item.desc}</span>`;
-        btn.onclick = () => goTo(item.id);
-        if(i === 0) btn.classList.add("active");
-        navLista.appendChild(btn);
+      navItems.forEach((n,i)=>{
+        const b = document.createElement("button");
+        b.dataset.target = n.id;
+        b.innerHTML = `<strong>${i+1}. ${n.title}</strong><span>Acesso rápido</span>`;
+        b.onclick = ()=>goTo(n.id);
+        if(i===0) b.className = "active";
+        navLista.appendChild(b);
       });
-    }
-
-    function iconSVG(type){
-      const icons = {
-        walk: `<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="33" cy="10" r="5" />
-          <path d="M33 15l-2 10 9 7" />
-          <path d="M31 25l-9 10" />
-          <path d="M24 35l-8 14" />
-          <path d="M35 32l8 14" />
-          <path d="M28 22l-7-7" />
-        </svg>`,
-        walk2: `<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="33" cy="10" r="5" />
-          <path d="M33 15l3 10 9 5" />
-          <path d="M33 25l-8 8" />
-          <path d="M26 33l-7 15" />
-          <path d="M37 31l7 15" />
-          <path d="M27 20l-6-5" />
-        </svg>`,
-        chair: `<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M18 16v22" />
-          <path d="M18 24h22" />
-          <path d="M40 24v14" />
-          <path d="M18 38h28" />
-          <path d="M22 38v10" />
-          <path d="M38 38v10" />
-          <circle cx="28" cy="17" r="4" />
-        </svg>`,
-        calf: `<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="32" cy="12" r="5" />
-          <path d="M32 17l0 12" />
-          <path d="M32 29l-8 10" />
-          <path d="M32 29l8 10" />
-          <path d="M24 39l-5 12" />
-          <path d="M40 39l5 12" />
-          <path d="M20 51h10" />
-          <path d="M34 51h10" />
-        </svg>`,
-        shoulders: `<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="32" cy="12" r="5" />
-          <path d="M32 17v12" />
-          <path d="M32 20l-10 6" />
-          <path d="M32 20l10 6" />
-          <path d="M22 26l-4 8" />
-          <path d="M42 26l4 8" />
-        </svg>`,
-        push: `<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="18" cy="23" r="4" />
-          <path d="M21 26l14 6 10 12" />
-          <path d="M35 32l-10 12" />
-          <path d="M26 44h12" />
-          <path d="M41 44h10" />
-        </svg>`,
-        row: `<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="18" cy="18" r="4" />
-          <path d="M21 22l12 7 11 1" />
-          <path d="M33 29l8 10" />
-          <path d="M27 36l-8 8" />
-          <path d="M41 40l8 4" />
-        </svg>`,
-        squat: `<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="32" cy="11" r="5" />
-          <path d="M32 16l0 10" />
-          <path d="M32 26l-8 8" />
-          <path d="M32 26l8 8" />
-          <path d="M24 34l-6 12" />
-          <path d="M40 34l6 12" />
-          <path d="M18 46h28" />
-        </svg>`,
-        step: `<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="26" cy="12" r="5" />
-          <path d="M26 17l4 12 10 4" />
-          <path d="M30 29l-8 10" />
-          <path d="M38 33l8 11" />
-          <path d="M22 39l-6 12" />
-          <path d="M46 44h8" />
-        </svg>`,
-        mobility: `<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="32" cy="12" r="5" />
-          <path d="M32 17l0 11" />
-          <path d="M32 22l-8 5" />
-          <path d="M32 22l8 5" />
-          <path d="M24 35c4-4 12-4 16 0" />
-          <path d="M24 43c4-4 12-4 16 0" />
-        </svg>`,
-        stretch: `<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="30" cy="13" r="5" />
-          <path d="M30 18l2 12" />
-          <path d="M32 30l-10 8" />
-          <path d="M32 30l10 8" />
-          <path d="M22 38l-6 11" />
-          <path d="M42 38l6 11" />
-          <path d="M18 49h12" />
-          <path d="M34 49h12" />
-        </svg>`
-      };
-      return icons[type] || icons.mobility;
     }
 
     function renderPlan(){
       weekCards.innerHTML = "";
-      plan.forEach(day => {
-        const dayCard = document.createElement("div");
-        dayCard.className = "day-card";
-
-        dayCard.innerHTML = `
+      plan.forEach(d=>{
+        const c = document.createElement("div");
+        c.className = "day-card";
+        c.innerHTML = `
           <div class="day-head">
             <div>
-              <h3>${day.title}</h3>
-              <p>${day.desc}</p>
+              <h3>${d.title}</h3>
+              <p>${d.desc}</p>
             </div>
-            <div class="day-pill">${day.badge}</div>
+            <div class="day-pill">16:00</div>
           </div>
         `;
-
-        day.exercises.forEach(ex => {
-          const exDiv = document.createElement("div");
-          exDiv.className = "exercise";
-          exDiv.innerHTML = `
-            <div class="icon-box">${iconSVG(ex.icon)}</div>
+        d.exercises.forEach(e=>{
+          const ex = document.createElement("div");
+          ex.className = "exercise";
+          ex.innerHTML = `
+            <div class="media-box">${renderMedia(e)}</div>
             <div>
-              <h4>${ex.name}</h4>
-              <div class="meta">${ex.duration} • ${ex.equipment}</div>
-              <p>${ex.desc}</p>
-              <ul>${ex.tips.map(t => `<li>${t}</li>`).join("")}</ul>
-
-              <div class="video-grid">
-                <div class="video-card">
-                  <iframe
-                    src="${ex.video}"
-                    title="Vídeo de ${ex.name}"
-                    loading="lazy"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen>
-                  </iframe>
-                  <div class="caption">Vídeo real do exercício: ${ex.name}</div>
-                </div>
-              </div>
+              <h4>${e.name}</h4>
+              <div class="meta">${e.duration} • ${e.equipment}</div>
+              <p>${e.desc}</p>
+              <ul>${e.tips.map(t=>`<li>${t}</li>`).join("")}</ul>
             </div>
           `;
-          dayCard.appendChild(exDiv);
+          c.appendChild(ex);
         });
-
-        weekCards.appendChild(dayCard);
+        weekCards.appendChild(c);
       });
     }
 
-    function renderSchedule(){
-      const saved = JSON.parse(localStorage.getItem("schedule") || "{}");
-      scheduleItems.innerHTML = "";
+    function renderMedia(exercise){
+      if(exercise.mediaType === "sequence"){
+        return `
+          <div class="media-seq">
+            ${exercise.media.map(src => `<img src="${src}" alt="${exercise.name}">`).join("")}
+          </div>
+        `;
+      }
+      return `<img src="${exercise.media}" alt="${exercise.name}">`;
+    }
 
-      for(let i = 0; i < 4; i++){
+    function renderSchedule(){
+      scheduleItems.innerHTML = "";
+      const saved = JSON.parse(localStorage.getItem("schedule") || "{}");
+
+      for(let i=0;i<7;i++){
         const row = document.createElement("div");
         row.className = "schedule-row";
         row.innerHTML = `
-          <strong>Dia ${i+1}</strong>
-          <input type="time" id="horario-${i}" value="${saved["horario-"+i] || "08:00"}" />
-          <button class="btn gray" type="button" onclick="markDone(${i})">Feito</button>
+          <strong>${scheduleDays[i]}</strong>
+          <input type="time" id="horario-${i}" value="${saved["horario-"+i] || "16:00"}">
+          <button class="btn gray" onclick="markDone(${i})">Feito</button>
         `;
         scheduleItems.appendChild(row);
       }
@@ -957,51 +766,18 @@
     }
 
     function saveSchedule(){
-      const data = {};
-      for(let i = 0; i < 4; i++){
-        data["horario-"+i] = document.getElementById(`horario-${i}`).value;
+      const s = {};
+      for(let i=0;i<7;i++){
+        s["horario-"+i] = document.getElementById("horario-"+i).value || "16:00";
       }
-      localStorage.setItem("schedule", JSON.stringify(data));
-      document.getElementById("statusReminder").textContent = "Status: agenda salva com sucesso.";
+      localStorage.setItem("schedule", JSON.stringify(s));
+      document.getElementById("statusReminder").textContent = "Status: agenda salva.";
       updateNext();
-    }
-
-    function markDone(i){
-      const done = JSON.parse(localStorage.getItem("done") || "{}");
-      done[`dia-${i}`] = !done[`dia-${i}`];
-      localStorage.setItem("done", JSON.stringify(done));
-      updateProgress();
-    }
-
-    function updateProgress(){
-      const done = JSON.parse(localStorage.getItem("done") || "{}");
-      const concluidos = Object.values(done).filter(Boolean).length;
-      const perc = Math.min((concluidos / 4) * 100, 100);
-
-      document.getElementById("concluidos").textContent = `${concluidos}/4`;
-      document.getElementById("percentual").textContent = `${Math.round(perc)}%`;
-      document.getElementById("percentu").textContent = `${Math.round(perc)}%`;
-      progressFill.style.width = `${perc}%`;
-    }
-
-    function updateNext(){
-      const saved = JSON.parse(localStorage.getItem("schedule") || "{}");
-      const now = new Date();
-      const current = now.toTimeString().slice(0,5);
-      let next = "--:--";
-
-      for(let i = 0; i < 4; i++){
-        if(saved["horario-"+i]){
-          next = saved["horario-"+i];
-          if(saved["horario-"+i] >= current) break;
-        }
-      }
-      document.getElementById("next").textContent = next;
     }
 
     async function requestNotification(){
       if(!("Notification" in window)){
-        alert("Seu navegador não oferece suporte a notificações.");
+        alert("Seu navegador não suporta notificações.");
         return;
       }
       const perm = await Notification.requestPermission();
@@ -1009,24 +785,19 @@
     }
 
     function checkRemind(){
-      const saved = JSON.parse(localStorage.getItem("schedule") || "{}");
+      const s = JSON.parse(localStorage.getItem("schedule") || "{}");
       const now = new Date();
-      const current = now.toTimeString().slice(0,5);
-      let hit = false;
+      const t = now.toTimeString().slice(0,5);
+      let sent = false;
 
-      for(let i = 0; i < 4; i++){
-        if(saved["horario-"+i] === current && "Notification" in window && Notification.permission === "granted"){
-          new Notification("Treino da Nizia", {
-            body: `Dia ${i+1} está no horário!`
-          });
-          hit = true;
+      for(let i=0;i<7;i++){
+        if(s["horario-"+i] === t && "Notification" in window && Notification.permission === "granted"){
+          new Notification("Treino Nizia", { body: `Treino de ${scheduleDays[i]} no horário!` });
+          sent = true;
         }
       }
 
-      document.getElementById("statusReminder").textContent = hit
-        ? "Status: lembrete disparado."
-        : "Status: nenhum horário agora.";
-
+      document.getElementById("statusReminder").textContent = sent ? "Lembrete disparado" : "Nenhum horário agora";
       updateProgress();
       updateNext();
     }
@@ -1037,23 +808,22 @@
       const s = parseInt(document.getElementById("sec").value) || 0;
       timerSeconds = (m * 60) + s;
       updateTimer();
-
-      chronoInterval = setInterval(() => {
+      chronoInterval = setInterval(()=>{
         if(timerSeconds > 0){
           timerSeconds--;
           updateTimer();
-          return;
+        }else{
+          clearInterval(chronoInterval);
+          chronoInterval = null;
+          playSound();
+          alert("Tempo finalizado!");
         }
-
-        pauseChrono();
-        playFinishSound();
-        alert("Tempo finalizado!");
       }, 1000);
     }
 
     function updateTimer(){
-      const m = Math.floor(timerSeconds / 60).toString().padStart(2, "0");
-      const s = (timerSeconds % 60).toString().padStart(2, "0");
+      const m = Math.floor(timerSeconds/60).toString().padStart(2,"0");
+      const s = (timerSeconds%60).toString().padStart(2,"0");
       displayTimer.textContent = `${m}:${s}`;
     }
 
@@ -1070,17 +840,42 @@
       updateTimer();
     }
 
-    function playFinishSound(){
-      const audio = document.getElementById("finishSound");
-      audio.currentTime = 0;
-      audio.play().catch(() => {});
+    function playSound(){
+      const a = document.getElementById("finishSound");
+      a.currentTime = 0;
+      a.play();
     }
 
-    window.addEventListener("storage", () => {
-      renderSchedule();
+    function markDone(i){
+      const d = JSON.parse(localStorage.getItem("done") || "{}");
+      d[`dia-${i}`] = !d[`dia-${i}`];
+      localStorage.setItem("done", JSON.stringify(d));
       updateProgress();
-      updateNext();
-    });
+    }
+
+    function updateProgress(){
+      const d = JSON.parse(localStorage.getItem("done") || "{}");
+      const concluidos = Object.values(d).filter(Boolean).length;
+      const perc = Math.min((concluidos / 7) * 100, 100);
+      document.getElementById("concluidos").textContent = `${concluidos}/7`;
+      document.getElementById("percentual").textContent = `${Math.round(perc)}%`;
+      document.getElementById("percentu").textContent = `${Math.round(perc)}%`;
+      progressFill.style.width = `${perc}%`;
+    }
+
+    function updateNext(){
+      const s = JSON.parse(localStorage.getItem("schedule") || "{}");
+      const now = new Date();
+      const t = now.toTimeString().slice(0,5);
+      let next = "16:00";
+      for(let i=0;i<7;i++){
+        if(s["horario-"+i]){
+          next = s["horario-"+i];
+          if(next >= t) break;
+        }
+      }
+      document.getElementById("next").textContent = next;
+    }
 
     (function init(){
       renderNav();
