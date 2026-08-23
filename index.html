@@ -1,616 +1,653 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>📖 Bíblia Cronológica Interativa</title>
-    <!-- Fontes e Ícones -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,600;14..32,700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #f8f5f0;
-            color: #1e1e2a;
-            display: flex;
-            height: 100vh;
-            overflow: hidden;
-        }
-        /* Scrollbar */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #e8e2d9; }
-        ::-webkit-scrollbar-thumb { background: #b89b7b; border-radius: 8px; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Academia em Casa 62+</title>
+  <style>
+    :root{
+      --bg:#f3f7ff;
+      --card:#ffffff;
+      --text:#1f2937;
+      --muted:#6b7280;
+      --primary:#2563eb;
+      --primary-dark:#1d4ed8;
+      --border:#e5e7eb;
+      --shadow:0 12px 28px rgba(0,0,0,.08);
+      --radius:18px;
+      --ok:#16a34a;
+      --warn:#f59e0b;
+    }
 
-        /* SIDEBAR */
-        .sidebar {
-            width: 320px;
-            background: #2c241c;
-            color: #f0e8df;
-            display: flex;
-            flex-direction: column;
-            padding: 20px 0;
-            flex-shrink: 0;
-            border-right: 2px solid #4a3f35;
-            overflow: hidden;
-        }
-        .sidebar h1 {
-            font-size: 1.3rem;
-            padding: 0 20px 16px 20px;
-            border-bottom: 1px solid #4a3f35;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: #f2d8b3;
-        }
-        .sidebar h1 i { color: #e6b17e; }
-        .progress-container {
-            padding: 18px 20px;
-            background: #1f1813;
-            border-bottom: 1px solid #4a3f35;
-        }
-        .progress-label {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.85rem;
-            margin-bottom: 6px;
-            font-weight: 600;
-            color: #d4c5b5;
-        }
-        .progress-bar-bg {
-            width: 100%;
-            height: 12px;
-            background: #3d3229;
-            border-radius: 20px;
-            overflow: hidden;
-        }
-        .progress-bar-fill {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, #7cb57c, #4a9e4a);
-            border-radius: 20px;
-            transition: width 0.4s ease;
-        }
-        .chapter-list {
-            flex: 1;
-            overflow-y: auto;
-            padding: 12px 10px 20px 20px;
-        }
-        .chapter-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 10px 12px;
-            margin-bottom: 4px;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: 0.2s;
-            font-size: 0.95rem;
-            border-left: 4px solid transparent;
-            color: #ccc3b9;
-        }
-        .chapter-item:hover { background: #3d3229; color: #fff; }
-        .chapter-item.active {
-            background: #4a3f35;
-            color: #fae5cc;
-            border-left-color: #e6b17e;
-            font-weight: 600;
-        }
-        .chapter-item .status {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            border: 2px solid #5a4e42;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.7rem;
-            flex-shrink: 0;
-            background: #2c241c;
-            color: #5a4e42;
-        }
-        .chapter-item.read .status {
-            background: #4a9e4a;
-            border-color: #4a9e4a;
-            color: #fff;
-        }
-        .chapter-item.read { color: #cfd9cf; }
-        .chapter-item .ch-number {
-            font-weight: 700;
-            color: #b89b7b;
-            margin-right: 4px;
-        }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Arial, Helvetica, sans-serif;
+      background:linear-gradient(180deg,#edf4ff 0%,#f8fbff 45%,#ffffff 100%);
+      color:var(--text);
+    }
 
-        /* MAIN CONTENT */
-        .main {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            background: #fcf9f5;
-            overflow: hidden;
-        }
-        .top-bar {
-            padding: 16px 30px;
-            background: #fffbf7;
-            border-bottom: 1px solid #e5ddd4;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-shrink: 0;
-        }
-        .top-bar h2 {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: #2c241c;
-        }
-        .top-bar h2 small {
-            font-weight: 400;
-            font-size: 0.9rem;
-            color: #7a6b5d;
-            margin-left: 12px;
-        }
-        .top-bar .actions button {
-            background: none;
-            border: none;
-            font-size: 1.3rem;
-            color: #5a4e42;
-            cursor: pointer;
-            padding: 8px 12px;
-            border-radius: 30px;
-            transition: 0.2s;
-        }
-        .top-bar .actions button:hover { background: #ede7e0; color: #2c241c; }
+    .app{
+      max-width:1200px;
+      margin:0 auto;
+      padding:16px;
+    }
 
-        .scroll-area {
-            flex: 1;
-            overflow-y: auto;
-            padding: 25px 30px 30px 30px;
-        }
+    .header{
+      background:rgba(255,255,255,.92);
+      backdrop-filter:blur(8px);
+      border:1px solid var(--border);
+      box-shadow:var(--shadow);
+      border-radius:24px;
+      padding:20px;
+      position:sticky;
+      top:12px;
+      z-index:10;
+    }
 
-        /* MEDIA ROW (Imagens e Vídeos) */
-        .media-row {
-            display: flex;
-            gap: 20px;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-        }
-        .media-box {
-            flex: 1;
-            min-width: 200px;
-            background: #f0ebe5;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-            border: 1px solid #e5ddd4;
-        }
-        .media-box h4 {
-            background: #e8e0d7;
-            padding: 8px 14px;
-            font-size: 0.8rem;
-            color: #3d3229;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .media-box img, .media-box iframe {
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
-            display: block;
-            border: none;
-        }
-        .media-box iframe { height: 180px; }
+    .header h1{
+      margin:0 0 8px;
+      font-size:28px;
+    }
 
-        /* TEXTO BÍBLICO */
-        .bible-text {
-            background: #fffcf9;
-            padding: 25px 30px;
-            border-radius: 16px;
-            border: 1px solid #e5ddd4;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
-            line-height: 2;
-            font-size: 1.1rem;
-            color: #1e1e2a;
-        }
-        .bible-text .verse-num {
-            color: #b89b7b;
-            font-weight: 700;
-            font-size: 0.8rem;
-            margin-right: 6px;
-            opacity: 0.7;
-        }
-        .bible-text .word {
-            cursor: pointer;
-            border-bottom: 2px solid transparent;
-            transition: 0.15s;
-            padding: 2px 2px;
-            border-radius: 4px;
-        }
-        .bible-text .word:hover {
-            background: #f0e4d8;
-            border-bottom-color: #b89b7b;
-        }
+    .header p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.5;
+    }
 
-        /* POPUP DICIONÁRIO */
-        .dict-popup {
-            display: none;
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #1e1a16;
-            color: #f0e8df;
-            padding: 18px 28px;
-            border-radius: 20px;
-            max-width: 600px;
-            width: 90%;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
-            z-index: 999;
-            border: 1px solid #4a3f35;
-            font-size: 1rem;
-            line-height: 1.5;
-        }
-        .dict-popup strong { color: #e6b17e; }
-        .dict-popup .close-dict {
-            position: absolute;
-            top: 8px;
-            right: 16px;
-            background: none;
-            border: none;
-            color: #aaa;
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-        .dict-popup .close-dict:hover { color: #fff; }
-        .dict-overlay {
-            display: none;
-            position: fixed;
-            top:0;left:0;width:100%;height:100%;
-            background: rgba(0,0,0,0.3);
-            z-index: 998;
-        }
+    .header-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:14px;
+    }
 
-        /* Responsivo */
-        @media (max-width: 768px) {
-            body { flex-direction: column; }
-            .sidebar {
-                width: 100%;
-                height: 45vh;
-                border-right: none;
-                border-bottom: 2px solid #4a3f35;
-            }
-            .main { height: 55vh; }
-            .top-bar { padding: 12px 16px; flex-wrap: wrap; gap: 8px; }
-            .scroll-area { padding: 16px; }
-            .bible-text { padding: 18px; font-size: 1rem; }
-            .media-row { flex-direction: column; }
-            .media-box img, .media-box iframe { height: 140px; }
-            .dict-popup { bottom: 10px; width: 95%; padding: 14px 18px; font-size: 0.9rem; }
-        }
-    </style>
+    .btn{
+      border:none;
+      border-radius:14px;
+      padding:12px 16px;
+      font-weight:700;
+      cursor:pointer;
+      transition:.2s;
+    }
+
+    .btn.primary{
+      background:var(--primary);
+      color:#fff;
+    }
+
+    .btn.primary:hover{background:var(--primary-dark)}
+    .btn.secondary{
+      background:#eef2ff;
+      color:#1e3a8a;
+      border:1px solid #c7d2fe;
+    }
+
+    .layout{
+      display:grid;
+      grid-template-columns: 280px 1fr;
+      gap:16px;
+      margin-top:16px;
+    }
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:18px;
+    }
+
+    .card h2{
+      margin-top:0;
+      font-size:20px;
+    }
+
+    .index-list{
+      display:grid;
+      gap:10px;
+    }
+
+    .index-item{
+      text-align:left;
+      padding:14px;
+      border-radius:14px;
+      border:1px solid var(--border);
+      background:#fff;
+      cursor:pointer;
+      transition:.2s;
+    }
+
+    .index-item:hover{
+      border-color:#bfdbfe;
+      transform:translateY(-1px);
+    }
+
+    .index-item.active{
+      background:#eff6ff;
+      border-color:var(--primary);
+    }
+
+    .index-item strong{
+      display:block;
+      margin-bottom:4px;
+    }
+
+    .index-item span{
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.4;
+    }
+
+    .content{
+      display:grid;
+      gap:16px;
+    }
+
+    .overview{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:12px;
+    }
+
+    .mini{
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:14px;
+      background:#fff;
+    }
+
+    .mini strong{
+      display:block;
+      margin-bottom:6px;
+    }
+
+    .muted{color:var(--muted)}
+
+    .section{
+      scroll-margin-top:110px;
+    }
+
+    .week-grid{
+      display:grid;
+      gap:12px;
+    }
+
+    .day{
+      border:1px solid var(--border);
+      border-radius:18px;
+      overflow:hidden;
+      background:#fff;
+    }
+
+    .day-head{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:12px;
+      padding:14px;
+      background:#fafafa;
+      border-bottom:1px solid var(--border);
+    }
+
+    .day-head h3{
+      margin:0 0 6px;
+      font-size:18px;
+    }
+
+    .pill{
+      display:inline-block;
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:12px;
+      background:#e0e7ff;
+      color:#1e3a8a;
+      white-space:nowrap;
+    }
+
+    .pill.green{background:#dcfce7;color:#166534}
+    .pill.orange{background:#ffedd5;color:#9a3412}
+    .pill.gray{background:#e5e7eb;color:#374151}
+
+    .day-body{
+      padding:14px;
+    }
+
+    .exercise-list{
+      display:grid;
+      gap:12px;
+    }
+
+    .exercise{
+      border:1px solid var(--border);
+      border-radius:16px;
+      overflow:hidden;
+    }
+
+    .exercise-top{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      padding:14px;
+      background:#fff;
+      border-bottom:1px solid var(--border);
+    }
+
+    .exercise-top h4{
+      margin:0 0 6px;
+      font-size:16px;
+    }
+
+    .exercise-top p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.4;
+      font-size:13px;
+    }
+
+    .exercise-body{
+      display:grid;
+      grid-template-columns: 220px 1fr;
+      gap:14px;
+      padding:14px;
+      align-items:center;
+      background:#fff;
+    }
+
+    .video-box{
+      position:relative;
+      border-radius:16px;
+      overflow:hidden;
+      border:1px solid #dbeafe;
+      background:linear-gradient(180deg,#eff6ff,#ffffff);
+      aspect-ratio:1/1;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .video-tag{
+      position:absolute;
+      top:10px;
+      left:10px;
+      z-index:2;
+      font-size:12px;
+      padding:4px 8px;
+      border-radius:999px;
+      background:rgba(255,255,255,.92);
+      border:1px solid #dbeafe;
+      color:#1e3a8a;
+    }
+
+    .meta{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-bottom:10px;
+    }
+
+    .meta span{
+      font-size:12px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:#f9fafb;
+    }
+
+    ul{
+      margin:0;
+      padding-left:18px;
+      line-height:1.55;
+      color:#374151;
+    }
+
+    .warning{
+      border-left:5px solid var(--warn);
+      background:#fff8e6;
+      padding:14px;
+      border-radius:14px;
+      line-height:1.5;
+      color:#7c2d12;
+    }
+
+    .safe{
+      border-left:5px solid var(--ok);
+      background:#ecfdf5;
+      padding:14px;
+      border-radius:14px;
+      line-height:1.5;
+      color:#14532d;
+    }
+
+    .progress{
+      margin-top:10px;
+      height:10px;
+      background:#e5e7eb;
+      border-radius:999px;
+      overflow:hidden;
+    }
+
+    .progress > div{
+      width:0%;
+      height:100%;
+      background:linear-gradient(90deg,var(--primary),var(--ok));
+      border-radius:999px;
+    }
+
+    .footer{
+      margin-top:16px;
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:12px;
+    }
+
+    .footer .mini{
+      text-align:center;
+    }
+
+    .hidden{display:none}
+
+    .figure{
+      transform-origin:center;
+      animation:bounce 2.2s ease-in-out infinite;
+    }
+
+    .arm-l{transform-origin:250px 165px; animation:armL 2.2s ease-in-out infinite}
+    .arm-r{transform-origin:250px 165px; animation:armR 2.2s ease-in-out infinite}
+    .leg-l{transform-origin:250px 245px; animation:legL 2.2s ease-in-out infinite}
+    .leg-r{transform-origin:250px 245px; animation:legR 2.2s ease-in-out infinite}
+
+    @keyframes bounce{
+      0%,100%{transform:translateY(0)}
+      50%{transform:translateY(-3px)}
+    }
+    @keyframes armL{
+      0%,100%{transform:rotate(8deg)}
+      50%{transform:rotate(-12deg)}
+    }
+    @keyframes armR{
+      0%,100%{transform:rotate(-8deg)}
+      50%{transform:rotate(12deg)}
+    }
+    @keyframes legL{
+      0%,100%{transform:rotate(-4deg)}
+      50%{transform:rotate(7deg)}
+    }
+    @keyframes legR{
+      0%,100%{transform:rotate(4deg)}
+      50%{transform:rotate(-7deg)}
+    }
+
+    @media (max-width: 900px){
+      .layout,
+      .overview,
+      .footer,
+      .exercise-body{
+        grid-template-columns:1fr;
+      }
+
+      .header{position:relative; top:auto}
+    }
+  </style>
 </head>
 <body>
+  <div class="app">
+    <header class="header">
+      <h1>Academia em Casa 62+</h1>
+      <p>Treino em casa para mulher de 62 anos, com exercícios leves, seguros e sem equipamentos complexos. Quatro vezes por semana, 40 minutos por sessão.</p>
+      <div class="header-actions">
+        <button class="btn primary" onclick="scrollToSection('weekSection')">Ver plano da semana</button>
+        <button class="btn secondary" onclick="scrollToSection('safetySection')">Regras de segurança</button>
+      </div>
+    </header>
 
-    <!-- SIDEBAR -->
-    <div class="sidebar">
-        <h1><i class="fas fa-scroll"></i> Ordem Cronológica</h1>
-        <div class="progress-container">
-            <div class="progress-label">
-                <span><i class="fas fa-book-open"></i> Progresso</span>
-                <span id="progressPercent">0%</span>
-            </div>
-            <div class="progress-bar-bg">
-                <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
-            </div>
-        </div>
-        <div class="chapter-list" id="chapterList"></div>
+    <div class="layout">
+      <aside class="card section" id="indexSection">
+        <h2>Índice</h2>
+        <div class="index-list" id="indexList"></div>
+      </aside>
+
+      <main class="content">
+        <section class="overview">
+          <div class="mini">
+            <strong>Tempo por treino</strong>
+            <span>40 minutos</span>
+          </div>
+          <div class="mini">
+            <strong>Frequência</strong>
+            <span>4 vezes por semana</span>
+          </div>
+          <div class="mini">
+            <strong>Equipamentos</strong>
+            <span>Cadeira, parede, toalha, garrafas e degrau baixo</span>
+          </div>
+        </section>
+
+        <section class="card section" id="safetySection">
+          <h2>Segurança</h2>
+          <div class="warning">
+            Use sempre uma cadeira firme, espaço livre no chão e calçado seguro. Pare o exercício se houver dor forte, tontura, falta de ar incomum ou sensação de desequilíbrio.
+          </div>
+          <div style="height:12px"></div>
+          <div class="safe">
+            O ideal é manter esforço leve a moderado, sem impacto e sem pressa. Em caso de doenças, dores articulares ou risco de queda, vale conversar com um profissional de saúde antes de começar.
+          </div>
+          <div style="height:12px"></div>
+          <div class="mini">
+            <strong>Progresso da semana</strong>
+            <div class="progress"><div id="progressBar"></div></div>
+            <p class="muted" id="progressText">0% concluído</p>
+          </div>
+        </section>
+
+        <section class="card section" id="weekSection">
+          <h2>Plano semanal</h2>
+          <p class="muted">Clique em cada dia para ver os exercícios. Cada exercício tem um mini vídeo animado em SVG.</p>
+          <div class="week-grid" id="weekGrid"></div>
+        </section>
+      </main>
     </div>
 
-    <!-- MAIN -->
-    <div class="main">
-        <div class="top-bar">
-            <h2 id="chapterTitle">Gênesis 1 <small>— Criação</small></h2>
-            <div class="actions">
-                <button id="prevBtn" title="Anterior"><i class="fas fa-chevron-left"></i></button>
-                <button id="nextBtn" title="Próximo"><i class="fas fa-chevron-right"></i></button>
-            </div>
-        </div>
-        <div class="scroll-area" id="scrollArea">
-            <!-- Media Row -->
-            <div class="media-row">
-                <div class="media-box">
-                    <h4><i class="fas fa-map"></i> Mapa / Personagem</h4>
-                    <img id="mediaImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Map_of_the_Ancient_Near_East_1400_BCE.jpg/640px-Map_of_the_Ancient_Near_East_1400_BCE.jpg" alt="Mapa">
-                </div>
-                <div class="media-box">
-                    <h4><i class="fab fa-youtube"></i> Vídeo Explicativo</h4>
-                    <iframe id="mediaVideo" src="https://www.youtube.com/embed/h2p4jRDOq_Q" title="YouTube" allowfullscreen></iframe>
-                </div>
-            </div>
-            <!-- Texto -->
-            <div class="bible-text" id="bibleText">
-                <span style="color:#b89b7b;">Carregando capítulo...</span>
-            </div>
-        </div>
-    </div>
+    <section class="footer">
+      <div class="mini">
+        <strong>Objetivo</strong>
+        <span>Força, equilíbrio e mobilidade</span>
+      </div>
+      <div class="mini">
+        <strong>Estilo</strong>
+        <span>Baixo impacto e simples de seguir</span>
+      </div>
+      <div class="mini">
+        <strong>Itens caseiros</strong>
+        <span>Cadeira, parede, toalha, garrafas, degrau</span>
+      </div>
+    </section>
+  </div>
 
-    <!-- POPUP DICIONÁRIO -->
-    <div class="dict-overlay" id="dictOverlay"></div>
-    <div class="dict-popup" id="dictPopup">
-        <button class="close-dict" id="closeDictBtn">&times;</button>
-        <div id="dictContent">
-            <strong>Palavra:</strong> <span id="dictWord">---</span><br>
-            <span id="dictMeaning">Significado bíblico/estudioso.</span>
-        </div>
-    </div>
+  <script>
+    const plan = [
+      {
+        title: "Dia 1 — Pernas e equilíbrio",
+        desc: "Foco em pernas, estabilidade e prevenção de quedas.",
+        pill: "Leve a moderado",
+        exercises: [
+          ["Marcha no lugar", "5 min", "Sem equipamento", "Levante os joelhos de forma confortável e mova os braços.", ["Postura ereta", "Passos curtos", "Respiração normal"], "march"],
+          ["Sentar e levantar da cadeira", "10 min", "Cadeira firme", "Use a força das pernas, sem pressa.", ["Pés firmes no chão", "Incline o tronco levemente", "Levante e sente com controle"], "chair"],
+          ["Elevação de panturrilha", "10 min", "Cadeira ou parede", "Suba e desça devagar, sem balançar o corpo.", ["Segure apoio", "Suba na ponta dos pés", "Desça lentamente"], "calf"],
+          ["Equilíbrio com apoio", "5 min", "Parede ou cadeira", "Apoie uma mão se precisar e troque a perna.", ["Fique em um pé por poucos segundos", "Olhe para frente", "Mantenha o abdômen leve"], "balance"],
+          ["Caminhada em linha reta", "5 min", "Espaço livre", "Dê passos curtos e lentos com segurança.", ["Olhe para frente", "Passos curtos", "Pare se perder o equilíbrio"], "walk"],
+          ["Alongamento leve", "5 min", "Sem equipamento", "Sem forçar, apenas relaxe pernas e costas.", ["Segure 10 a 15 segundos", "Respire fundo", "Sem dor"], "stretch"]
+        ]
+      },
+      {
+        title: "Dia 2 — Braços, postura e core",
+        desc: "Fortalecimento dos membros superiores e melhora da postura.",
+        pill: "Leve a moderado",
+        exercises: [
+          ["Mobilidade de ombros", "5 min", "Sem equipamento", "Faça círculos pequenos e confortáveis.", ["Gire os ombros para trás e para frente", "Movimento lento", "Sem dor"], "shoulder"],
+          ["Flexão na parede", "10 min", "Parede", "Mantenha o corpo alinhado e mãos na altura do peito.", ["Aproxime o peito da parede", "Empurre de volta", "Cotovelos controlados"], "wallpush"],
+          ["Remada com toalha", "10 min", "Toalha", "Puxe a toalha com firmeza sem prender a respiração.", ["Segure com as duas mãos", "Abra o peito", "Volte devagar"], "row"],
+          ["Elevação frontal com garrafinhas", "5 min", "2 garrafinhas leves", "Levante até a altura dos ombros.", ["Use peso leve", "Desça com controle", "Não arqueie as costas"], "bottle"],
+          ["Contração abdominal sentada", "5 min", "Cadeira", "Puxe o abdômen suavemente para dentro.", ["Sente-se ereta", "Contraia o abdômen por alguns segundos", "Relaxe"], "core"],
+          ["Alongamento de braços", "5 min", "Sem equipamento", "Solte ombros e braços no fim.", ["Puxe um braço de cada vez", "Respire fundo", "Sem dor"], "stretch"]
+        ]
+      },
+      {
+        title: "Dia 3 — Corpo todo funcional",
+        desc: "Movimentos do dia a dia com foco em força e coordenação.",
+        pill: "Leve a moderado",
+        exercises: [
+          ["Marcha leve", "5 min", "Sem equipamento", "Aqueça o corpo sem pressa.", ["Passos suaves", "Braços naturais", "Respiração confortável"], "march"],
+          ["Agachamento curto com cadeira", "10 min", "Cadeira firme", "Desça pouco, como se fosse sentar e levantar parcialmente.", ["Pés firmes", "Quadril para trás", "Joelhos alinhados"], "squat"],
+          ["Empurrar a parede", "10 min", "Parede", "Ótimo para peito, braços e postura.", ["Mãos na parede", "Flexione cotovelos", "Empurre de volta"], "wallpush"],
+          ["Equilíbrio com pés em linha", "5 min", "Chão livre", "Coloque um pé à frente do outro.", ["Olhe fixo em um ponto", "Tronco estável", "Troque os pés"], "balance2"],
+          ["Subida em degrau baixo", "5 min", "Degrau baixo e seguro", "Só se houver segurança e com apoio.", ["Suba com um pé", "Depois o outro", "Desça com controle"], "step"],
+          ["Relaxamento", "5 min", "Sem equipamento", "Finalize com respiração lenta.", ["Inspire pelo nariz", "Solte o ar devagar", "Relaxe ombros"], "breath"]
+        ]
+      },
+      {
+        title: "Dia 4 — Mobilidade e fortalecimento leve",
+        desc: "Dia mais suave para soltar o corpo e reforçar a consistência.",
+        pill: "Leve",
+        exercises: [
+          ["Aquecimento articular", "5 min", "Sem equipamento", "Movimente tornozelos, punhos, pescoço e ombros devagar.", ["Movimentos circulares", "Sem forçar", "Respire tranquilamente"], "joint"],
+          ["Sentar e levantar da cadeira", "10 min", "Cadeira firme", "Faça mais devagar do que no Dia 1.", ["Use os calcanhares", "Suba com controle", "Desça sem bater"], "chair"],
+          ["Elevação lateral com garrafinhas", "10 min", "2 garrafinhas leves", "Levante pouco, até a linha dos ombros.", ["Braços levemente flexionados", "Subida controlada", "Sem impulsionar"], "side"],
+          ["Elevação de calcanhares", "5 min", "Cadeira", "Trabalha panturrilhas e ajuda no equilíbrio.", ["Suba na ponta dos pés", "Desça devagar", "Segure apoio se precisar"], "calf"],
+          ["Alongamento de pernas e costas", "5 min", "Toalha ou cadeira", "Alongue com suavidade, sem dor.", ["Segure cada posição por alguns segundos", "Não force", "Respire"], "stretch"],
+          ["Respiração e relaxamento", "5 min", "Sem equipamento", "Feche o treino reduzindo o ritmo do corpo.", ["Inspire 4 segundos", "Solte 6 segundos", "Repita calmamente"], "breath"]
+        ]
+      }
+    ];
 
-    <script>
-        // ----------------------------------------------------------------
-        // 1. PLANO DE LEITURA CRONOLÓGICO (exemplo com 12 leituras)
-        //    (Adicione mais seguindo a ordem histórica)
-        // ----------------------------------------------------------------
-        const READING_PLAN = [
-            { id: 0, book: 'genesis', chapter: 1, label: 'Gênesis 1', topic: 'Criação do mundo' },
-            { id: 1, book: 'genesis', chapter: 2, label: 'Gênesis 2', topic: 'Jardim do Éden' },
-            { id: 2, book: 'job', chapter: 1, label: 'Jó 1', topic: 'A provação de Jó' },
-            { id: 3, book: 'job', chapter: 2, label: 'Jó 2', topic: 'Satanás e a fé de Jó' },
-            { id: 4, book: 'genesis', chapter: 3, label: 'Gênesis 3', topic: 'A Queda' },
-            { id: 5, book: 'genesis', chapter: 4, label: 'Gênesis 4', topic: 'Caim e Abel' },
-            { id: 6, book: 'genesis', chapter: 6, label: 'Gênesis 6', topic: 'Dilúvio anunciado' },
-            { id: 7, book: 'genesis', chapter: 7, label: 'Gênesis 7', topic: 'O Dilúvio' },
-            { id: 8, book: 'genesis', chapter: 8, label: 'Gênesis 8', topic: 'A Terra se seca' },
-            { id: 9, book: 'genesis', chapter: 12, label: 'Gênesis 12', topic: 'Chamado de Abrão' },
-            { id: 10, book: 'exodus', chapter: 1, label: 'Êxodo 1', topic: 'Escravidão no Egito' },
-            { id: 11, book: 'exodus', chapter: 2, label: 'Êxodo 2', topic: 'Nascimento de Moisés' },
-        ];
+    const indexList = document.getElementById("indexList");
+    const weekGrid = document.getElementById("weekGrid");
+    const progressBar = document.getElementById("progressBar");
+    const progressText = document.getElementById("progressText");
 
-        // ----------------------------------------------------------------
-        // 2. DICIONÁRIO BÍBLICO (Hebraico/Grego + Significado)
-        //    (Clique em qualquer palavra do texto)
-        // ----------------------------------------------------------------
-        const BIBLE_DICT = {
-            'deus': 'Elohim - O Deus Criador, Soberano e Trino. No hebraico, plural de majestade.',
-            'criou': 'Bara - Criar do nada, exclusivo de Deus. Traz à existência algo que não existia.',
-            'céus': 'Shamayim - O firmamento, a morada de Deus. Representa a transcendência divina.',
-            'terra': 'Eretz - O mundo habitado, a base da criação. Também simboliza o povo de Israel.',
-            'espírito': 'Ruach - Sopro, vento, fôlego de vida. A presença ativa de Deus.',
-            'luz': 'Or - A iluminação divina. Simbolicamente, a verdade e a salvação.',
-            'trevas': 'Choshek - Escuridão, caos, o oposto da ordem divina. Associado ao pecado.',
-            'águas': 'Mayim - Simboliza as nações, purificação, e a Palavra de Deus.',
-            'abençoou': 'Barak - Agraciar, dar poder para prosperar. Ação contínua de Deus sobre a criação.',
-            'jó': 'Iyov - Homem íntegro e reto, que temia a Deus. Exemplo de perseverança na dor.',
-            'satanás': 'Ha-Satan - O adversário, acusador. No grego, Diabolos (caluniador).',
-            'pecado': 'Chattah - Errar o alvo, transgressão da Lei divina. Separação de Deus.',
-            'fé': 'Emunah - Firmeza, confiança, fidelidade. Mais que crença, é um vínculo de aliança.',
-            'caim': 'Qayin - Possessão, adquirido. Primeiro assassino bíblico, símbolo do orgulho.',
-            'abel': 'Hebel - Sopro, vaidade. Pastor justo que agradou a Deus.',
-            'nóe': 'Noach - Descanso, consolo. Pregador da justiça e construtor da arca.',
-            'arca': 'Tevah - A salvação em meio ao juízo. Prefigura Cristo.',
-            'dilúvio': 'Mabul - Inundação catastrófica. Juízo divino sobre a corrupção.',
-            'abrão': 'Avram - Pai exaltado. Depois chamado Abraão (pai de multidões).',
-            'moisés': 'Mosheh - Tirado das águas. Libertador e mediador da Antiga Aliança.',
-            'egito': 'Mitzrayim - Lugar de opressão. Simbolicamente, o mundo e a escravidão do pecado.',
-            'senhor': 'YHWH - O Eterno, o Deus que é. Nome inefável da aliança.',
+    function scrollToSection(id){
+      document.getElementById(id).scrollIntoView({behavior:"smooth"});
+    }
+
+    function iconSVG(type){
+      const labels = {
+        march:"Marcha",
+        chair:"Cadeira",
+        calf:"Ponta dos pés",
+        balance:"Equilíbrio",
+        walk:"Caminhada",
+        stretch:"Alongamento",
+        shoulder:"Ombros",
+        wallpush:"Parede",
+        row:"Remada",
+        bottle:"Garrafa",
+        core:"Core",
+        squat:"Agachamento",
+        balance2:"Linha",
+        step:"Degrau",
+        breath:"Respiração",
+        joint:"Mobilidade",
+        side:"Lateral"
+      };
+
+      return `
+        <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" aria-label="Mini vídeo instrutivo">
+          <rect width="500" height="500" fill="transparent"/>
+          <circle cx="250" cy="115" r="34" fill="#f6d7c3"/>
+          <circle cx="238" cy="108" r="4" fill="#111827"/>
+          <circle cx="262" cy="108" r="4" fill="#111827"/>
+          <path d="M238 125 Q250 135 262 125" stroke="#111827" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <g class="figure">
+            <rect x="225" y="150" width="50" height="92" rx="18" fill="#2563eb"/>
+            <line x1="250" y1="242" x2="212" y2="315" stroke="#1f2937" stroke-width="12" stroke-linecap="round" class="leg-l"/>
+            <line x1="250" y1="242" x2="288" y2="315" stroke="#1f2937" stroke-width="12" stroke-linecap="round" class="leg-r"/>
+            <line x1="225" y1="168" x2="184" y2="215" stroke="#1f2937" stroke-width="12" stroke-linecap="round" class="arm-l"/>
+            <line x1="275" y1="168" x2="316" y2="215" stroke="#1f2937" stroke-width="12" stroke-linecap="round" class="arm-r"/>
+          </g>
+          <text x="250" y="382" text-anchor="middle" font-size="20" fill="#1f2937" font-family="Arial">${labels[type] || "Exercício"}</text>
+        </svg>
+      `;
+    }
+
+    function updateProgress(index){
+      const percent = Math.round(((index + 1) / plan.length) * 100);
+      progressBar.style.width = percent + "%";
+      progressText.textContent = percent + "% concluído";
+    }
+
+    function renderIndex(){
+      indexList.innerHTML = "";
+      plan.forEach((day, i) => {
+        const btn = document.createElement("button");
+        btn.className = "index-item" + (i === 0 ? " active" : "");
+        btn.innerHTML = `
+          <strong>${i + 1}. ${day.title}</strong>
+          <span>${day.desc}</span>
+        `;
+        btn.onclick = () => {
+          document.getElementById(`day-${i}`).scrollIntoView({behavior:"smooth"});
+          document.querySelectorAll(".index-item").forEach(el => el.classList.remove("active"));
+          btn.classList.add("active");
+          updateProgress(i);
         };
+        indexList.appendChild(btn);
+      });
+    }
 
-        // Fallback: busca genérica se não estiver no dicionário
-        function getMeaning(word) {
-            const lower = word.toLowerCase().replace(/[^a-záéíóúâêîôûãõç]/g, '');
-            if (BIBLE_DICT[lower]) return BIBLE_DICT[lower];
-            return '📖 Palavra não encontrada no dicionário local. Sugerimos pesquisar em um dicionário bíblico (Strong ou Vine).';
-        }
+    function renderWeek(){
+      weekGrid.innerHTML = "";
+      plan.forEach((day, i) => {
+        const section = document.createElement("article");
+        section.className = "day section";
+        section.id = `day-${i}`;
+        section.innerHTML = `
+          <div class="day-head">
+            <div>
+              <h3>${day.title}</h3>
+              <p class="muted">${day.desc}</p>
+            </div>
+            <span class="pill ${i === 3 ? 'green' : i === 2 ? 'orange' : 'gray'}">${day.pill}</span>
+          </div>
+          <div class="day-body">
+            <div class="exercise-list">
+              ${day.exercises.map((ex, j) => `
+                <div class="exercise">
+                  <div class="exercise-top">
+                    <div>
+                      <h4>${j + 1}. ${ex[0]}</h4>
+                      <p>${ex[3]}</p>
+                    </div>
+                    <span class="pill">${ex[1]}</span>
+                  </div>
+                  <div class="exercise-body">
+                    <div class="video-box">
+                      <div class="video-tag">Mini vídeo</div>
+                      ${iconSVG(ex[5])}
+                    </div>
+                    <div>
+                      <div class="meta">
+                        <span><strong>Item:</strong> ${ex[2]}</span>
+                        <span><strong>Tempo:</strong> ${ex[1]}</span>
+                      </div>
+                      <ul>
+                        ${ex[4].map(x => `<li>${x}</li>`).join("")}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              `).join("")}
+            </div>
+          </div>
+        `;
+        weekGrid.appendChild(section);
+      });
+    }
 
-        // ----------------------------------------------------------------
-        // 3. MÍDIAS (Imagens de mapas/personagens e vídeos YouTube)
-        //    Associadas a cada ID de leitura
-        // ----------------------------------------------------------------
-        const MEDIA_MAP = {
-            0: { img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Map_of_the_Ancient_Near_East_1400_BCE.jpg/640px-Map_of_the_Ancient_Near_East_1400_BCE.jpg', video: 'h2p4jRDOq_Q' },
-            1: { img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Adam_and_Eve_-_Paradise_Lost_%28Gustave_Dor%C3%A9%29.jpg/640px-Adam_and_Eve_-_Paradise_Lost_%28Gustave_Dor%C3%A9%29.jpg', video: 'VtGWdReaHfM' },
-            2: { img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/William_Blake_Job%27s_Tormentors.jpg/640px-William_Blake_Job%27s_Tormentors.jpg', video: 'I5R9k4j9l2A' },
-            3: { img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Job_and_his_friends.jpg/640px-Job_and_his_friends.jpg', video: 'I5R9k4j9l2A' },
-            4: { img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/The_Fall_of_Man_-_Titian.jpg/640px-The_Fall_of_Man_-_Titian.jpg', video: 'g3vQYxPg7hY' },
-            5: { img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Cain_and_Abel_mosaic.jpg/640px-Cain_and_Abel_mosaic.jpg', video: 'N2a1Ph4p4k4' },
-            6: { img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Noah_building_the_ark.jpg/640px-Noah_building_the_ark.jpg', video: 'dQw4w9WgXcQ' },
-            7: { img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Deluge_%28Michelangelo%29.jpg/640px-Deluge_%28Michelangelo%29.jpg', video: 'dQw4w9WgXcQ' },
-            8: { img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Noah_sending_the_dove.jpg/640px-Noah_sending_the_dove.jpg', video: 'dQw4w9WgXcQ' },
-            9: { img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Abram_%28Abraham%29%27s_journey_Map.jpg/640px-Abram_%28Abraham%29%27s_journey_Map.jpg', video: 'B1J6Ou4q8vE' },
-            10: { img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Moses_in_the_bulrushes.jpg/640px-Moses_in_the_bulrushes.jpg', video: '2Gg6Seob5Mg' },
-            11: { img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Moses_and_burning_bush.jpg/640px-Moses_and_burning_bush.jpg', video: '2Gg6Seob5Mg' },
-        };
-
-        // ----------------------------------------------------------------
-        // 4. ESTADO E LÓGICA DO APP
-        // ----------------------------------------------------------------
-        let currentIndex = 0;
-        let readStatus = {}; // { "0": true, "2": true }
-
-        // Carregar do localStorage
-        function loadProgress() {
-            try {
-                const saved = localStorage.getItem('bibleProgress');
-                if (saved) readStatus = JSON.parse(saved);
-            } catch (e) { readStatus = {}; }
-        }
-        function saveProgress() {
-            localStorage.setItem('bibleProgress', JSON.stringify(readStatus));
-        }
-
-        function markAsRead(index) {
-            readStatus[index] = true;
-            saveProgress();
-            renderSidebar();
-            updateProgressBar();
-        }
-
-        function isRead(index) {
-            return !!readStatus[index];
-        }
-
-        // Atualiza barra de progresso
-        function updateProgressBar() {
-            const total = READING_PLAN.length;
-            const readCount = READING_PLAN.filter(item => isRead(item.id)).length;
-            const percent = Math.round((readCount / total) * 100);
-            document.getElementById('progressPercent').textContent = percent + '%';
-            document.getElementById('progressFill').style.width = percent + '%';
-            // Mudar cor se completar
-            if (percent === 100) {
-                document.getElementById('progressFill').style.background = 'linear-gradient(90deg, #f2b84b, #f5a623)';
-            } else {
-                document.getElementById('progressFill').style.background = 'linear-gradient(90deg, #7cb57c, #4a9e4a)';
-            }
-        }
-
-        // Renderizar lista da sidebar
-        function renderSidebar() {
-            const container = document.getElementById('chapterList');
-            container.innerHTML = '';
-            READING_PLAN.forEach((item) => {
-                const div = document.createElement('div');
-                div.className = 'chapter-item';
-                if (isRead(item.id)) div.classList.add('read');
-                if (currentIndex === item.id) div.classList.add('active');
-
-                const statusSpan = document.createElement('span');
-                statusSpan.className = 'status';
-                statusSpan.innerHTML = isRead(item.id) ? '<i class="fas fa-check"></i>' : item.id + 1;
-
-                const labelSpan = document.createElement('span');
-                labelSpan.innerHTML = `<span class="ch-number">${item.label}</span> — ${item.topic}`;
-
-                div.appendChild(statusSpan);
-                div.appendChild(labelSpan);
-
-                div.addEventListener('click', () => {
-                    loadChapter(item.id);
-                });
-
-                container.appendChild(div);
-            });
-        }
-
-        // Carregar capítulo
-        async function loadChapter(index) {
-            if (index < 0 || index >= READING_PLAN.length) return;
-            currentIndex = index;
-            const item = READING_PLAN[index];
-
-            // Atualiza título
-            document.getElementById('chapterTitle').innerHTML = `${item.label} <small>— ${item.topic}</small>`;
-
-            // Atualiza sidebar
-            renderSidebar();
-
-            // Atualiza mídia
-            const media = MEDIA_MAP[index] || MEDIA_MAP[0];
-            document.getElementById('mediaImage').src = media.img;
-            document.getElementById('mediaVideo').src = `https://www.youtube.com/embed/${media.video}?rel=0`;
-
-            // Busca texto da Bíblia (API pública)
-            const textContainer = document.getElementById('bibleText');
-            textContainer.innerHTML = '<span style="color:#b89b7b;">Carregando texto...</span>';
-
-            try {
-                const url = `https://bible-api.com/${item.book}+${item.chapter}?translation=acf`;
-                const response = await fetch(url);
-                if (!response.ok) throw new Error('Erro ao buscar');
-                const data = await response.json();
-
-                // Processa versículos
-                let html = '';
-                if (data.verses) {
-                    data.verses.forEach(v => {
-                        // Separa palavras e envolve com span para clique
-                        const words = v.text.split(/(\s+|[.,;:!?])/).filter(w => w.trim() !== '');
-                        let verseHtml = `<span class="verse-num">${v.verse}</span>`;
-                        words.forEach(word => {
-                            const clean = word.replace(/[.,;:!?]/g, '');
-                            if (clean.trim() !== '') {
-                                verseHtml += `<span class="word" data-word="${clean}">${word}</span>`;
-                            } else {
-                                verseHtml += word; // pontuação
-                            }
-                        });
-                        html += `<p>${verseHtml}</p>`;
-                    });
-                } else {
-                    html = '<p style="color:#b89b7b;">Texto não disponível para este capítulo.</p>';
-                }
-
-                textContainer.innerHTML = html;
-
-                // Adiciona evento de clique nas palavras
-                document.querySelectorAll('.word').forEach(el => {
-                    el.addEventListener('click', function(e) {
-                        const word = this.dataset.word;
-                        showDictionary(word);
-                    });
-                });
-
-                // Marca como lido automaticamente ao carregar (opcional, pode desativar)
-                if (!isRead(index)) {
-                    markAsRead(index);
-                }
-
-            } catch (error) {
-                textContainer.innerHTML = `<p style="color:#c0392b;">⚠️ Erro ao carregar o capítulo. Verifique sua conexão.</p>`;
-                console.error(error);
-            }
-
-            // Scroll para o topo
-            document.getElementById('scrollArea').scrollTop = 0;
-        }
-
-        // ----------------------------------------------------------------
-        // 5. DICIONÁRIO POPUP
-        // ----------------------------------------------------------------
-        function showDictionary(word) {
-            const popup = document.getElementById('dictPopup');
-            const overlay = document.getElementById('dictOverlay');
-            document.getElementById('dictWord').textContent = word;
-            document.getElementById('dictMeaning').textContent = getMeaning(word);
-            popup.style.display = 'block';
-            overlay.style.display = 'block';
-        }
-
-        function hideDictionary() {
-            document.getElementById('dictPopup').style.display = 'none';
-            document.getElementById('dictOverlay').style.display = 'none';
-        }
-
-        document.getElementById('closeDictBtn').addEventListener('click', hideDictionary);
-        document.getElementById('dictOverlay').addEventListener('click', hideDictionary);
-
-        // ----------------------------------------------------------------
-        // 6. NAVEGAÇÃO E INICIALIZAÇÃO
-        // ----------------------------------------------------------------
-        document.getElementById('prevBtn').addEventListener('click', () => {
-            if (currentIndex > 0) loadChapter(currentIndex - 1);
-        });
-        document.getElementById('nextBtn').addEventListener('click', () => {
-            if (currentIndex < READING_PLAN.length - 1) loadChapter(currentIndex + 1);
-        });
-
-        // Teclado (setas)
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowLeft' && currentIndex > 0) loadChapter(currentIndex - 1);
-            if (e.key === 'ArrowRight' && currentIndex < READING_PLAN.length - 1) loadChapter(currentIndex + 1);
-        });
-
-        // Inicializar
-        loadProgress();
-        renderSidebar();
-        updateProgressBar();
-        loadChapter(0); // começa pelo primeiro
-
-        console.log('📖 App Bíblico Cronológico carregado! Clique em qualquer palavra para ver o significado.');
-    </script>
+    renderIndex();
+    renderWeek();
+    updateProgress(0);
+  </script>
 </body>
 </html>
