@@ -3,14 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Academia em Casa 62+ | Dashboard</title>
-  <meta name="description" content="Aplicativo de treino em casa para mulher de 62 anos, com dashboard, agenda, cronômetro e plano semanal." />
+  <title>Academia da Nizia | Dashboard</title>
+  <meta name="description" content="Academia da Nizia - treino em casa com dashboard, agenda, cronômetro, progresso e exercícios guiados." />
   <style>
     :root{
       --bg:#08111f;
       --bg2:#0f172a;
       --panel:#111827;
-      --panel2:#0b1220;
       --line:rgba(148,163,184,.16);
       --text:#e5e7eb;
       --muted:#94a3b8;
@@ -273,6 +272,7 @@
       border:1px solid var(--line);
       border-radius:18px;
       overflow:hidden;
+      margin-bottom:14px;
     }
 
     .exercise-top{
@@ -301,36 +301,16 @@
       height:fit-content;
     }
 
-    .exercise-body{
-      display:grid;
-      grid-template-columns:220px 1fr;
-      gap:14px;
-      padding:14px 16px 16px;
-      align-items:center;
-    }
-
-    .mini-video{
-      aspect-ratio:1/1;
-      border-radius:18px;
-      overflow:hidden;
-      border:1px solid rgba(96,165,250,.2);
-      background:linear-gradient(180deg,#0f172a,#111827);
+    .checkbox-wrap{
       display:flex;
       align-items:center;
-      justify-content:center;
-      position:relative;
-    }
-
-    .mini-video .label{
-      position:absolute;
-      top:10px;
-      left:10px;
-      padding:5px 8px;
-      border-radius:999px;
-      font-size:11px;
-      background:rgba(15,23,42,.95);
-      border:1px solid rgba(96,165,250,.24);
-      color:#bfdbfe;
+      gap:8px;
+      background:#0f172a;
+      border:1px solid var(--line);
+      padding:12px 14px;
+      border-radius:14px;
+      color:#d1fae5;
+      font-weight:700;
     }
 
     .meta{
@@ -356,18 +336,6 @@
       color:#d1d5db;
     }
 
-    .checkbox-wrap{
-      display:flex;
-      align-items:center;
-      gap:8px;
-      background:#0f172a;
-      border:1px solid var(--line);
-      padding:12px 14px;
-      border-radius:14px;
-      color:#d1fae5;
-      font-weight:700;
-    }
-
     .good{
       border-left:5px solid var(--green);
       background:rgba(34,197,94,.10);
@@ -377,21 +345,95 @@
       line-height:1.55;
     }
 
-    .warn{
-      border-left:5px solid var(--yellow);
-      background:rgba(245,158,11,.10);
-      padding:14px;
-      border-radius:16px;
-      color:#fcd34d;
-      line-height:1.55;
-    }
-
     .footer{
       margin:18px 0 8px;
       text-align:center;
       color:var(--muted);
       font-size:13px;
       line-height:1.6;
+    }
+
+    .exercise-body{
+      display:grid;
+      grid-template-columns:220px 1fr;
+      gap:14px;
+      padding:14px 16px 16px;
+      align-items:center;
+    }
+
+    .video-card{
+      aspect-ratio:1/1;
+      border-radius:18px;
+      overflow:hidden;
+      border:1px solid rgba(96,165,250,.2);
+      background:linear-gradient(180deg,#0f172a,#111827);
+      position:relative;
+      cursor:pointer;
+      user-select:none;
+      touch-action:manipulation;
+    }
+
+    .video-card .label{
+      position:absolute;
+      top:10px;
+      left:10px;
+      padding:5px 8px;
+      border-radius:999px;
+      font-size:11px;
+      background:rgba(15,23,42,.95);
+      border:1px solid rgba(96,165,250,.24);
+      color:#bfdbfe;
+      z-index:3;
+    }
+
+    .video-card .play-overlay{
+      position:absolute;
+      inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      z-index:2;
+      background:radial-gradient(circle at center, rgba(15,23,42,.08), rgba(15,23,42,.28));
+      transition:.2s;
+    }
+
+    .play-btn{
+      width:74px;
+      height:74px;
+      border-radius:999px;
+      border:none;
+      background:rgba(37,99,235,.92);
+      color:#fff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      box-shadow:0 10px 30px rgba(37,99,235,.35);
+      font-size:28px;
+      cursor:pointer;
+      transition:.2s;
+    }
+
+    .video-card.playing .play-overlay{
+      opacity:0;
+      pointer-events:none;
+    }
+
+    .video-state{
+      position:absolute;
+      right:10px;
+      top:10px;
+      z-index:4;
+      font-size:11px;
+      padding:5px 8px;
+      border-radius:999px;
+      background:rgba(34,197,94,.15);
+      border:1px solid rgba(34,197,94,.35);
+      color:#bbf7d0;
+      display:none;
+    }
+
+    .video-card.playing .video-state{
+      display:inline-flex;
     }
 
     .svg-figure{transform-origin:center; animation:bounce 2.2s ease-in-out infinite}
@@ -424,8 +466,8 @@
     <header class="hero">
       <div class="hero-top">
         <div>
-          <h1>Academia em Casa 62+</h1>
-          <p>Aplicativo em HTML para treino doméstico com dashboard, agenda, cronômetro, progresso e exercícios guiados para uma mulher de 62 anos.</p>
+          <h1>Academia da Nizia</h1>
+          <p>Aplicativo em HTML para treino doméstico com dashboard, agenda, cronômetro, progresso e exercícios guiados.</p>
         </div>
         <div class="badge">Pronto para GitHub Pages</div>
       </div>
@@ -546,7 +588,7 @@
               <p>Quatro dias de treino com exercícios simples, usando objetos da casa.</p>
             </div>
           </div>
-          <div class="cards" id="weekCards"></div>
+          <div id="weekCards"></div>
         </section>
 
         <div class="footer">
@@ -566,9 +608,7 @@
           ["Marcha no lugar", "5 min", "Sem equipamento", "Levante os joelhos de forma confortável e mova os braços.", ["Postura ereta", "Passos curtos", "Respiração normal"], "march"],
           ["Sentar e levantar da cadeira", "10 min", "Cadeira firme", "Use a força das pernas, sem pressa.", ["Pés firmes", "Tronco levemente à frente", "Levante e sente com controle"], "chair"],
           ["Elevação de panturrilha", "10 min", "Cadeira ou parede", "Suba e desça devagar, sem balançar o corpo.", ["Segure apoio", "Suba na ponta dos pés", "Desça lentamente"], "calf"],
-          ["Equilíbrio com apoio", "5 min", "Parede ou cadeira", "Apoie uma mão se precisar e troque a perna.", ["Fique em um pé por alguns segundos", "Olhe para frente", "Mantenha abdômen leve"], "balance"],
-          ["Caminhada em linha reta", "5 min", "Espaço livre", "Dê passos curtos e lentos com segurança.", ["Olhe para frente", "Passos curtos", "Pare se perder o equilíbrio"], "walk"],
-          ["Alongamento leve", "5 min", "Sem equipamento", "Sem forçar, apenas relaxe pernas e costas.", ["Segure 10 a 15 segundos", "Respire fundo", "Sem dor"], "stretch"]
+          ["Equilíbrio com apoio", "5 min", "Parede ou cadeira", "Apoie uma mão se precisar e troque a perna.", ["Fique em um pé por alguns segundos", "Olhe para frente", "Mantenha abdômen leve"], "balance"]
         ]
       },
       {
@@ -580,8 +620,7 @@
           ["Flexão na parede", "10 min", "Parede", "Mantenha o corpo alinhado e mãos na altura do peito.", ["Aproxime o peito da parede", "Empurre de volta", "Cotovelos controlados"], "wallpush"],
           ["Remada com toalha", "10 min", "Toalha", "Puxe a toalha com firmeza sem prender a respiração.", ["Segure com as duas mãos", "Abra o peito", "Volte devagar"], "row"],
           ["Elevação frontal com garrafinhas", "5 min", "2 garrafinhas leves", "Levante até a altura dos ombros.", ["Use peso leve", "Desça com controle", "Não arqueie as costas"], "bottle"],
-          ["Contração abdominal sentada", "5 min", "Cadeira", "Puxe o abdômen suavemente para dentro.", ["Sente-se ereta", "Contraia por alguns segundos", "Relaxe"], "core"],
-          ["Alongamento de braços", "5 min", "Sem equipamento", "Solte ombros e braços no fim.", ["Puxe um braço de cada vez", "Respire fundo", "Sem dor"], "stretch"]
+          ["Contração abdominal sentada", "5 min", "Cadeira", "Puxe o abdômen suavemente para dentro.", ["Sente-se ereta", "Contraia por alguns segundos", "Relaxe"], "core"]
         ]
       },
       {
@@ -637,6 +676,21 @@
       document.getElementById(id).scrollIntoView({behavior:"smooth"});
     }
 
+    function renderNav(){
+      navList.innerHTML = "";
+      navItems.forEach((n, i) => {
+        const b = document.createElement("button");
+        b.className = i === 0 ? "active" : "";
+        b.innerHTML = `<strong>${i + 1}. ${n.title}</strong><span>${n.desc}</span>`;
+        b.onclick = () => {
+          scrollToSection(n.id);
+          document.querySelectorAll(".nav button").forEach(x => x.classList.remove("active"));
+          b.classList.add("active");
+        };
+        navList.appendChild(b);
+      });
+    }
+
     function iconSVG(type){
       const labels = {
         march:"Marcha",
@@ -659,7 +713,7 @@
       };
 
       return `
-        <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" aria-label="Mini vídeo instrutivo">
+        <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" aria-label="Mini vídeo clicável">
           <circle cx="250" cy="115" r="34" fill="#f6d7c3"/>
           <circle cx="238" cy="108" r="4" fill="#111827"/>
           <circle cx="262" cy="108" r="4" fill="#111827"/>
@@ -676,27 +730,12 @@
       `;
     }
 
-    function renderNav(){
-      navList.innerHTML = "";
-      navItems.forEach((n, i) => {
-        const b = document.createElement("button");
-        b.className = i === 0 ? "active" : "";
-        b.innerHTML = `<strong>${i + 1}. ${n.title}</strong><span>${n.desc}</span>`;
-        b.onclick = () => {
-          scrollToSection(n.id);
-          document.querySelectorAll(".nav button").forEach(x => x.classList.remove("active"));
-          b.classList.add("active");
-        };
-        navList.appendChild(b);
-      });
-    }
-
     function renderSchedule(){
       const times = JSON.parse(localStorage.getItem("workoutSchedule") || "{}");
       scheduleBox.innerHTML = ["Dia 1","Dia 2","Dia 3","Dia 4"].map((d, i) => `
         <div class="schedule-row">
           <strong>${d}</strong>
-          <input type="time" id="time-${i}" value="${times[`time-${i}`] || "08:00"}">
+          <input type="time" id="time-${i}" value="${times[\`time-${i}\`] || "08:00"}">
           <button class="btn" onclick="testReminder(${i})">Testar</button>
         </div>
       `).join("");
@@ -704,7 +743,7 @@
 
     function saveSchedule(){
       const times = {};
-      for(let i=0;i<4;i++) times[`time-${i}`] = document.getElementById(`time-${i}`).value;
+      for(let i=0;i<4;i++) times[\`time-${i}\`] = document.getElementById(\`time-${i}\`).value;
       localStorage.setItem("workoutSchedule", JSON.stringify(times));
       notifStatus.textContent = "Agenda salva com sucesso.";
       updateDashboard();
@@ -720,36 +759,41 @@
     }
 
     function notify(title, body){
-      if("Notification" in window && Notification.permission === "granted") new Notification(title, {body});
-      else alert(title + "\n" + body);
+      if("Notification" in window && Notification.permission === "granted"){
+        new Notification(title, {body});
+      }else{
+        alert(title + "\n" + body);
+      }
     }
 
     function checkReminders(){
       const now = new Date();
       const current = now.getHours().toString().padStart(2,"0") + ":" + now.getMinutes().toString().padStart(2,"0");
       const times = JSON.parse(localStorage.getItem("workoutSchedule") || "{}");
+
       for(let i=0;i<4;i++){
-        if(times[`time-${i}`] === current) notify("Hora do treino!", `Está na hora do Dia ${i + 1}.`);
+        if(times[\`time-${i}\`] === current){
+          notify("Hora do treino", "É hora do Dia " + (i + 1));
+        }
       }
-      notifStatus.textContent = `Checagem feita às ${current}.`;
       updateDashboard();
     }
 
     function testReminder(i){
-      notify("Teste de lembrete", `Lembrete do Dia ${i + 1} enviado com sucesso.`);
-    }
-
-    function renderTimer(){
-      const m = Math.floor(timerSeconds / 60).toString().padStart(2,"0");
-      const s = (timerSeconds % 60).toString().padStart(2,"0");
-      timerDisplay.textContent = `${m}:${s}`;
+      notify("Teste de lembrete", "Este é um teste do lembrete do Dia " + (i + 1));
     }
 
     function setTimer(){
-      const m = Math.max(0, parseInt(document.getElementById("setMinutes").value || "0", 10));
-      const s = Math.max(0, Math.min(59, parseInt(document.getElementById("setSeconds").value || "0", 10)));
+      const m = parseInt(document.getElementById("setMinutes").value || "0", 10);
+      const s = parseInt(document.getElementById("setSeconds").value || "0", 10);
       timerSeconds = (m * 60) + s;
       renderTimer();
+    }
+
+    function renderTimer(){
+      const m = Math.floor(timerSeconds / 60).toString().padStart(2, "0");
+      const s = (timerSeconds % 60).toString().padStart(2, "0");
+      timerDisplay.textContent = `${m}:${s}`;
     }
 
     function startTimer(){
@@ -760,7 +804,7 @@
           renderTimer();
         }else{
           pauseTimer();
-          notify("Tempo encerrado", "O cronômetro do treino terminou.");
+          alert("Tempo encerrado");
         }
       }, 1000);
     }
@@ -775,79 +819,128 @@
       setTimer();
     }
 
-    function markDone(dayIndex, checked){
-      const saved = JSON.parse(localStorage.getItem("exerciseDone") || "{}");
-      saved[`day-${dayIndex}`] = checked;
-      localStorage.setItem("exerciseDone", JSON.stringify(saved));
+    function isDone(i){
+      const data = JSON.parse(localStorage.getItem("exerciseDone") || "{}");
+      return !!data[`day-${i}`];
+    }
+
+    function markDone(i, checked){
+      const data = JSON.parse(localStorage.getItem("exerciseDone") || "{}");
+      data[`day-${i}`] = checked;
+      localStorage.setItem("exerciseDone", JSON.stringify(data));
       updateDashboard();
     }
 
-    function renderWeek(){
-      const saved = JSON.parse(localStorage.getItem("exerciseDone") || "{}");
+    function startVideo(card){
+      const video = card.querySelector("video");
+      if(video.src){
+        if(video.style.display === "none" || !video.style.display){
+          video.style.display = "block";
+          card.querySelector(".play-overlay").style.display = "none";
+          video.currentTime = 0;
+          video.play();
+          card.classList.add("playing");
+        }else{
+          video.pause();
+          video.style.display = "none";
+          card.querySelector(".play-overlay").style.display = "flex";
+          card.classList.remove("playing");
+        }
+      }else{
+        alert("Vídeo não disponível");
+      }
+    }
+
+    function renderPlan(){
       weekCards.innerHTML = "";
       plan.forEach((day, i) => {
-        const el = document.createElement("div");
-        el.className = "exercise";
-        el.id = `day-${i}`;
-        el.innerHTML = `
+        const card = document.createElement("div");
+        card.className = "exercise";
+        card.innerHTML = `
           <div class="exercise-top">
             <div>
               <h4>${day.title}</h4>
               <p>${day.desc}</p>
             </div>
-            <span class="badge">${day.badge}</span>
+            <div class="badge">${day.badge}</div>
           </div>
           <div style="padding:14px 16px 0;">
             <label class="checkbox-wrap">
-              <input type="checkbox" ${saved[`day-${i}`] ? "checked" : ""} onchange="markDone(${i}, this.checked)">
+              <input type="checkbox" onchange="markDone(${i}, this.checked)" ${isDone(i) ? "checked" : ""}>
               Concluído
             </label>
           </div>
-          <div class="exercise-body">
-            <div class="mini-video">
-              <div class="label">Mini vídeo</div>
-              ${iconSVG(day.exercises[0][5])}
-            </div>
-            <div>
-              ${day.exercises.map((ex, j) => `
-                <div style="padding:10px 0; ${j < day.exercises.length - 1 ? 'border-bottom:1px solid rgba(148,163,184,.10);' : ''}">
-                  <div class="meta">
-                    <span>${j + 1}. ${ex[0]}</span>
-                    <span>${ex[1]}</span>
-                    <span>${ex[2]}</span>
-                  </div>
-                  <p style="margin:0 0 8px; color:#cbd5e1; line-height:1.5">${ex[3]}</p>
-                  <ul>${ex[4].map(x => `<li>${x}</li>`).join("")}</ul>
-                </div>
-              `).join("")}
-            </div>
-          </div>
         `;
-        weekCards.appendChild(el);
+
+        const body = document.createElement("div");
+        body.style.padding = "14px 16px 16px";
+
+        day.exercises.forEach((ex, j) => {
+          const exWrap = document.createElement("div");
+          exWrap.style.borderTop = "1px solid rgba(148,163,184,.1)";
+          exWrap.style.paddingTop = "12px";
+          exWrap.style.marginTop = "12px";
+
+          exWrap.innerHTML = `
+            <div class="exercise-body">
+              <div class="video-card" onclick="startVideo(this)">
+                <div class="label">Mini vídeo</div>
+                <div class="play-overlay">
+                  <button class="play-btn">▶</button>
+                </div>
+                <div class="video-state">Parar</div>
+                <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;position:relative;">
+                  ${iconSVG(ex[5])}
+                </div>
+                <video src="" style="display:none;"></video>
+              </div>
+              <div>
+                <div class="meta">
+                  <span>${j + 1}. ${ex[0]}</span>
+                  <span>${ex[1]}</span>
+                  <span>${ex[2]}</span>
+                </div>
+                <p style="margin:0 0 10px; color:#d1d5db; line-height:1.55;">${ex[3]}</p>
+                <ul>${ex[4].map(x => `<li>${x}</li>`).join("")}</ul>
+              </div>
+            </div>
+          `;
+
+          body.appendChild(exWrap);
+        });
+
+        card.appendChild(body);
+        weekCards.appendChild(card);
       });
     }
 
     function updateDashboard(){
-      const saved = JSON.parse(localStorage.getItem("exerciseDone") || "{}");
-      const times = JSON.parse(localStorage.getItem("workoutSchedule") || "{}");
-      const done = Object.values(saved).filter(Boolean).length;
-      const percent = Math.round((done / 4) * 100);
-
+      const done = Object.values(JSON.parse(localStorage.getItem("exerciseDone") || "{}")).filter(Boolean).length;
+      const perc = Math.round((done / 4) * 100);
+      progressBar.style.width = perc + "%";
+      progressText.textContent = `${perc}% concluído`;
       kpiDone.textContent = `${done}/4`;
-      kpiProgress.textContent = `${percent}%`;
-      progressBar.style.width = `${percent}%`;
-      progressText.textContent = `${percent}% concluído`;
+      kpiProgress.textContent = `${perc}%`;
 
-      const next = times["time-0"] || times["time-1"] || times["time-2"] || times["time-3"] || "--:--";
+      const times = JSON.parse(localStorage.getItem("workoutSchedule") || "{}");
+      const now = new Date();
+      const current = now.getHours().toString().padStart(2,"0") + ":" + now.getMinutes().toString().padStart(2,"0");
+      let next = "--:--";
+
+      for(let i=0;i<4;i++){
+        if(times[`time-${i}`] === current){
+          next = times[`time-${i}`];
+          break;
+        }
+      }
       kpiNext.textContent = next;
     }
 
     renderNav();
     renderSchedule();
-    renderWeek();
+    renderPlan();
     renderTimer();
     updateDashboard();
-    setInterval(checkReminders, 60000);
   </script>
 </body>
 </html>
