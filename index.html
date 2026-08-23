@@ -35,7 +35,6 @@ body{background:linear-gradient(160deg,#0f0f1e,#141430 45%,#1a0f30);min-height:1
 .section.active{display:block}
 @keyframes fadeIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 
-/* GRID LEITURA */
 .leitura-layout{display:grid;grid-template-columns:300px 1fr;gap:22px;align-items:start}
 @media(max-width:900px){.leitura-layout{grid-template-columns:1fr}}
 
@@ -52,7 +51,7 @@ body{background:linear-gradient(160deg,#0f0f1e,#141430 45%,#1a0f30);min-height:1
 .reading{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px;min-height:400px}
 .reading h2{font-size:1.8em;color:var(--gold);margin-bottom:4px}
 .reading .autor{color:var(--muted);font-style:italic;margin-bottom:18px}
-.chapter-selector{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px}
+.chapter-selector{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px;max-height:120px;overflow-y:auto}
 .ch-btn{min-width:38px;height:34px;border-radius:8px;border:1px solid var(--border);background:rgba(255,255,255,.05);color:var(--text);cursor:pointer;font-size:.82em;transition:.2s;padding:0 6px}
 .ch-btn:hover{background:rgba(245,197,66,.2)}
 .ch-btn.read{background:rgba(61,220,132,.2);border-color:var(--green);color:var(--green)}
@@ -61,6 +60,8 @@ body{background:linear-gradient(160deg,#0f0f1e,#141430 45%,#1a0f30);min-height:1
 .texto .vnum{color:var(--gold);font-weight:700;font-size:.75em;vertical-align:super;margin-right:3px}
 .word{cursor:pointer;padding:1px 2px;border-radius:3px;transition:.15s}
 .word:hover{background:rgba(245,197,66,.28);text-decoration:underline;text-decoration-color:var(--gold);text-underline-offset:3px}
+.local{cursor:pointer;color:var(--blue);border-bottom:1px dashed var(--blue);padding:0 1px;transition:.15s}
+.local:hover{background:rgba(90,176,255,.22)}
 .placeholder{background:rgba(176,122,255,.08);border:1px solid rgba(176,122,255,.3);border-radius:10px;padding:18px;color:var(--muted);line-height:1.7;font-size:.92em}
 .placeholder b{color:var(--purple)}
 .nav-btns{display:flex;justify-content:space-between;gap:10px;margin-top:22px;flex-wrap:wrap}
@@ -71,16 +72,31 @@ body{background:linear-gradient(160deg,#0f0f1e,#141430 45%,#1a0f30);min-height:1
 .btn-ghost{background:transparent;border:1px solid var(--border);color:var(--text)}
 .btn-ghost:disabled{opacity:.3;cursor:not-allowed}
 
-/* POPUP */
+/* MAPA NO CANTO */
+.mapa-canto{position:fixed;bottom:20px;right:20px;width:330px;background:var(--card2);border:2px solid var(--gold);border-radius:16px;z-index:600;box-shadow:0 16px 50px rgba(0,0,0,.6);display:none;overflow:hidden}
+.mapa-canto.show{display:block;animation:popIn .3s}
+@keyframes popIn{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
+.mapa-canto-header{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;background:rgba(245,197,66,.12);border-bottom:1px solid var(--border)}
+.mapa-canto-header span{font-weight:700;color:var(--gold);font-size:.9em}
+.mapa-canto-header button{background:none;border:none;color:var(--muted);cursor:pointer;font-size:1.1em}
+.mapa-canto-chips{display:flex;flex-wrap:wrap;gap:6px;padding:10px 12px;max-height:74px;overflow-y:auto}
+.mapa-canto-chips button{background:rgba(255,255,255,.07);border:1px solid var(--border);color:var(--text);padding:5px 11px;border-radius:14px;cursor:pointer;font-size:.75em;transition:.2s}
+.mapa-canto-chips button.active{background:linear-gradient(90deg,#5ab0ff,#b07aff);color:#0a0a1a;font-weight:700;border-color:transparent}
+.mapa-canto-frame{height:200px;border-top:1px solid var(--border)}
+.mapa-canto-frame iframe{width:100%;height:100%;border:none}
+.mapa-canto-nome{padding:10px 14px;font-size:.85em;color:var(--muted);line-height:1.5}
+.mapa-canto-reabrir{position:fixed;bottom:20px;right:20px;width:52px;height:52px;border-radius:50%;border:none;background:linear-gradient(90deg,#5ab0ff,#b07aff);color:#0a0a1a;font-size:1.3em;cursor:pointer;z-index:600;display:none;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(0,0,0,.4)}
+@media(max-width:768px){.mapa-canto{width:calc(100vw - 24px);right:12px;bottom:12px}}
+
+/* OVERLAY POPUP */
 .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:500}
 .overlay.show{display:block}
 .popup{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--card2);border:2px solid var(--gold);border-radius:16px;padding:26px;max-width:480px;width:92%;z-index:501;box-shadow:0 20px 60px rgba(0,0,0,.6)}
 .popup.show{display:block;animation:popIn .25s}
-@keyframes popIn{from{transform:translate(-50%,-50%) scale(.85);opacity:0}to{transform:translate(-50%,-50%) scale(1);opacity:1}}
 .popup .close{position:absolute;top:10px;right:14px;background:none;border:none;color:var(--muted);font-size:1.2em;cursor:pointer}
 .popup h3{color:var(--gold);font-size:1.4em;margin-bottom:4px}
 .popup .orig{color:var(--purple);font-style:italic;font-size:.9em;margin-bottom:12px}
-.popup p{line-height:1.7;color:var(--text)}
+.popup p{line-height:1.7}
 
 /* TIMELINE */
 .timeline{position:relative;padding-left:30px}
@@ -159,7 +175,7 @@ p.subtitulo{text-align:center;color:var(--muted);margin-bottom:22px}
 
 <div class="container">
 
-<!-- ============ LEITURA ============ -->
+<!-- LEITURA -->
 <div id="leitura" class="section active">
   <div class="leitura-layout">
     <div class="sidebar" id="sidebarBooks"></div>
@@ -170,11 +186,11 @@ p.subtitulo{text-align:center;color:var(--muted);margin-bottom:22px}
       <div class="texto" id="textoArea">
         <div class="placeholder">
           <b>📖 Como funciona:</b><br><br>
-          • Escolha um livro na <b>lista à esquerda</b> (em ordem cronológica)<br>
-          • Selecione um capítulo para ler<br>
-          • <b>Clique em qualquer palavra destacada</b> para ver o significado bíblico original (hebraico/grego)<br>
-          • Use <b>"Marcar como Lido"</b> para registrar seu progresso<br>
-          • A barra de progresso no topo <b>muda de cor</b> conforme você avança
+          • Escolha um livro na <b>lista à esquerda</b> (ordem cronológica)<br>
+          • Selecione um capítulo — o texto é carregado da tradução <b>Almeida</b><br>
+          • <b>Palavras douradas</b> = significado bíblico (hebraico/grego)<br>
+          • <b>Palavras azuis</b> = lugares — um <b>mapa aparece no canto</b> da tela<br>
+          • Use <b>"Marcar como Lido"</b> para registrar seu progresso
         </div>
       </div>
       <div class="nav-btns">
@@ -186,21 +202,21 @@ p.subtitulo{text-align:center;color:var(--muted);margin-bottom:22px}
   </div>
 </div>
 
-<!-- ============ TIMELINE ============ -->
+<!-- TIMELINE -->
 <div id="timeline" class="section">
   <h2 class="titulo"><i class="fa-solid fa-clock-rotate-left"></i> Linha do Tempo Bíblica</h2>
   <p class="subtitulo">Os principais eventos na ordem em que aconteceram</p>
   <div class="timeline" id="timelineContent"></div>
 </div>
 
-<!-- ============ VÍDEOS ============ -->
+<!-- VÍDEOS -->
 <div id="videos" class="section">
   <h2 class="titulo"><i class="fa-solid fa-video"></i> Vídeos Explicativos</h2>
   <p class="subtitulo">Aprenda mais sobre cada parte da Bíblia</p>
   <div class="video-grid" id="videoGrid"></div>
 </div>
 
-<!-- ============ MAPAS ============ -->
+<!-- MAPAS -->
 <div id="mapas" class="section">
   <h2 class="titulo"><i class="fa-solid fa-map"></i> Mapas das Terras Bíblicas</h2>
   <p class="subtitulo">Explore as regiões onde a história bíblica aconteceu</p>
@@ -209,14 +225,14 @@ p.subtitulo{text-align:center;color:var(--muted);margin-bottom:22px}
   <p class="map-note" id="mapNote"></p>
 </div>
 
-<!-- ============ PERSONAGENS ============ -->
+<!-- PERSONAGENS -->
 <div id="personagens" class="section">
   <h2 class="titulo"><i class="fa-solid fa-users"></i> Personagens Bíblicos</h2>
   <p class="subtitulo">As figuras centrais da história da redenção</p>
   <div class="char-grid" id="charGrid"></div>
 </div>
 
-<!-- ============ DICIONÁRIO ============ -->
+<!-- DICIONÁRIO -->
 <div id="dicionario" class="section">
   <h2 class="titulo"><i class="fa-solid fa-spell-check"></i> Dicionário Bíblico</h2>
   <p class="subtitulo">Significados originais em hebraico e grego</p>
@@ -224,7 +240,7 @@ p.subtitulo{text-align:center;color:var(--muted);margin-bottom:22px}
   <div class="dict-grid" id="dictGrid"></div>
 </div>
 
-<!-- ============ STATS ============ -->
+<!-- STATS -->
 <div id="stats" class="section">
   <h2 class="titulo"><i class="fa-solid fa-chart-pie"></i> Suas Estatísticas</h2>
   <p class="subtitulo">Acompanhe sua jornada de leitura</p>
@@ -235,7 +251,19 @@ p.subtitulo{text-align:center;color:var(--muted);margin-bottom:22px}
 
 </div>
 
-<!-- POPUP -->
+<!-- MAPA NO CANTO -->
+<div class="mapa-canto" id="mapaCanto">
+  <div class="mapa-canto-header">
+    <span><i class="fa-solid fa-location-dot"></i> Onde isso aconteceu?</span>
+    <button onclick="fecharMapaCanto()"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+  <div class="mapa-canto-chips" id="mapaChips"></div>
+  <div class="mapa-canto-frame"><iframe id="mapaCantoFrame" src="" loading="lazy"></iframe></div>
+  <div class="mapa-canto-nome" id="mapaCantoNome"></div>
+</div>
+<button class="mapa-canto-reabrir" id="mapaReabrir" onclick="abrirMapaCanto()"><i class="fa-solid fa-map"></i></button>
+
+<!-- POPUP DICIONÁRIO -->
 <div class="overlay" id="overlay" onclick="closePopup()"></div>
 <div class="popup" id="popup">
   <button class="close" onclick="closePopup()"><i class="fa-solid fa-xmark"></i></button>
@@ -245,23 +273,17 @@ p.subtitulo{text-align:center;color:var(--muted);margin-bottom:22px}
 </div>
 
 <script>
-/* =========================================================
-   DADOS: 66 LIVROS EM ORDEM CRONOLÓGICA (contagem de capítulos)
-   ========================================================= */
+/* ============ 66 LIVROS EM ORDEM CRONOLÓGICA ============ */
 const LIVROS = [
-  // Era 1 — Origens
   {nome:"Jó", era:"🌍 Origens", caps:42, autor:"Desconhecido"},
   {nome:"Gênesis", era:"🌍 Origens", caps:50, autor:"Moisés"},
-  // Era 2 — Êxodo e Lei
   {nome:"Êxodo", era:"🏜️ Êxodo e Lei", caps:40, autor:"Moisés"},
   {nome:"Levítico", era:"🏜️ Êxodo e Lei", caps:27, autor:"Moisés"},
   {nome:"Números", era:"🏜️ Êxodo e Lei", caps:36, autor:"Moisés"},
   {nome:"Deuteronômio", era:"🏜️ Êxodo e Lei", caps:34, autor:"Moisés"},
-  // Era 3 — Conquista
   {nome:"Josué", era:"⚔️ Conquista", caps:24, autor:"Josué/Eleazar"},
   {nome:"Juízes", era:"⚔️ Conquista", caps:21, autor:"Samuel (prov.)"},
   {nome:"Rute", era:"⚔️ Conquista", caps:4, autor:"Desconhecido"},
-  // Era 4 — Reino Unido
   {nome:"1 Samuel", era:"👑 Reino Unido", caps:31, autor:"Samuel/Natã/Gade"},
   {nome:"2 Samuel", era:"👑 Reino Unido", caps:24, autor:"Natã/Gade"},
   {nome:"Salmos", era:"👑 Reino Unido", caps:150, autor:"Davi e outros"},
@@ -270,7 +292,6 @@ const LIVROS = [
   {nome:"Cantares", era:"👑 Reino Unido", caps:8, autor:"Salomão"},
   {nome:"1 Reis", era:"👑 Reino Unido", caps:22, autor:"Jeremias (prov.)"},
   {nome:"2 Reis", era:"👑 Reino Unido", caps:25, autor:"Jeremias (prov.)"},
-  // Era 5 — Profetas
   {nome:"Isaías", era:"📢 Profetas", caps:66, autor:"Isaías"},
   {nome:"Jeremias", era:"📢 Profetas", caps:52, autor:"Jeremias"},
   {nome:"Lamentações", era:"📢 Profetas", caps:5, autor:"Jeremias"},
@@ -283,7 +304,6 @@ const LIVROS = [
   {nome:"Naum", era:"📢 Profetas", caps:3, autor:"Naum"},
   {nome:"Habacuque", era:"📢 Profetas", caps:3, autor:"Habacuque"},
   {nome:"Sofonias", era:"📢 Profetas", caps:3, autor:"Sofonias"},
-  // Era 6 — Exílio e Retorno
   {nome:"Ezequiel", era:"🏗️ Exílio e Retorno", caps:48, autor:"Ezequiel"},
   {nome:"Daniel", era:"🏗️ Exílio e Retorno", caps:12, autor:"Daniel"},
   {nome:"Ageu", era:"🏗️ Exílio e Retorno", caps:2, autor:"Ageu"},
@@ -294,13 +314,11 @@ const LIVROS = [
   {nome:"Ester", era:"🏗️ Exílio e Retorno", caps:10, autor:"Desconhecido"},
   {nome:"1 Crônicas", era:"🏗️ Exílio e Retorno", caps:29, autor:"Esdras (prov.)"},
   {nome:"2 Crônicas", era:"🏗️ Exílio e Retorno", caps:36, autor:"Esdras (prov.)"},
-  // Era 7 — Evangelhos
   {nome:"Mateus", era:"✝️ Evangelhos", caps:28, autor:"Mateus (Levi)"},
   {nome:"Marcos", era:"✝️ Evangelhos", caps:16, autor:"João Marcos"},
   {nome:"Lucas", era:"✝️ Evangelhos", caps:24, autor:"Lucas (médico)"},
   {nome:"João", era:"✝️ Evangelhos", caps:21, autor:"João (apóstolo)"},
   {nome:"Atos", era:"✝️ Evangelhos", caps:28, autor:"Lucas"},
-  // Era 8 — Igreja Primitiva
   {nome:"Romanos", era:"🔥 Igreja Primitiva", caps:16, autor:"Paulo"},
   {nome:"1 Coríntios", era:"🔥 Igreja Primitiva", caps:16, autor:"Paulo"},
   {nome:"2 Coríntios", era:"🔥 Igreja Primitiva", caps:13, autor:"Paulo"},
@@ -326,123 +344,151 @@ const LIVROS = [
 ];
 const TOTAL_CAPS = LIVROS.reduce((s,l)=>s+l.caps,0);
 
-/* =========================================================
-   TEXTOS BÍBLICOS (capítulos disponíveis para leitura)
-   ========================================================= */
+/* ============ MAPEAMENTO PARA API (Almeida) ============ */
+const API_BOOKS = {
+  "Jó":"Job","Gênesis":"Genesis","Êxodo":"Exodus","Levítico":"Leviticus","Números":"Numbers","Deuteronômio":"Deuteronomy",
+  "Josué":"Joshua","Juízes":"Judges","Rute":"Ruth",
+  "1 Samuel":"1 Samuel","2 Samuel":"2 Samuel","Salmos":"Psalms","Provérbios":"Proverbs","Eclesiastes":"Ecclesiastes","Cantares":"Song of Solomon","1 Reis":"1 Kings","2 Reis":"2 Kings",
+  "Isaías":"Isaiah","Jeremias":"Jeremiah","Lamentações":"Lamentations","Oséias":"Hosea","Joel":"Joel","Amós":"Amos","Obadias":"Obadiah","Jonas":"Jonah","Miquéias":"Micah","Naum":"Nahum","Habacuque":"Habakkuk","Sofonias":"Zephaniah",
+  "Ezequiel":"Ezekiel","Daniel":"Daniel","Ageu":"Haggai","Zacarias":"Zechariah","Malaquias":"Malachi","Esdras":"Ezra","Neemias":"Nehemiah","Ester":"Esther","1 Crônicas":"1 Chronicles","2 Crônicas":"2 Chronicles",
+  "Mateus":"Matthew","Marcos":"Mark","Lucas":"Luke","João":"John","Atos":"Acts",
+  "Romanos":"Romans","1 Coríntios":"1 Corinthians","2 Coríntios":"2 Corinthians","Gálatas":"Galatians","Efésios":"Ephesians","Filipenses":"Philippians","Colossenses":"Colossians","1 Tessalonicenses":"1 Thessalonians","2 Tessalonicenses":"2 Thessalonians","1 Timóteo":"1 Timothy","2 Timóteo":"2 Timothy","Tito":"Titus","Filemom":"Philemon","Hebreus":"Hebrews","Tiago":"James","1 Pedro":"1 Peter","2 Pedro":"2 Peter","1 João":"1 John","2 João":"2 John","3 João":"3 John","Judas":"Jude","Apocalipse":"Revelation"
+};
+
+/* ============ TEXTOS EMBUTIDOS (reserva) ============ */
 const TEXTOS = {
   "Gênesis":{
     1:["No princípio criou Deus os céus e a terra.","E a terra era sem forma e vazia; e havia trevas sobre a face do abismo; e o Espírito de Deus se movia sobre a face das águas.","E disse Deus: Haja luz; e houve luz.","E viu Deus que era boa a luz; e fez Deus separação entre a luz e as trevas.","E Deus chamou à luz Dia; e às trevas chamou Noite. E foi a tarde e a manhã, o dia primeiro.","E disse Deus: Haja uma expansão no meio das águas, e haja separação entre águas e águas.","E fez Deus a expansão, e fez separação entre as águas que estavam debaixo da expansão e as águas que estavam sobre a expansão; e assim foi.","E chamou Deus à expansão Céus; e foi a tarde e a manhã, o dia segundo.","E disse Deus: Ajuntem-se as águas debaixo dos céus num lugar; e apareça a porção seca; e assim foi.","E chamou Deus à porção seca Terra; e ao ajuntamento das águas chamou Mares; e viu Deus que era bom."],
-    2:["Assim os céus, a terra e todo o seu exército foram acabados.","E havendo Deus acabado no sétimo dia a obra que fizera, descansou no sétimo dia de toda a sua obra.","E abençoou Deus o dia sétimo, e o santificou; porque nele descansou de toda a sua obra.","E formou o Senhor Deus o homem do pó da terra, e soprou-lhe nas narinas o fôlego de vida; e o homem foi feito alma vivente.","E plantou o Senhor Deus um jardim no Éden, da banda do oriente, e pôs ali o homem que tinha formado.","E tomou o Senhor Deus o homem, e o pôs no jardim do Éden para o lavrar e o guardar.","E ordenou o Senhor Deus ao homem: De toda a árvore do jardim comerás livremente.","Mas da árvore do conhecimento do bem e do mal, dela não comerás; porque no dia em que dela comeres, certamente morrerás.","E disse o Senhor Deus: Não é bom que o homem esteja só; far-lhe-ei uma auxiliadora que lhe seja idônea.","E da costela que o Senhor Deus tomou do homem, formou uma mulher; e trouxe-a ao homem."],
-    3:["Ora, a serpente era mais astuta que todos os animais do campo. E disse à mulher: É assim que Deus disse: Não comereis de toda a árvore do jardim?","E disse a mulher à serpente: Do fruto das árvores do jardim comeremos.","Mas do fruto da árvore que está no meio do jardim, disse Deus: Não comereis dele, nem nele tocareis, para que não morrais.","Então a serpente disse à mulher: Certamente não morrereis.","Porque Deus sabe que no dia em que dele comerdes se abrirão os vossos olhos, e sereis como Deus, sabendo o bem e o mal.","E viu a mulher que aquela árvore era boa para se comer, e agradável aos olhos, e árvore desejável para dar entendimento; tomou do seu fruto, e comeu, e deu também a seu marido.","Então foram abertos os olhos de ambos, e conheceram que estavam nus; e coseram folhas de figueira.","E ouviram a voz do Senhor Deus que passeava no jardim pela viração do dia; e esconderam-se da presença do Senhor Deus.","E chamou o Senhor Deus a Adão, e disse-lhe: Onde estás?","E ele disse: Ouvi a tua voz soar no jardim, e temi, porque estava nu, e escondi-me."]
+    2:["Assim os céus, a terra e todo o seu exército foram acabados.","E havendo Deus acabado no sétimo dia a obra que fizera, descansou no sétimo dia de toda a sua obra.","E abençoou Deus o dia sétimo, e o santificou; porque nele descansou de toda a sua obra.","E formou o Senhor Deus o homem do pó da terra, e soprou-lhe nas narinas o fôlego de vida; e o homem foi feito alma vivente.","E plantou o Senhor Deus um jardim no Éden, da banda do oriente, e pôs ali o homem que tinha formado.","E tomou o Senhor Deus o homem, e o pôs no jardim do Éden para o lavrar e o guardar.","E ordenou o Senhor Deus ao homem: De toda a árvore do jardim comerás livremente.","Mas da árvore do conhecimento do bem e do mal, dela não comerás; porque no dia em que dela comeres, certamente morrerás.","E disse o Senhor Deus: Não é bom que o homem esteja só; far-lhe-ei uma auxiliadora que lhe seja idônea.","E da costela que o Senhor Deus tomou do homem, formou uma mulher; e trouxe-a ao homem."]
   },
   "Êxodo":{
-    1:["Estes pois são os nomes dos filhos de Israel, que entraram no Egito com Jacó; cada um entrou com sua casa.","Rúben, Simeão, Levi e Judá;","Issacar, Zebulom e Benjamim;","Dã e Naftali, Gade e Aser.","Todas as almas que saíram da coxa de Jacó foram setenta almas; José, porém, já estava no Egito.","José morreu, e todos os seus irmãos, e toda aquela geração.","Mas os filhos de Israel frutificaram, e multiplicaram-se, e foram fortalecidos grandemente; de maneira que a terra se encheu deles.","Depois levantou-se um novo rei sobre o Egito, que não conhecera a José.","O qual disse ao seu povo: Eis que o povo dos filhos de Israel é muito, e mais numeroso do que nós.","Eia, usemos sabiamente para com ele, para que não se multiplique, e aconteça que, vindo guerra, ele se ajunte com os nossos inimigos."],
-    2:["E foi um homem da casa de Levi e casou com uma filha de Levi.","E a mulher concebeu e deu à luz um filho; e, vendo que era formoso, escondeu-o três meses.","Não podendo, porém, mais escondê-lo, tomou uma arca de juncos, e a pôs nos juncos à margem do rio.","E a filha de Faraó desceu a lavar-se no rio, e viu a arca no meio dos juncos.","E abrindo-a, viu o menino, e eis que o menino chorava; e moveu-se de compaixão dele.","Então disse a irmã do menino à filha de Faraó: Irei eu a chamar uma ama das hebreias, que crie este menino para ti?","E a filha de Faraó disse-lhe: Vai. E a jovem chamou a mãe do menino.","E, quando o menino já era grande, ela o trouxe à filha de Faraó, a qual o adotou; e chamou-lhe Moisés, e disse: Porque das águas o tenho tirado."],
-    20:["E falou Deus todas estas palavras, dizendo:","Eu sou o Senhor teu Deus, que te tirei da terra do Egito, da casa da servidão.","Não terás outros deuses diante de mim.","Não farás para ti imagem de escultura, nem alguma semelhança do que há em cima nos céus, nem embaixo na terra.","Não te encurvarás a elas nem as servirás; porque eu, o Senhor teu Deus, sou Deus zeloso.","Não tomarás o nome do Senhor teu Deus em vão.","Lembra-te do dia do sábado, para o santificar.","Honra a teu pai e a tua mãe, para que se prolonguem os teus dias na terra.","Não matarás.","Não adulterarás. Não furtarás. Não dirás falso testemunho contra o teu próximo. Não cobiçarás."]
+    20:["E falou Deus todas estas palavras, dizendo:","Eu sou o Senhor teu Deus, que te tirei da terra do Egito, da casa da servidão.","Não terás outros deuses diante de mim.","Não farás para ti imagem de escultura, nem alguma semelhança do que há em cima nos céus.","Não te encurvarás a elas nem as servirás; porque eu, o Senhor teu Deus, sou Deus zeloso.","Não tomarás o nome do Senhor teu Deus em vão.","Lembra-te do dia do sábado, para o santificar.","Honra a teu pai e a tua mãe, para que se prolonguem os teus dias na terra.","Não matarás.","Não adulterarás. Não furtarás. Não dirás falso testemunho contra o teu próximo. Não cobiçarás."]
   },
   "Salmos":{
-    1:["Bem-aventurado o homem que não anda segundo o conselho dos ímpios, nem se detém no caminho dos pecadores, nem se assenta na roda dos escarnecedores.","Antes tem o seu prazer na lei do Senhor, e na sua lei medita de dia e de noite.","Pois será como a árvore plantada junto a ribeiros de águas, a qual dá o seu fruto na estação própria, e cujas folhas não caem.","Não são assim os ímpios; mas são como a moinha que o vento dispersa.","Por isso os ímpios não subsistirão no juízo, nem os pecadores na congregação dos justos.","Porque o Senhor conhece o caminho dos justos; porém o caminho dos ímpios perecerá."],
     23:["O Senhor é o meu pastor, nada me faltará.","Deitar-me faz em verdes pastos, guia-me mansamente a águas tranquilas.","Refrigera a minha alma; guia-me pelas veredas da justiça, por amor do seu nome.","Ainda que eu andasse pelo vale da sombra da morte, não temeria mal algum, porque tu estás comigo; a tua vara e o teu cajado me consolam.","Preparas uma mesa perante mim na presença dos meus inimigos, unges a minha cabeça com óleo, o meu cálice transborda.","Certamente que a bondade e a misericórdia me seguirão todos os dias da minha vida; e habitarei na casa do Senhor por longos dias."],
-    91:["Aquele que habita no esconderijo do Altíssimo, à sombra do Onipotente descansará.","Direi do Senhor: Ele é o meu Deus, o meu refúgio, a minha fortaleza, e nele confiarei.","Porque ele te livrará do laço do passarinheiro, e da peste perniciosa.","Ele te cobrirá com as suas penas, e debaixo das suas asas te confiarás.","Não temerás espanto noturno, nem seta que voe de dia.","Mil cairão ao teu lado, e dez mil à tua direita, mas tu não serás atingido.","Porque tu, ó Senhor, és o meu refúgio. No Altíssimo fizeste a tua habitação.","Nenhum mal te sucederá, nem praga alguma chegará à tua tenda.","Porque aos seus anjos dará ordem a teu respeito, para te guardarem em todos os teus caminhos.","Eles te sustentarão nas suas mãos, para que não tropeces em alguma pedra."]
-  },
-  "Provérbios":{
-    1:["Provérbios de Salomão, filho de Davi, rei de Israel.","Para se conhecer a sabedoria e a instrução; para se entenderem as palavras da prudência.","O temor do Senhor é o princípio do conhecimento; os loucos desprezam a sabedoria e a instrução.","Filho meu, ouve a instrução de teu pai, e não deixes a doutrina de tua mãe.","Porque diadema de graça serão para a tua cabeça, e colares para o teu pescoço.","Filho meu, se os pecadores te quiserem aliciar, não consintas."],
-    3:["Filho meu, não te esqueças da minha lei, e o teu coração guarde os meus mandamentos.","Confia no Senhor de todo o teu coração, e não te estribes no teu próprio entendimento.","Reconhece-o em todos os teus caminhos, e ele endireitará as tuas veredas.","Não sejas sábio a teus próprios olhos; teme ao Senhor e aparta-te do mal.","Isto será saúde para o teu umbigo, e medula para os teus ossos.","Honra ao Senhor com os teus bens, e com a primeira parte de todos os teus ganhos."]
-  },
-  "Isaías":{
-    40:["Consolai, consolai o meu povo, diz o vosso Deus.","Voz do que clama no deserto: Preparai o caminho do Senhor; endireitai no ermo vereda a nosso Deus.","Toda a carne é erva, e toda a sua beleza como a flor do campo.","Seca-se a erva, e cai a flor, porém a palavra de nosso Deus subsiste eternamente.","Como pastor apascentará o seu rebanho; no seu braço recolherá os cordeiros.","Os que esperam no Senhor renovarão as suas forças, subirão com asas como águias."],
-    53:["Quem deu crédito à nossa pregação? E a quem se manifestou o braço do Senhor?","Era desprezado, e o mais indigno entre os homens, homem de dores, e experimentado nos trabalhos.","Certamente ele tomou sobre si as nossas enfermidades, e as nossas dores levou sobre si.","Mas ele foi ferido pelas nossas transgressões, e moído pelas nossas iniquidades.","O castigo que nos traz a paz estava sobre ele, e pelas suas pisaduras fomos sarados.","Todos nós andávamos desgarrados como ovelhas; cada um se desviava pelo seu caminho.","Mas o Senhor fez cair sobre ele a iniquidade de nós todos.","Ele foi oprimido e afligido, mas não abriu a sua boca; como um cordeiro foi levado ao matadouro.","Da angústia da sua alma ele verá o fruto do seu trabalho, e ficará satisfeito.","Pelo seu conhecimento o meu servo, o justo, justificará a muitos."]
-  },
-  "Mateus":{
-    5:["E Jesus, vendo a multidão, subiu a um monte, e, assentando-se, aproximaram-se dele os seus discípulos.","E, abrindo a sua boca, os ensinava, dizendo:","Bem-aventurados os pobres de espírito, porque deles é o reino dos céus.","Bem-aventurados os que choram, porque eles serão consolados.","Bem-aventurados os mansos, porque eles herdarão a terra.","Bem-aventurados os que têm fome e sede de justiça, porque eles serão fartos.","Bem-aventurados os misericordiosos, porque eles alcançarão misericórdia.","Bem-aventurados os limpos de coração, porque eles verão a Deus.","Bem-aventurados os pacificadores, porque eles serão chamados filhos de Deus.","Bem-aventurados os que sofrem perseguição por causa da justiça, porque deles é o reino dos céus."],
-    6:["E, quando orardes, não sejais como os hipócritas; pois gostam de orar em pé nas sinagogas, para serem vistos pelos homens.","Mas tu, quando orares, entra no teu aposento, e, fechando a tua porta, ora a teu Pai que está em secreto.","E teu Pai, que vê em secreto, te recompensará publicamente.","E, orando, não useis de vãs repetições, como os gentios, que pensam que por muito falarem serão ouvidos.","Portanto, orai vós assim: Pai nosso, que estás nos céus, santificado seja o teu nome.","Venha o teu reino, seja feita a tua vontade, assim na terra como no céu.","O pão nosso de cada dia nos dá hoje.","E perdoa-nos as nossas dívidas, assim como nós perdoamos aos nossos devedores.","E não nos conduzas à tentação, mas livra-nos do mal.","Porque, se perdoardes aos homens as suas ofensas, também vosso Pai celestial vos perdoará a vós."]
-  },
-  "Marcos":{
-    1:["Princípio do evangelho de Jesus Cristo, Filho de Deus.","Como está escrito nos profetas: Eis que eu envio o meu anjo ante a tua face, o qual preparará o teu caminho diante de ti.","Voz do que clama no deserto: Preparai o caminho do Senhor, endireitai as suas veredas.","Assim, João batizava no deserto, e pregava o batismo de arrependimento, para remissão dos pecados.","E saíam a ter com ele toda a província da Judeia, e todos os moradores de Jerusalém.","E aconteceu que Jesus veio de Nazaré da Galileia, e foi batizado por João no Jordão.","E, saindo ele da água, viu os céus se abrirem, e o Espírito, como pomba, descer sobre ele.","E ouviu-se uma voz dos céus: Tu és o meu Filho amado, em ti me comprazo.","E dizia: O tempo está cumprido, e o reino de Deus está próximo. Arrependei-vos, e crede no evangelho.","E Jesus lhes disse: Vinde após mim, e eu farei de vós pescadores de homens."]
-  },
-  "Lucas":{
-    2:["E aconteceu naqueles dias que saiu um decreto de César Augusto, para que todo o mundo se alistasse.","E todos iam alistar-se, cada um à sua própria cidade.","E subiu também José da Galileia, à cidade de Davi, chamada Belém, para se alistar.","E aconteceu que, estando eles ali, se cumpriram os dias em que ela havia de dar à luz.","E deu à luz o seu filho primogênito, e envolveu-o em panos, e deitou-o numa manjedoura.","E havia naquela mesma comarca pastores que estavam no campo, guardando os seus rebanhos durante as vigílias da noite.","E eis que o anjo do Senhor veio sobre eles, e a glória do Senhor os cercou de resplendor.","E o anjo lhes disse: Não temais, porque eis aqui vos trago novas de grande alegria, que será para todo o povo.","Porque hoje vos nasceu, na cidade de Davi, o Salvador, que é Cristo, o Senhor.","E de repente apareceu com o anjo uma multidão dos exércitos celestiais, louvando a Deus e dizendo: Glória a Deus nas alturas, paz na terra, boa vontade para com os homens."],
-    15:["E chegavam-se a ele todos os publicanos e pecadores para o ouvir.","E os fariseus e os escribas murmuravam: Este recebe pecadores, e come com eles.","Qual de vós, tendo cem ovelhas e perdendo uma delas, não deixa as noventa e nove no deserto, e vai após a perdida até encontrá-la?","E, achando-a, a põe sobre os seus ombros, cheio de alegria.","Digo-vos que assim haverá alegria no céu por um pecador que se arrepende, mais do que por noventa e nove justos.","Um certo homem tinha dois filhos. E o mais moço disse ao pai: Pai, dá-me a parte da fazenda que me pertence.","E, partindo para uma terra longínqua, ali desperdiçou a sua fazenda, vivendo dissolutamente.","E, caindo em si, disse: Levantar-me-ei, e irei ter com meu pai, e dir-lhe-ei: Pai, pequei contra o céu e perante ti.","E, levantando-se, foi para seu pai; e, quando ainda estava longe, viu-o seu pai, e se moveu de íntima compaixão.","Porque este meu filho estava morto, e reviveu; tinha-se perdido, e foi achado."]
+    91:["Aquele que habita no esconderijo do Altíssimo, à sombra do Onipotente descansará.","Direi do Senhor: Ele é o meu Deus, o meu refúgio, a minha fortaleza, e nele confiarei.","Porque ele te livrará do laço do passarinheiro, e da peste perniciosa.","Ele te cobrirá com as suas penas, e debaixo das suas asas te confiarás.","Não temerás espanto noturno, nem seta que voe de dia.","Mil cairão ao teu lado, e dez mil à tua direita, mas tu não serás atingido.","Porque tu, ó Senhor, és o meu refúgio. No Altíssimo fizeste a tua habitação.","Nenhum mal te sucederá, nem praga alguma chegará à tua tenda."]
   },
   "João":{
-    1:["No princípio era o Verbo, e o Verbo estava com Deus, e o Verbo era Deus.","Ele estava no princípio com Deus.","Todas as coisas foram feitas por ele, e sem ele nada do que foi feito se fez.","Nele estava a vida, e a vida era a luz dos homens.","E a luz resplandece nas trevas, e as trevas não a compreenderam.","Houve um homem enviado de Deus, cujo nome era João.","Este veio para testemunho, para que testificasse da luz.","Não era ele a luz, mas veio para que testificasse da luz.","E o Verbo se fez carne, e habitou entre nós, cheio de graça e de verdade.","Porque a lei foi dada por Moisés; a graça e a verdade vieram por Jesus Cristo."],
-    3:["E havia entre os fariseus um homem chamado Nicodemos, príncipe dos judeus.","Jesus respondeu e disse-lhe: Na verdade, na verdade te digo que aquele que não nascer de novo, não pode ver o reino de Deus.","O que é nascido da carne é carne, e o que é nascido do Espírito é espírito.","O vento assopra onde quer, e ouves a sua voz, mas não sabes de onde vem, nem para onde vai.","Porque Deus amou o mundo de tal maneira que deu o seu Filho unigênito, para que todo aquele que nele crê não pereça, mas tenha a vida eterna.","Porque Deus enviou o seu Filho ao mundo, não para que condenasse o mundo, mas para que o mundo fosse salvo por ele.","Quem crê nele não é condenado; mas quem não crê já está condenado.","E a condenação é esta: Que a luz veio ao mundo, e os homens amaram mais as trevas do que a luz.","Mas quem pratica a verdade vem para a luz, a fim de que as suas obras sejam manifestas.","Aquele que crê no Filho tem a vida eterna; mas aquele que não crê no Filho não verá a vida."],
-    14:["Não se turbe o vosso coração; credes em Deus, crede também em mim.","Na casa de meu Pai há muitas moradas; vou preparar-vos lugar.","Disse-lhe Jesus: Eu sou o caminho, e a verdade e a vida; ninguém vem ao Pai, senão por mim.","Se me amais, guardai os meus mandamentos.","E eu rogarei ao Pai, e ele vos dará outro Consolador, para que fique convosco para sempre.","O Espírito de verdade, que o mundo não pode receber, porque não o vê nem o conhece.","Não vos deixarei órfãos; voltarei para vós.","Deixo-vos a paz, a minha paz vos dou; não vo-la dou como o mundo a dá.","Não se turbe o vosso coração, nem se atemorize.","Vinde a mim, todos os que estais cansados e oprimidos, e eu vos aliviarei."]
+    1:["No princípio era o Verbo, e o Verbo estava com Deus, e o Verbo era Deus.","Ele estava no princípio com Deus.","Todas as coisas foram feitas por ele, e sem ele nada do que foi feito se fez.","Nele estava a vida, e a vida era a luz dos homens.","E a luz resplandece nas trevas, e as trevas não a compreenderam.","Houve um homem enviado de Deus, cujo nome era João.","E o Verbo se fez carne, e habitou entre nós, cheio de graça e de verdade.","Porque a lei foi dada por Moisés; a graça e a verdade vieram por Jesus Cristo."],
+    3:["E havia entre os fariseus um homem chamado Nicodemos, príncipe dos judeus.","Jesus respondeu e disse-lhe: Na verdade, na verdade te digo que aquele que não nascer de novo, não pode ver o reino de Deus.","Porque Deus amou o mundo de tal maneira que deu o seu Filho unigênito, para que todo aquele que nele crê não pereça, mas tenha a vida eterna.","Porque Deus enviou o seu Filho ao mundo, não para que condenasse o mundo, mas para que o mundo fosse salvo por ele.","Quem crê nele não é condenado; mas quem não crê já está condenado."]
   },
-  "Atos":{
-    1:["Fiz o primeiro tratado, ó Teófilo, acerca de tudo que Jesus começou, não só a fazer, mas a ensinar.","Até ao dia em que foi recebido em cima, depois de ter dado mandamentos aos apóstolos que escolhera.","Aos quais também, depois de ter padecido, se apresentou vivo, com muitas provas infalíveis.","E, estando com eles, determinou-lhes que não se ausentassem de Jerusalém, mas que esperassem a promessa do Pai.","Porque, na verdade, João batizou com água, mas vós sereis batizados com o Espírito Santo, não muito depois destes dias.","Mas recebereis a virtude do Espírito Santo, que há de vir sobre vós; e ser-me-eis testemunhas.","E, quando dizia isto, vendo-o eles, foi elevado às alturas, e uma nuvem o recebeu, ocultando-o a seus olhos.","E, estando com os olhos fitos no céu, eis que junto deles se puseram dois varões vestidos de branco.","Os quais lhes disseram: Varões galileus, por que estais olhando para o céu?","Esse Jesus, que dentre vós foi recebido em cima no céu, há de vir assim como para o céu o vistes ir."],
-    2:["E, cumprindo-se o dia de Pentecostes, estavam todos reunidos no mesmo lugar.","E, de repente, veio do céu um som, como de um vento veemente e impetuoso, e encheu toda a casa.","E foram vistas por eles línguas repartidas, como que de fogo, as quais pousaram sobre cada um deles.","E todos foram cheios do Espírito Santo, e começaram a falar noutras línguas, conforme o Espírito lhes concedia.","E habitavam em Jerusalém judeus, varões religiosos, de todas as nações que estão debaixo do céu.","E todos pasmavam e se maravilhavam, dizendo uns aos outros: Pois quê! Não são galileus todos esses que falam?","Como os ouvimos, cada um na nossa própria língua em que somos nascidos?","E Pedro, pondo-se em pé com os onze, levantou a sua voz, e disse-lhes: Varões judeus e todos os que habitais em Jerusalém, seja-vos isto notório.","Arrependei-vos, e cada um de vós seja batizado em nome de Jesus Cristo, para perdão dos pecados.","E naquele dia agregaram-se quase três mil almas."]
+  "Lucas":{
+    2:["E aconteceu naqueles dias que saiu um decreto de César Augusto, para que todo o mundo se alistasse.","E subiu também José da Galileia, à cidade de Davi, chamada Belém, para se alistar.","E deu à luz o seu filho primogênito, e envolveu-o em panos, e deitou-o numa manjedoura.","E havia naquela mesma comarca pastores que estavam no campo, guardando os seus rebanhos durante as vigílias da noite.","E o anjo lhes disse: Não temais, porque eis aqui vos trago novas de grande alegria, que será para todo o povo.","Porque hoje vos nasceu, na cidade de Davi, o Salvador, que é Cristo, o Senhor."]
+  },
+  "Mateus":{
+    5:["E Jesus, vendo a multidão, subiu a um monte, e, assentando-se, aproximaram-se dele os seus discípulos.","E, abrindo a sua boca, os ensinava, dizendo:","Bem-aventurados os pobres de espírito, porque deles é o reino dos céus.","Bem-aventurados os que choram, porque eles serão consolados.","Bem-aventurados os mansos, porque eles herdarão a terra.","Bem-aventurados os que têm fome e sede de justiça, porque eles serão fartos.","Bem-aventurados os misericordiosos, porque eles alcançarão misericórdia.","Bem-aventurados os limpos de coração, porque eles verão a Deus."]
   },
   "Romanos":{
-    1:["Paulo, servo de Jesus Cristo, chamado para apóstolo, separado para o evangelho de Deus.","O qual antes havia prometido pelos seus profetas nas Santas Escrituras.","Acerca de seu Filho, que nasceu da descendência de Davi segundo a carne.","Declarado Filho de Deus em poder, segundo o Espírito de santificação, pela ressurreição dos mortos.","Pois não me envergonho do evangelho de Cristo, pois é o poder de Deus para salvação de todo aquele que crê.","Porque nele se descobre a justiça de Deus de fé em fé, como está escrito: Mas o justo viverá da fé.","Porque do céu se manifesta a ira de Deus sobre toda a impiedade e injustiça dos homens.","Porquanto o que de Deus se pode conhecer neles se manifesta, porque Deus lho manifestou.","Porque as suas coisas invisíveis, desde a criação do mundo, se veem pelas coisas que estão criadas.","E, como eles não se importaram de ter conhecimento de Deus, Deus os entregou a um sentimento perverso."],
-    8:["Portanto, agora nenhuma condenação há para os que estão em Cristo Jesus.","Porque a lei do Espírito de vida, em Cristo Jesus, me livrou da lei do pecado e da morte.","E sabemos que todas as coisas contribuem juntamente para o bem daqueles que amam a Deus.","Que diremos, pois, a estas coisas? Se Deus é por nós, quem será contra nós?","Porque estou certo de que nem a morte, nem a vida, nem os anjos, nem os principados, poderão separar-nos do amor de Deus.","Nem a altura, nem a profundidade, nem alguma outra criatura nos poderá separar do amor de Deus, que está em Cristo Jesus nosso Senhor.","Aquele que nem mesmo a seu próprio Filho poupou, antes o entregou por todos nós.","Quem intentará acusação contra os escolhidos de Deus? É Deus quem os justifica.","Quem é que condena? Pois é Cristo quem morreu, ou antes quem ressuscitou dentre os mortos.","Em todas estas coisas somos mais que vencedores, por aquele que nos amou."]
+    8:["Portanto, agora nenhuma condenação há para os que estão em Cristo Jesus.","Porque a lei do Espírito de vida, em Cristo Jesus, me livrou da lei do pecado e da morte.","E sabemos que todas as coisas contribuem juntamente para o bem daqueles que amam a Deus.","Que diremos, pois, a estas coisas? Se Deus é por nós, quem será contra nós?","Porque estou certo de que nem a morte, nem a vida, nem os anjos, nem os principados, poderão separar-nos do amor de Deus.","Em todas estas coisas somos mais que vencedores, por aquele que nos amou."]
   },
   "Apocalipse":{
-    1:["Revelação de Jesus Cristo, a qual Deus lhe deu, para mostrar aos seus servos as coisas que brevemente devem acontecer.","Bem-aventurado aquele que lê, e os que ouvem as palavras desta profecia, e guardam as coisas que nela estão escritas.","Eu sou o Alfa e o Ômega, o princípio e o fim, diz o Senhor, que é, e que era, e que há de vir, o Todo-Poderoso.","E da parte de Jesus Cristo, que é a fiel testemunha, o primogênito dos mortos e o príncipe dos reis da terra.","Àquele que nos amou, e em seu sangue nos lavou dos nossos pecados.","E nos fez reis e sacerdotes para Deus e seu Pai; a ele glória e poder para todo o sempre. Amém.","Eis que vem com as nuvens, e todo o olho o verá, até os mesmos que o traspassaram.","Eu sou o Alfa e o Ômega, o princípio e o fim, diz o Senhor.","Eu, João, que também sou vosso irmão, estava na ilha chamada Patmos, por causa da palavra de Deus.","Eu fui arrebatado no Espírito no dia do Senhor, e ouvi detrás de mim uma grande voz, como de trombeta."],
-    21:["E vi um novo céu e uma nova terra. Porque já o primeiro céu e a primeira terra passaram.","E eu, João, vi a santa cidade, a nova Jerusalém, que de Deus descia do céu.","E ouvi uma grande voz do céu, que dizia: Eis aqui o tabernáculo de Deus com os homens.","E Deus limpará de seus olhos toda a lágrima; e não haverá mais morte, nem pranto, nem clamor, nem dor.","E o que estava assentado no trono disse: Eis que tudo faço novo.","E disse-me: Está cumprido. Eu sou o Alfa e o Ômega, o princípio e o fim.","A quem tiver sede, de graça lhe darei da fonte da água da vida.","Quem vencer herdará todas as coisas, e eu serei seu Deus, e ele será meu filho.","E não vi nela templo, porque o seu templo é o Senhor Deus Todo-Poderoso, e o Cordeiro.","E as nações andarão à sua luz; e os reis da terra trarão para ela a sua glória."]
+    21:["E vi um novo céu e uma nova terra. Porque já o primeiro céu e a primeira terra passaram.","E eu, João, vi a santa cidade, a nova Jerusalém, que de Deus descia do céu.","E Deus limpará de seus olhos toda a lágrima; e não haverá mais morte, nem pranto, nem clamor, nem dor.","E o que estava assentado no trono disse: Eis que tudo faço novo."]
   }
 };
 
-/* =========================================================
-   DICIONÁRIO BÍBLICO
-   ========================================================= */
+/* ============ LOCAIS BÍBLICOS (com coordenadas reais) ============ */
+const LOCAIS = [
+  {nome:"Jerusalém", aliases:["Jerusalém","Jerusalem","Sião","Siao"], lat:31.7683, lng:35.2137, desc:"Capital de Israel e cidade santa"},
+  {nome:"Belém", aliases:["Belém","Belem"], lat:31.7054, lng:35.2024, desc:"Cidade natal de Davi e de Jesus"},
+  {nome:"Nazaré", aliases:["Nazaré","Nazare","Nazareth"], lat:32.6996, lng:35.3035, desc:"Cidade onde Jesus cresceu"},
+  {nome:"Cafarnaum", aliases:["Cafarnaum","Capernaum"], lat:32.8803, lng:35.5755, desc:"Base do ministério de Jesus na Galileia"},
+  {nome:"Galileia", aliases:["Galileia","Galiléia","Mar da Galileia","mar da Galileia","Genesaré","Tiberíades"], lat:32.8256, lng:35.5758, desc:"Região e mar onde Jesus ministrou"},
+  {nome:"Rio Jordão", aliases:["Jordão","Jordao","rio Jordão"], lat:31.78, lng:35.55, desc:"Rio onde Jesus foi batizado"},
+  {nome:"Jericó", aliases:["Jericó","Jerico"], lat:31.8572, lng:35.4444, desc:"Cidade das muralhas derrubadas"},
+  {nome:"Hebrom", aliases:["Hebrom","Hebron"], lat:31.5326, lng:35.0998, desc:"Cidade dos patriarcas"},
+  {nome:"Samaria", aliases:["Samaria"], lat:32.275, lng:35.19, desc:"Capital do reino do norte de Israel"},
+  {nome:"Betânia", aliases:["Betânia","Betania"], lat:31.7717, lng:35.2697, desc:"Aldeia de Lázaro, Marta e Maria"},
+  {nome:"Emaús", aliases:["Emaús","Emaus"], lat:31.8394, lng:34.9898, desc:"Aldeia no caminho da ressurreição"},
+  {nome:"Monte das Oliveiras", aliases:["Monte das Oliveiras","oliveiras"], lat:31.778, lng:35.244, desc:"Monte onde Jesus orou e ascendeu"},
+  {nome:"Getsêmani", aliases:["Getsêmani","Getsemani"], lat:31.7794, lng:35.2399, desc:"Jardim da agonia de Jesus"},
+  {nome:"Gólgota", aliases:["Gólgota","Golgota","Calvário","Calvario"], lat:31.7785, lng:35.2306, desc:"Local da crucificação de Jesus"},
+  {nome:"Monte Sinai", aliases:["Sinai","Horebe","Horeb"], lat:28.5394, lng:33.9753, desc:"Onde Moisés recebeu a Lei"},
+  {nome:"Egito", aliases:["Egito","Egipto","Egipto","Egipto"], lat:29.9792, lng:31.1342, desc:"Terra da escravidão de Israel"},
+  {nome:"Rio Nilo", aliases:["Nilo"], lat:30.0, lng:31.0, desc:"Grande rio do Egito"},
+  {nome:"Babilônia", aliases:["Babilônia","Babilonia","Babel"], lat:32.5364, lng:44.4209, desc:"Império do exílio de Judá"},
+  {nome:"Nínive", aliases:["Nínive","Ninive"], lat:36.3594, lng:43.1529, desc:"Capital da Assíria (Jonas)"},
+  {nome:"Assíria", aliases:["Assíria","Assiria"], lat:36.5, lng:43.0, desc:"Império que levou Israel cativo"},
+  {nome:"Pérsia", aliases:["Pérsia","Persia"], lat:30.0, lng:53.0, desc:"Império que permitiu o retorno"},
+  {nome:"Roma", aliases:["Roma"], lat:41.9028, lng:12.4964, desc:"Capital do Império Romano"},
+  {nome:"Damasco", aliases:["Damasco"], lat:33.5138, lng:36.2765, desc:"Cidade da conversão de Paulo"},
+  {nome:"Antioquia", aliases:["Antioquia"], lat:36.2021, lng:36.1606, desc:"Primeira igreja de gentios"},
+  {nome:"Éfeso", aliases:["Éfeso","Efeso"], lat:37.9397, lng:27.3408, desc:"Cidade da igreja de Apocalipse"},
+  {nome:"Corinto", aliases:["Corinto"], lat:37.9393, lng:22.9322, desc:"Cidade das cartas aos Coríntios"},
+  {nome:"Tessalônica", aliases:["Tessalônica","Tessalonica"], lat:40.6401, lng:22.9444, desc:"Cidade da igreja de Paulo"},
+  {nome:"Filipos", aliases:["Filipos"], lat:41.0121, lng:24.2846, desc:"Cidade da carta aos Filipenses"},
+  {nome:"Atenas", aliases:["Atenas"], lat:37.9838, lng:23.7275, desc:"Onde Paulo pregou no Areópago"},
+  {nome:"Patmos", aliases:["Patmos"], lat:37.3095, lng:26.5478, desc:"Ilha onde João recebeu o Apocalipse"},
+  {nome:"Canaã", aliases:["Canaã","Canaa","Cana"], lat:32.0, lng:35.0, desc:"A Terra Prometida"},
+  {nome:"Ur dos Caldeus", aliases:["Ur dos Caldeus","Ur"], lat:30.9626, lng:46.1051, desc:"Cidade natal de Abraão"},
+  {nome:"Harã", aliases:["Harã","Hara","Harã"], lat:36.8607, lng:39.0318, desc:"Cidade por onde Abraão passou"},
+  {nome:"Siquém", aliases:["Siquém","Siquem"], lat:32.2138, lng:35.2833, desc:"Cidade da aliança de Deus"},
+  {nome:"Betel", aliases:["Betel"], lat:31.9435, lng:35.2431, desc:"Casa de Deus (visão de Jacó)"},
+  {nome:"Gaza", aliases:["Gaza"], lat:31.5017, lng:34.4668, desc:"Cidade dos filisteus (Sansão)"},
+  {nome:"Tiro", aliases:["Tiro"], lat:33.2705, lng:35.2033, desc:"Cidade fenícia"},
+  {nome:"Sidom", aliases:["Sidom","Sidon"], lat:33.559, lng:35.3709, desc:"Cidade fenícia"},
+  {nome:"Cesaréia", aliases:["Cesaréia","Cesareia","Cesaréia"], lat:32.5, lng:34.9, desc:"Porto romano de Israel"},
+  {nome:"Jope", aliases:["Jope"], lat:32.0538, lng:34.7515, desc:"Porto onde Pedro teve a visão"},
+  {nome:"Mar Morto", aliases:["Mar Morto","mar Morto"], lat:31.5, lng:35.5, desc:"Mar salgado, junto a Sodoma"},
+  {nome:"Sodoma", aliases:["Sodoma"], lat:31.2, lng:35.5, desc:"Cidade julgada por Deus"},
+  {nome:"Gomorra", aliases:["Gomorra"], lat:31.2, lng:35.5, desc:"Cidade julgada por Deus"},
+  {nome:"Moabe", aliases:["Moabe"], lat:31.5, lng:35.7, desc:"Terra de Rute"},
+  {nome:"Fenícia", aliases:["Fenícia","Fenicia"], lat:34.0, lng:35.5, desc:"Região de Tiro e Sidom"},
+  {nome:"Grécia", aliases:["Grécia","Grecia"], lat:39.0, lng:22.0, desc:"Terra das viagens de Paulo"},
+  {nome:"Macedônia", aliases:["Macedônia","Macedonia"], lat:41.0, lng:22.5, desc:"Província de Filipos e Tessalônica"},
+  {nome:"Mar Mediterrâneo", aliases:["Mediterrâneo","Mediterraneo","Mar Grande"], lat:34.0, lng:22.0, desc:"O Grande Mar dos hebreus"}
+];
+
+/* ============ DICIONÁRIO ============ */
 const DICIONARIO = {
-  "Deus":{orig:"אֱלֹהִים (Elohim) — Hebraico",sig:"O Ser Supremo, Criador de todas as coisas. O termo é plural, sugerindo a Trindade. Indica o Deus todo-poderoso, Criador e Juiz. Enfatiza o poder e a majestade divina."},
-  "Senhor":{orig:"יהוה (YHWH) / Adonai — Hebraico",sig:"Título de reverência e autoridade. O nome próprio de Deus revelado a Moisés ('Eu Sou o que Sou'). Usado para Deus e para Jesus Cristo."},
-  "Espírito":{orig:"רוּחַ (Ruach) — Hebraico",sig:"Sopro, vento, espírito. O Espírito Santo, terceira pessoa da Trindade. Presente e ativo na criação e na vida do crente."},
-  "Verbo":{orig:"Λόγος (Logos) — Grego",sig:"Palavra, razão, expressão. Em João 1 refere-se a Jesus Cristo, a Palavra eterna de Deus que se fez carne — a comunicação perfeita de Deus à humanidade."},
-  "criou":{orig:"בָּרָא (bara) — Hebraico",sig:"Criar do nada (creatio ex nihilo). Verbo usado exclusivamente para a criação divina — somente Deus pode criar do nada."},
-  "princípio":{orig:"רֵאשִׁית (reshit) / arché",sig:"Início, começo, primeira causa. Indica o ponto inicial da criação. Aponta para a eternidade de Deus que existia antes do tempo."},
-  "fé":{orig:"πίστις (pistis) — Grego",sig:"Confiança, fidelidade, convicção. 'Certeza de coisas que se esperam, convicção de fatos que se não veem' (Hb 11:1). É confiar plenamente em Deus."},
-  "graça":{orig:"χάρις (charis) — Grego",sig:"Favor imerecido, bondade gratuita. O presente gratuito da salvação em Cristo. Não é conquistada — é recebida (Ef 2:8)."},
-  "amor":{orig:"ἀγάπη (agape) — Grego",sig:"Amor incondicional e sacrificial. O amor que Deus tem — que dá sem esperar retorno. 'Deus é amor' (1Jo 4:8)."},
-  "salvação":{orig:"σωτηρία (soteria) — Grego",sig:"Livramento, resgate, libertação. O nome de Jesus é 'Yeshua' = 'Salvação'. Deus liberta do pecado, morte e condenação."},
-  "pecado":{orig:"ἁμαρτία (hamartia) — Grego",sig:"'Errar o alvo', como flecha que não atinge a mira. É falhar em cumprir o propósito de Deus e desobedecer Sua lei."},
-  "justiça":{orig:"δικαιοσύνη (dikaiosune) — Grego",sig:"Retidão, conformidade com o caráter de Deus. Não é apenas seguir regras, mas viver alinhado com a natureza santa de Deus."},
-  "verdade":{orig:"ἀλήθεια (aletheia) — Grego",sig:"Realidade não oculta, firmeza, fidelidade. Jesus declarou: 'Eu sou a verdade' (Jo 14:6)."},
-  "vida":{orig:"ζωή (zoe) — Grego",sig:"Vida no sentido absoluto e divino — não apenas existência biológica, mas a vida eterna e plena que vem de Deus."},
-  "paz":{orig:"שָׁלוֹם (shalom) / eirene",sig:"Bem-estar completo, integridade, harmonia. Não apenas ausência de conflito, mas plenitude de vida em comunhão com Deus."},
-  "glória":{orig:"כָּבוֹד (kavod) / doxa",sig:"Peso, honra, majestade, esplendor. A manifestação visível da presença e perfeição de Deus."},
-  "reino":{orig:"βασιλεία (basileia) — Grego",sig:"O domínio soberano de Deus. O 'Reino dos Céus' é tema central no ensino de Jesus — onde Deus reina."},
-  "profeta":{orig:"נָבִיא (navi) — Hebraico",sig:"Porta-voz de Deus. Não apenas prediz o futuro, mas declara a mensagem de Deus ao povo."},
-  "apóstolo":{orig:"ἀπόστολος (apostolos) — Grego",sig:"'Enviado'. Os doze discípulos escolhidos por Jesus para levar o evangelho ao mundo."},
-  "evangelho":{orig:"εὐαγγέλιον (euangelion) — Grego",sig:"'Boas novas'. A mensagem da salvação através da vida, morte e ressurreição de Jesus Cristo."},
-  "ressurreição":{orig:"ἀνάστασις (anastasis) — Grego",sig:"'Levantar-se' — voltar à vida após a morte. Central ao cristianismo: Cristo ressuscitou e garante a ressurreição dos crentes."},
-  "aliança":{orig:"בְּרִית (berit) — Hebraico",sig:"Pacto, acordo vinculante. Um compromisso sagrado entre Deus e Seu povo (Noé, Abraão, Moisés, Davi e a Nova Aliança)."},
-  "santo":{orig:"קֹדֶשׁ (qodesh) / hagios",sig:"Separado, puro, distinto. Atributo central de Deus — Ele é 'Santo, Santo, Santo' (Is 6:3)."},
-  "misericórdia":{orig:"חֶסֶד (chesed) — Hebraico",sig:"Amor leal, compaixão profunda. O amor fiel de Deus à aliança. Não receber o castigo que merecemos."},
-  "sabedoria":{orig:"חָכְמָה (chokmah) — Hebraico",sig:"Habilidade prática de viver bem. 'O temor do Senhor é o princípio da sabedoria' (Pv 9:10)."},
-  "caminho":{orig:"ὁδός (hodos) — Grego",sig:"Jesus declarou: 'Eu sou o caminho' (Jo 14:6). Direção, conduta, modo de viver que conduz a Deus."},
-  "luz":{orig:"אוֹר (or) / phos",sig:"Símbolo de Deus, verdade, pureza e revelação. Jesus é 'a luz do mundo' (Jo 8:12)."},
-  "trevas":{orig:"חֹשֶׁךְ (choshek) — Hebraico",sig:"Escuridão, ausência de luz. Representa ignorância, mal e separação de Deus."},
-  "água":{orig:"מַיִם (mayim) — Hebraico",sig:"Símbolo de purificação, vida e renovação espiritual. Usada no batismo cristão."},
-  "homem":{orig:"אָדָם (adam) — Hebraico",sig:"Ser humano, criado à imagem e semelhança de Deus (Gn 1:27). Vem de 'adamah' (terra/solo)."},
-  "pastor":{orig:"רֹעֶה (roeh) — Hebraico",sig:"Aquele que apascenta, cuida e protege. 'O Senhor é o meu pastor' (Sl 23:1). Deus cuida do Seu povo."},
-  "cordeiro":{orig:"שֶׂה (seh) / amnos",sig:"Símbolo de sacrifício inocente. Jesus é 'o Cordeiro de Deus que tira o pecado do mundo' (Jo 1:29)."},
-  "oração":{orig:"תְּפִלָּה (tefillah) — Hebraico",sig:"Comunicação direta com Deus — pedir, louvar, confessar, interceder. O respirar da alma."},
-  "Jesus":{orig:"יֵשׁוּעַ (Yeshua) — Hebraico",sig:"'O Senhor salva'. O Cristo, Filho de Deus, Salvador da humanidade. Central da fé cristã."},
-  "Cristo":{orig:"Χριστός (Christos) — Grego",sig:"'Ungido'. Equivalente hebraico: 'Messias'. Título de Jesus — o enviado e ungido de Deus."},
-  "Moisés":{orig:"מֹשֶׁה (Moshe) — Hebraico",sig:"Libertador de Israel do Egito. Recebeu os Dez Mandamentos no monte Sinai. Autor do Pentateuco."},
-  "Davi":{orig:"דָּוִד (David) — Hebraico",sig:"Rei de Israel, autor de muitos Salmos. 'Homem segundo o coração de Deus' (At 13:22)."},
-  "Salomão":{orig:"שְׁלֹמֹה (Shlomo) — Hebraico",sig:"Filho de Davi, rei conhecido por sua sabedoria. Construiu o primeiro templo em Jerusalém."},
-  "Abraão":{orig:"אַבְרָהָם (Avraham) — Hebraico",sig:"Pai da fé e das nações. Patriarca com quem Deus fez aliança — pai de Isaque e Israel."},
-  "Paulo":{orig:"Παῦλος (Paulos) — Grego",sig:"Apóstolo dos gentios. Antes perseguidor (Saulo), tornou-se o maior missionário do cristianismo. Autor de 13 cartas."},
-  "Pedro":{orig:"Πέτρος (Petros) — Grego",sig:"'Rocha'. Apóstolo líder da igreja primitiva. Um dos discípulos mais próximos de Jesus."},
-  "João":{orig:"Ἰωάννης (Ioannes) — Grego",sig:"'O discípulo amado'. Autor do Evangelho de João, das três cartas e do Apocalipse."},
-  "Noé":{orig:"נֹחַ (Noach) — Hebraico",sig:"Patriarca que construiu a arca para sobreviver ao dilúvio. Símbolo de fé e obediência."},
-  "Adão":{orig:"אָדָם (Adam) — Hebraico",sig:"Primeiro homem criado por Deus do pó da terra. Representa toda a humanidade."},
-  "Eva":{orig:"חַוָּה (Chavah) — Hebraico",sig:"Primeira mulher, 'mãe de todos os viventes'. Criada da costela de Adão."},
-  "Jerusalém":{orig:"יְרוּשָׁלַיִם (Yerushalayim)",sig:"Cidade santa, capital de Israel. Local do templo, da crucificação e ressurreição de Jesus."},
-  "Éden":{orig:"עֵדֶן (Eden) — Hebraico",sig:"Jardim paradisíaco onde Adão e Eva viveram antes do pecado. Significa 'deleite' ou 'prazer'."},
-  "Sião":{orig:"צִיּוֹן (Tzion) — Hebraico",sig:"Monte em Jerusalém, símbolo da presença de Deus e do Seu povo. Nome poético de Jerusalém."},
-  "Israel":{orig:"יִשְׂרָאֵל (Yisrael) — Hebraico",sig:"'Aquele que luta com Deus'. Nome dado a Jacó; passou a designar o povo escolhido de Deus."},
-  "Egito":{orig:"מִצְרַיִם (Mitzrayim) — Hebraico",sig:"Terra da escravidão de Israel por 400 anos. Símbolo de opressão e do mundo pecaminoso."},
-  "Babilônia":{orig:"בָּבֶל (Bavel) — Hebraico",sig:"Império que destruiu Jerusalém e levou o povo ao exílio. Símbolo de orgulho e rebeldia contra Deus."}
+  "Deus":{orig:"אֱלֹהִים (Elohim) — Hebraico",sig:"O Ser Supremo, Criador de todas as coisas. Termo plural que sugere a Trindade. Enfatiza o poder e a majestade divina."},
+  "Senhor":{orig:"יהוה (YHWH) / Adonai — Hebraico",sig:"Título de reverência. O nome próprio de Deus revelado a Moisés ('Eu Sou o que Sou')."},
+  "Espírito":{orig:"רוּחַ (Ruach) — Hebraico",sig:"Sopro, vento, espírito. O Espírito Santo, terceira pessoa da Trindade."},
+  "Verbo":{orig:"Λόγος (Logos) — Grego",sig:"Palavra, razão. Em João 1 refere-se a Jesus Cristo, a Palavra eterna de Deus que se fez carne."},
+  "criou":{orig:"בָּרָא (bara) — Hebraico",sig:"Criar do nada (creatio ex nihilo). Verbo usado exclusivamente para a criação divina."},
+  "princípio":{orig:"רֵאשִׁית (reshit) / arché",sig:"Início, começo, primeira causa. Aponta para a eternidade de Deus antes do tempo."},
+  "fé":{orig:"πίστις (pistis) — Grego",sig:"Confiança, fidelidade, convicção. 'Certeza de coisas que se esperam' (Hb 11:1)."},
+  "graça":{orig:"χάρις (charis) — Grego",sig:"Favor imerecido, bondade gratuita. O presente da salvação em Cristo (Ef 2:8)."},
+  "amor":{orig:"ἀγάπη (agape) — Grego",sig:"Amor incondicional e sacrificial. 'Deus é amor' (1Jo 4:8)."},
+  "salvação":{orig:"σωτηρία (soteria) — Grego",sig:"Livramento, resgate. O nome de Jesus é 'Yeshua' = 'Salvação'."},
+  "pecado":{orig:"ἁμαρτία (hamartia) — Grego",sig:"'Errar o alvo'. Falhar em cumprir o propósito de Deus."},
+  "justiça":{orig:"δικαιοσύνη (dikaiosune) — Grego",sig:"Retidão, conformidade com o caráter de Deus."},
+  "verdade":{orig:"ἀλήθεια (aletheia) — Grego",sig:"Realidade não oculta. 'Eu sou a verdade' (Jo 14:6)."},
+  "vida":{orig:"ζωή (zoe) — Grego",sig:"Vida plena e eterna que vem de Deus."},
+  "paz":{orig:"שָׁלוֹם (shalom)",sig:"Bem-estar completo, integridade, harmonia."},
+  "glória":{orig:"כָּבוֹד (kavod) / doxa",sig:"Peso, honra, majestade. Manifestação da presença de Deus."},
+  "reino":{orig:"βασιλεία (basileia) — Grego",sig:"O domínio soberano de Deus. Tema central de Jesus."},
+  "profeta":{orig:"נָבִיא (navi) — Hebraico",sig:"Porta-voz de Deus. Declara a mensagem divina ao povo."},
+  "apóstolo":{orig:"ἀπόστολος (apostolos) — Grego",sig:"'Enviado'. Os doze escolhidos por Jesus."},
+  "evangelho":{orig:"εὐαγγέλιον (euangelion) — Grego",sig:"'Boas novas'. Mensagem da salvação em Cristo."},
+  "ressurreição":{orig:"ἀνάστασις (anastasis) — Grego",sig:"'Levantar-se'. Cristo ressuscitou e garante a ressurreição dos crentes."},
+  "aliança":{orig:"בְּרִית (berit) — Hebraico",sig:"Pacto sagrado entre Deus e Seu povo."},
+  "santo":{orig:"קֹדֶשׁ (qodesh) / hagios",sig:"Separado, puro, distinto. 'Santo, Santo, Santo' (Is 6:3)."},
+  "misericórdia":{orig:"חֶסֶד (chesed) — Hebraico",sig:"Amor leal e compaixão profunda de Deus."},
+  "sabedoria":{orig:"חָכְמָה (chokmah) — Hebraico",sig:"'O temor do Senhor é o princípio da sabedoria' (Pv 9:10)."},
+  "caminho":{orig:"ὁδός (hodos) — Grego",sig:"'Eu sou o caminho' (Jo 14:6)."},
+  "luz":{orig:"אוֹר (or) / phos",sig:"Símbolo de Deus, verdade e pureza. Jesus é 'a luz do mundo'."},
+  "trevas":{orig:"חֹשֶׁךְ (choshek)",sig:"Escuridão; representa o pecado e a separação de Deus."},
+  "água":{orig:"מַיִם (mayim)",sig:"Purificação, vida e renovação espiritual."},
+  "pastor":{orig:"רֹעֶה (roeh)",sig:"'O Senhor é o meu pastor' (Sl 23:1). Deus cuida do Seu povo."},
+  "cordeiro":{orig:"ἀμνός (amnos) — Grego",sig:"Símbolo de sacrifício. Jesus é 'o Cordeiro de Deus' (Jo 1:29)."},
+  "oração":{orig:"תְּפִלָּה (tefillah)",sig:"Comunicação direta com Deus — o respirar da alma."},
+  "Jesus":{orig:"יֵשׁוּעַ (Yeshua)",sig:"'O Senhor salva'. O Cristo, Filho de Deus, Salvador."},
+  "Cristo":{orig:"Χριστός (Christos)",sig:"'Ungido'. Equivalente hebraico: 'Messias'."},
+  "Moisés":{orig:"מֹשֶׁה (Moshe)",sig:"Libertador de Israel. Recebeu os Dez Mandamentos no Sinai."},
+  "Davi":{orig:"דָּוִד (David)",sig:"Rei de Israel, autor de Salmos. 'Homem segundo o coração de Deus'."},
+  "Salomão":{orig:"שְׁלֹמֹה (Shlomo)",sig:"Rei sábio que construiu o primeiro templo."},
+  "Abraão":{orig:"אַבְרָהָם (Avraham)",sig:"Pai da fé e das nações."},
+  "Paulo":{orig:"Παῦλος (Paulos)",sig:"Apóstolo dos gentios. Autor de 13 cartas."},
+  "Pedro":{orig:"Πέτρος (Petros)",sig:"'Rocha'. Apóstolo líder da igreja primitiva."},
+  "João":{orig:"Ἰωάννης (Ioannes)",sig:"'O discípulo amado'. Autor do Evangelho, cartas e Apocalipse."},
+  "Adão":{orig:"אָדָם (Adam)",sig:"Primeiro homem criado do pó da terra."},
+  "Eva":{orig:"חַוָּה (Chavah)",sig:"Primeira mulher, 'mãe de todos os viventes'."},
+  "Israel":{orig:"יִשְׂרָאֵל (Yisrael)",sig:"'Aquele que luta com Deus'. Nome dado a Jacó; designa o povo de Deus."},
+  "Noé":{orig:"נֹחַ (Noach)",sig:"Patriarca que construiu a arca. Símbolo de fé."},
+  "José":{orig:"יוֹסֵף (Yosef)",sig:"Filho de Jacó, governador do Egito."}
 };
 
-/* =========================================================
-   TIMELINE
-   ========================================================= */
+/* ============ TIMELINE / VÍDEOS / MAPAS / PERSONAGENS ============ */
 const TIMELINE = [
   {data:"~4000 a.C.",ev:"Criação do Mundo",desc:"Deus cria os céus, a terra e o ser humano",livro:"Gênesis"},
   {data:"~2350 a.C.",ev:"O Dilúvio",desc:"Deus julga a terra; Noé é salvo na arca",livro:"Gênesis"},
@@ -464,195 +510,250 @@ const TIMELINE = [
   {data:"~95 d.C.",ev:"Apocalipse",desc:"João recebe a revelação final em Patmos",livro:"Apocalipse"}
 ];
 
-/* =========================================================
-   VÍDEOS (Bible Project — visões gerais)
-   ========================================================= */
 const VIDEOS = [
   {titulo:"Gênesis 1-11 — A Criação e o Dilúvio",id:"GQI72THyO5I",desc:"O começo de tudo: criação, queda e o recomeço com Noé."},
   {titulo:"Êxodo 1-18 — Libertação do Egito",id:"jH_aojNvM3E",desc:"Como Deus libertou Israel da escravidão egípcia."},
   {titulo:"Salmos — O Livro de Orações",id:"j9phNEaPrv8",desc:"Os cânticos de louvor, lamento e adoração."},
   {titulo:"Mateus — O Rei e o Reino",id:"3Dv4-n6OYGI",desc:"Jesus, o Messias prometido, cumpre as Escrituras."},
   {titulo:"João 1-12 — O Verbo se Fez Carne",id:"G-2e9mMf7E8",desc:"Quem é Jesus e por que ele veio ao mundo."},
-  {titulo:"Romanos 1-4 — A Justiça de Deus",id:"ej_6dVdJSIU",desc:"O evangelho explicado por Paulo, versículo a versículo."},
+  {titulo:"Romanos 1-4 — A Justiça de Deus",id:"ej_6dVdJSIU",desc:"O evangelho explicado por Paulo."},
   {titulo:"Apocalipse — O Fim e o Novo Começo",id:"5nvVVcYD-0w",desc:"A visão final de João sobre a vitória de Cristo."},
   {titulo:"Atos 1-12 — O Nascimento da Igreja",id:"CGbNw8ksbrg",desc:"Como o evangelho se espalhou pelo poder do Espírito."}
 ];
 
-/* =========================================================
-   MAPAS (OpenStreetMap — sem chave de API)
-   ========================================================= */
 const MAPAS = [
   {nome:"Jerusalém",lat:31.7683,lng:35.2137,zoom:13,desc:"A cidade santa — templo, crucificação e ressurreição"},
   {nome:"Egito",lat:29.9792,lng:31.1342,zoom:6,desc:"Terra da escravidão de Israel por 400 anos"},
   {nome:"Monte Sinai",lat:28.5394,lng:33.9753,zoom:10,desc:"Onde Moisés recebeu os Dez Mandamentos"},
-  {nome:"Galileia",lat:32.8256,lng:35.5758,zoom:11,desc:"Onde Jesus exerceu grande parte do seu ministério"},
+  {nome:"Galileia",lat:32.8256,lng:35.5758,zoom:11,desc:"Onde Jesus exerceu grande parte do ministério"},
   {nome:"Babilônia",lat:32.5364,lng:44.4209,zoom:6,desc:"Império que levou o povo ao exílio"},
-  {nome:"Roma",lat:41.9028,lng:12.4964,zoom:6,desc:"Centro do Império — destino final de Paulo"},
+  {nome:"Roma",lat:41.9028,lng:12.4964,zoom:6,desc:"Centro do Império — destino de Paulo"},
   {nome:"Belém",lat:31.7054,lng:35.2024,zoom:14,desc:"Cidade do nascimento de Jesus"},
   {nome:"Mesopotâmia",lat:33.3128,lng:44.3615,zoom:6,desc:"Berço de Abraão e da civilização"}
 ];
 
-/* =========================================================
-   PERSONAGENS
-   ========================================================= */
 const PERSONAGENS = [
-  {nome:"Adão",papel:"Primeiro homem criado",emoji:"🧔"},
-  {nome:"Eva",papel:"Primeira mulher",emoji:"👩"},
-  {nome:"Noé",papel:"Construtor da arca",emoji:"🚢"},
-  {nome:"Abraão",papel:"Pai da fé",emoji:"⭐"},
-  {nome:"Isaque",papel:"Filho da promessa",emoji:"🐑"},
-  {nome:"Jacó",papel:"Pai das 12 tribos",emoji:"🏔️"},
-  {nome:"José",papel:"Governador do Egito",emoji:"👔"},
-  {nome:"Moisés",papel:"Libertador de Israel",emoji:"🌊"},
-  {nome:"Josué",papel:"Conquistador de Canaã",emoji:"⚔️"},
-  {nome:"Sansão",papel:"Juiz de grande força",emoji:"💪"},
-  {nome:"Rute",papel:"Moabita fiel",emoji:"🌾"},
-  {nome:"Samuel",papel:"Profeta e juiz",emoji:"👦"},
-  {nome:"Saul",papel:"Primeiro rei",emoji:"🗡️"},
-  {nome:"Davi",papel:"Rei segundo o coração de Deus",emoji:"🎵"},
-  {nome:"Salomão",papel:"Rei mais sábio",emoji:"👑"},
-  {nome:"Elias",papel:"Profeta de fogo",emoji:"🔥"},
-  {nome:"Isaías",papel:"Profeta messiânico",emoji:"📢"},
-  {nome:"Daniel",papel:"Profeta na Babilônia",emoji:"🦁"},
-  {nome:"Ester",papel:"Rainha corajosa",emoji:"👸"},
-  {nome:"Maria",papel:"Mãe de Jesus",emoji:"🌹"},
-  {nome:"João Batista",papel:"Precursor do Messias",emoji:"🌊"},
-  {nome:"Jesus",papel:"O Salvador",emoji:"✝️"},
-  {nome:"Pedro",papel:"Apóstolo líder",emoji:"🪨"},
-  {nome:"Paulo",papel:"Apóstolo dos gentios",emoji:"✉️"},
-  {nome:"João",papel:"O discípulo amado",emoji:"🦅"}
+  {nome:"Adão",papel:"Primeiro homem criado",emoji:"🧔"},{nome:"Eva",papel:"Primeira mulher",emoji:"👩"},
+  {nome:"Noé",papel:"Construtor da arca",emoji:"🚢"},{nome:"Abraão",papel:"Pai da fé",emoji:"⭐"},
+  {nome:"Isaque",papel:"Filho da promessa",emoji:"🐑"},{nome:"Jacó",papel:"Pai das 12 tribos",emoji:"🏔️"},
+  {nome:"José",papel:"Governador do Egito",emoji:"👔"},{nome:"Moisés",papel:"Libertador de Israel",emoji:"🌊"},
+  {nome:"Josué",papel:"Conquistador de Canaã",emoji:"⚔️"},{nome:"Sansão",papel:"Juiz de grande força",emoji:"💪"},
+  {nome:"Rute",papel:"Moabita fiel",emoji:"🌾"},{nome:"Samuel",papel:"Profeta e juiz",emoji:"👦"},
+  {nome:"Davi",papel:"Rei segundo o coração de Deus",emoji:"🎵"},{nome:"Salomão",papel:"Rei mais sábio",emoji:"👑"},
+  {nome:"Elias",papel:"Profeta de fogo",emoji:"🔥"},{nome:"Isaías",papel:"Profeta messiânico",emoji:"📢"},
+  {nome:"Daniel",papel:"Profeta na Babilônia",emoji:"🦁"},{nome:"Ester",papel:"Rainha corajosa",emoji:"👸"},
+  {nome:"Maria",papel:"Mãe de Jesus",emoji:"🌹"},{nome:"João Batista",papel:"Precursor do Messias",emoji:"🌊"},
+  {nome:"Jesus",papel:"O Salvador",emoji:"✝️"},{nome:"Pedro",papel:"Apóstolo líder",emoji:"🪨"},
+  {nome:"Paulo",papel:"Apóstolo dos gentios",emoji:"✉️"},{nome:"João",papel:"O discípulo amado",emoji:"🦅"}
 ];
 
-/* =========================================================
-   ESTADO E LÓGICA
-   ========================================================= */
-let livroAtual = null;
-let capituloAtual = null;
+/* ============ ESTADO ============ */
+let livroAtual = null, capituloAtual = null;
 let lidos = JSON.parse(localStorage.getItem('bibliaLidos') || '{}');
+let locaisCapitulo = [], mapaLocalAtual = 0;
 
 function salvar(){ localStorage.setItem('bibliaLidos', JSON.stringify(lidos)); }
 
+/* ============ HELPERS ============ */
+function escapeHtml(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function escapeRegex(s){ return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'); }
+function regexAccent(str){
+  const mapa = {a:'aáàâãä',e:'eéèêë',i:'iíìîï',o:'oóòôõö',u:'uúùûü',c:'cç',n:'nñ'};
+  let out='';
+  for(const ch of str){
+    const c=ch.toLowerCase();
+    if(mapa[c]) out+='['+mapa[c]+']';
+    else if(ch===' ') out+='\\s+';
+    else out+=escapeRegex(ch);
+  }
+  return out;
+}
 function corProgresso(pct){
-  if(pct < 25) return 'linear-gradient(90deg,#ff6b6b,#e8563a)';
-  if(pct < 50) return 'linear-gradient(90deg,#ffa94d,#f5c542)';
-  if(pct < 75) return 'linear-gradient(90deg,#5ab0ff,#6a8cff)';
+  if(pct<25) return 'linear-gradient(90deg,#ff6b6b,#e8563a)';
+  if(pct<50) return 'linear-gradient(90deg,#ffa94d,#f5c542)';
+  if(pct<75) return 'linear-gradient(90deg,#5ab0ff,#6a8cff)';
   return 'linear-gradient(90deg,#3ddc84,#1fa862)';
 }
 
-function atualizarProgresso(){
-  const total = TOTAL_CAPS;
-  const nLidos = Object.keys(lidos).length;
-  const pct = Math.round((nLidos/total)*100);
-  const fill = document.getElementById('pfill');
-  fill.style.width = pct + '%';
-  fill.style.background = corProgresso(pct);
-  fill.textContent = pct + '%';
-  document.getElementById('pctTxt').textContent = pct + '%';
+/* ============ DESTAQUE DE PALAVRAS E LOCAIS ============ */
+function destacar(texto, offset){
+  const matches=[];
+  LOCAIS.forEach(loc=>{
+    loc.aliases.forEach(alias=>{
+      const re=new RegExp('(?<![A-Za-zÀ-ÖØ-öø-ÿ])'+regexAccent(alias)+'(?![A-Za-zÀ-ÖØ-öø-ÿ])','gi');
+      let m;
+      while((m=re.exec(texto))!==null){ matches.push({start:m.index,end:m.index+m[0].length,type:'local',loc,text:m[0]}); }
+    });
+  });
+  Object.keys(DICIONARIO).forEach(pal=>{
+    const re=new RegExp('(?<![A-Za-zÀ-ÖØ-öø-ÿ])'+regexAccent(pal)+'(?![A-Za-zÀ-ÖØ-öø-ÿ])','gi');
+    let m;
+    while((m=re.exec(texto))!==null){ matches.push({start:m.index,end:m.index+m[0].length,type:'word',pal,text:m[0]}); }
+  });
+  matches.sort((a,b)=>a.start-b.start || (a.type==='local'?-1:1));
+  let out='',pos=0;
+  const locaisEncontrados=[];
+  for(const mt of matches){
+    if(mt.start<pos) continue;
+    out+=escapeHtml(texto.slice(pos,mt.start));
+    if(mt.type==='local'){
+      const idx=offset+locaisEncontrados.length;
+      locaisEncontrados.push({nome:mt.loc.nome,lat:mt.loc.lat,lng:mt.loc.lng,desc:mt.loc.desc});
+      out+=`<span class="local" onclick="focarMapa(${idx})">${escapeHtml(mt.text)}</span>`;
+    } else {
+      out+=`<span class="word" onclick="abrirPopup('${mt.pal.replace(/'/g,"\\'")}')">${escapeHtml(mt.text)}</span>`;
+    }
+    pos=mt.end;
+  }
+  out+=escapeHtml(texto.slice(pos));
+  return {html:out,locais:locaisEncontrados};
 }
 
+/* ============ CARREGAR TEXTO ============ */
+async function carregarTextoAPI(livro,cap){
+  const apiBook=API_BOOKS[livro];
+  if(!apiBook) return null;
+  const key='bibliaApi-'+livro+'-'+cap;
+  const cached=localStorage.getItem(key);
+  if(cached){ try{ const p=JSON.parse(cached); if(p&&p.length) return p; }catch(e){} }
+  try{
+    const q=encodeURIComponent(apiBook).replace(/%20/g,'+');
+    const resp=await fetch(`https://bible-api.com/${q}+${cap}?translation=almeida`);
+    if(!resp.ok) return null;
+    const data=await resp.json();
+    const vers=data.verses.map(v=>v.text.replace(/\[\d+\]/g,'').trim()).filter(t=>t);
+    if(vers.length){ localStorage.setItem(key,JSON.stringify(vers)); return vers; }
+    return null;
+  }catch(e){ return null; }
+}
+
+async function renderTexto(){
+  const area=document.getElementById('textoArea');
+  area.innerHTML='<div class="placeholder">⏳ <b>Carregando texto bíblico (Almeida)...</b></div>';
+  let texto=await carregarTextoAPI(livroAtual,capituloAtual);
+  if(!texto && TEXTOS[livroAtual] && TEXTOS[livroAtual][capituloAtual]) texto=TEXTOS[livroAtual][capituloAtual];
+  if(texto){ renderVersiculos(texto); }
+  else{
+    const livro=LIVROS.find(l=>l.nome===livroAtual);
+    area.innerHTML=`<div class="placeholder"><b>📖 ${livroAtual} ${capituloAtual}</b><br><br>
+      Não foi possível carregar este capítulo (verifique a conexão).<br><br>
+      <b>Sobre o livro:</b> ${livro.autor} • ${livro.caps} capítulos • ${livro.era}<br><br>
+      🔍 Explore o <b>Dicionário</b>, a <b>Linha do Tempo</b>, os <b>Mapas</b> e os <b>Vídeos</b> enquanto isso!</div>`;
+  }
+}
+
+function renderVersiculos(texto){
+  const area=document.getElementById('textoArea');
+  locaisCapitulo=[];
+  let html='';
+  texto.forEach((v,i)=>{
+    html+=`<span class="vnum">${i+1}</span> `;
+    const res=destacar(v,locaisCapitulo.length);
+    res.locais.forEach(l=>locaisCapitulo.push(l));
+    html+=res.html+' ';
+  });
+  area.innerHTML=html;
+  atualizarMapaCanto();
+}
+
+/* ============ MAPA NO CANTO ============ */
+function atualizarMapaCanto(){
+  const panel=document.getElementById('mapaCanto');
+  if(!locaisCapitulo.length){
+    panel.classList.remove('show');
+    document.getElementById('mapaReabrir').style.display='none';
+    return;
+  }
+  document.getElementById('mapaChips').innerHTML=locaisCapitulo.map((l,i)=>`<button class="${i===0?'active':''}" onclick="focarMapa(${i})">${l.nome}</button>`).join('');
+  focarMapa(0);
+  panel.classList.add('show');
+  document.getElementById('mapaReabrir').style.display='none';
+}
+function focarMapa(i){
+  const l=locaisCapitulo[i]; if(!l) return;
+  mapaLocalAtual=i;
+  document.querySelectorAll('#mapaChips button').forEach((b,bi)=>b.classList.toggle('active',bi===i));
+  const d=0.15;
+  const bbox=`${l.lng-d},${l.lat-d},${l.lng+d},${l.lat+d}`;
+  document.getElementById('mapaCantoFrame').src=`https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${l.lat},${l.lng}`;
+  document.getElementById('mapaCantoNome').innerHTML=`📍 <b>${l.nome}</b> — ${l.desc}`;
+  document.getElementById('mapaCanto').classList.add('show');
+  document.getElementById('mapaReabrir').style.display='none';
+}
+function fecharMapaCanto(){
+  document.getElementById('mapaCanto').classList.remove('show');
+  document.getElementById('mapaReabrir').style.display='flex';
+}
+function abrirMapaCanto(){
+  document.getElementById('mapaCanto').classList.add('show');
+  document.getElementById('mapaReabrir').style.display='none';
+}
+
+/* ============ NAVEGAÇÃO ============ */
+function atualizarProgresso(){
+  const pct=Math.round((Object.keys(lidos).length/TOTAL_CAPS)*100);
+  const fill=document.getElementById('pfill');
+  fill.style.width=pct+'%'; fill.style.background=corProgresso(pct); fill.textContent=pct+'%';
+  document.getElementById('pctTxt').textContent=pct+'%';
+}
 function renderSidebar(){
-  const sb = document.getElementById('sidebarBooks');
-  let html = '<h3><i class="fa-solid fa-book"></i> Livros (cronológico)</h3>';
-  let era = '';
+  const sb=document.getElementById('sidebarBooks');
+  let html='<h3><i class="fa-solid fa-book"></i> Livros (cronológico)</h3>', era='';
   LIVROS.forEach(l=>{
-    if(l.era !== era){ era = l.era; html += `<div class="era-label">${era}</div>`; }
-    const lidosNoLivro = Object.keys(lidos).filter(k=>k.startsWith(l.nome+'-')).length;
-    const completo = lidosNoLivro >= l.caps;
-    const ativo = l.nome === livroAtual;
-    html += `<div class="book-item ${ativo?'active':''}" onclick="escolherLivro('${l.nome}')">
+    if(l.era!==era){ era=l.era; html+=`<div class="era-label">${era}</div>`; }
+    const lidosNoLivro=Object.keys(lidos).filter(k=>k.startsWith(l.nome+'-')).length;
+    const completo=lidosNoLivro>=l.caps, ativo=l.nome===livroAtual;
+    html+=`<div class="book-item ${ativo?'active':''}" onclick="escolherLivro('${l.nome}')">
       <span>${l.nome}</span>
       <span class="mini"><i style="width:${Math.min(100,(lidosNoLivro/l.caps)*100)}%"></i></span>
       ${completo?'<span class="check">✓</span>':''}
     </div>`;
   });
-  sb.innerHTML = html;
+  sb.innerHTML=html;
 }
-
 function escolherLivro(nome){
-  livroAtual = nome;
-  capituloAtual = null;
-  const livro = LIVROS.find(l=>l.nome===nome);
-  document.getElementById('bookTitle').textContent = nome;
-  document.getElementById('bookAutor').textContent = `Autor: ${livro.autor} • ${livro.caps} capítulos • ${livro.era}`;
-  renderChapters();
-  renderSidebar();
-  const area = document.getElementById('textoArea');
-  area.innerHTML = `<div class="placeholder"><b>📖 ${nome}</b><br><br>Selecione um capítulo acima para começar a leitura. Clique nas palavras destacadas para ver o significado original.</div>`;
+  livroAtual=nome; capituloAtual=null; locaisCapitulo=[];
+  const livro=LIVROS.find(l=>l.nome===nome);
+  document.getElementById('bookTitle').textContent=nome;
+  document.getElementById('bookAutor').textContent=`Autor: ${livro.autor} • ${livro.caps} capítulos • ${livro.era}`;
+  renderChapters(); renderSidebar();
+  document.getElementById('mapaCanto').classList.remove('show');
+  document.getElementById('mapaReabrir').style.display='none';
+  document.getElementById('textoArea').innerHTML=`<div class="placeholder"><b>📖 ${nome}</b><br><br>Selecione um capítulo acima para começar a leitura.</div>`;
 }
-
 function renderChapters(){
-  const sel = document.getElementById('chapterSelector');
-  const livro = LIVROS.find(l=>l.nome===livroAtual);
+  const sel=document.getElementById('chapterSelector');
+  const livro=LIVROS.find(l=>l.nome===livroAtual);
   if(!livro){ sel.innerHTML=''; return; }
-  let html = '';
+  let html='';
   for(let i=1;i<=livro.caps;i++){
-    const key = `${livroAtual}-${i}`;
-    const lido = lidos[key];
-    const atual = i===capituloAtual;
-    html += `<button class="ch-btn ${lido?'read':''} ${atual?'current':''}" onclick="escolherCapitulo(${i})">${i}</button>`;
+    const key=`${livroAtual}-${i}`, lido=lidos[key], atual=i===capituloAtual;
+    html+=`<button class="ch-btn ${lido?'read':''} ${atual?'current':''}" onclick="escolherCapitulo(${i})">${i}</button>`;
   }
-  sel.innerHTML = html;
-  document.getElementById('btnPrev').disabled = !capituloAtual;
-  document.getElementById('btnNext').disabled = !capituloAtual;
+  sel.innerHTML=html;
+  document.getElementById('btnPrev').disabled=!capituloAtual;
+  document.getElementById('btnNext').disabled=!capituloAtual;
 }
-
-function escolherCapitulo(n){
-  capituloAtual = n;
+async function escolherCapitulo(n){
+  capituloAtual=n;
   renderChapters();
-  renderTexto();
+  await renderTexto();
 }
-
-function renderTexto(){
-  const area = document.getElementById('textoArea');
-  const texto = TEXTOS[livroAtual] && TEXTOS[livroAtual][capituloAtual];
-  if(texto){
-    let html = '';
-    texto.forEach((v,i)=>{
-      html += `<span class="vnum">${i+1}</span> `;
-      const palavras = v.split(/(\s+)/);
-      palavras.forEach(p=>{
-        const limpa = p.replace(/[.,;:!?()"'»«]/g,'');
-        if(limpa && DICIONARIO[limpa]){
-          html += `<span class="word" onclick="abrirPopup('${limpa.replace(/'/g,"\\'")}')">${p}</span>`;
-        } else {
-          html += p;
-        }
-      });
-      html += ' ';
-    });
-    area.innerHTML = html;
-  } else {
-    const livro = LIVROS.find(l=>l.nome===livroAtual);
-    area.innerHTML = `<div class="placeholder">
-      <b>📖 ${livroAtual} ${capituloAtual}</b><br><br>
-      Este capítulo ainda não possui texto carregado nesta versão de demonstração.<br><br>
-      <b>Sobre o livro:</b> ${livro.autor} • ${livro.caps} capítulos • ${livro.era}<br><br>
-      💡 <b>Dica:</b> Você pode adicionar mais textos no objeto <code>TEXTOS</code> do código-fonte, seguindo o padrão <code>"NomeDoLivro": { n: ["versículo..."] }</code>.<br><br>
-      🔍 Enquanto isso, explore o <b>Dicionário</b>, a <b>Linha do Tempo</b>, os <b>Mapas</b> e os <b>Vídeos</b> para aprofundar seu estudo!
-    </div>`;
-  }
-}
-
 function markRead(){
-  if(!livroAtual || !capituloAtual) return;
-  const key = `${livroAtual}-${capituloAtual}`;
-  lidos[key] = true;
-  salvar();
-  renderChapters();
-  renderSidebar();
-  atualizarProgresso();
-  renderStats();
+  if(!livroAtual||!capituloAtual) return;
+  lidos[`${livroAtual}-${capituloAtual}`]=true; salvar();
+  renderChapters(); renderSidebar(); atualizarProgresso(); renderStats();
   mostrarToast(`✅ ${livroAtual} ${capituloAtual} marcado como lido!`);
 }
-
 function navChapter(dir){
-  if(!livroAtual || !capituloAtual) return;
-  const livro = LIVROS.find(l=>l.nome===livroAtual);
-  const prox = capituloAtual + dir;
-  if(prox >= 1 && prox <= livro.caps) escolherCapitulo(prox);
+  if(!livroAtual||!capituloAtual) return;
+  const livro=LIVROS.find(l=>l.nome===livroAtual);
+  const prox=capituloAtual+dir;
+  if(prox>=1&&prox<=livro.caps) escolherCapitulo(prox);
 }
 
-function showSection(id, btn){
+/* ============ SEÇÕES ============ */
+function showSection(id,btn){
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
@@ -660,73 +761,41 @@ function showSection(id, btn){
   if(id==='stats') renderStats();
   if(id==='mapas') renderMapas(0);
 }
-
-/* -------- TIMELINE -------- */
 function renderTimeline(){
-  const c = document.getElementById('timelineContent');
-  c.innerHTML = TIMELINE.map(t=>`
-    <div class="tl-item">
-      <div class="data"><i class="fa-solid fa-calendar"></i> ${t.data}</div>
-      <h4>${t.ev}</h4>
-      <p>${t.desc}</p>
-      <div style="margin-top:6px;color:var(--purple);font-size:.85em">📖 ${t.livro}</div>
-    </div>`).join('');
+  document.getElementById('timelineContent').innerHTML=TIMELINE.map(t=>`
+    <div class="tl-item"><div class="data"><i class="fa-solid fa-calendar"></i> ${t.data}</div>
+    <h4>${t.ev}</h4><p>${t.desc}</p>
+    <div style="margin-top:6px;color:var(--purple);font-size:.85em">📖 ${t.livro}</div></div>`).join('');
 }
-
-/* -------- VÍDEOS -------- */
 function renderVideos(){
-  const g = document.getElementById('videoGrid');
-  g.innerHTML = VIDEOS.map(v=>`
-    <div class="video-card">
-      <iframe src="https://www.youtube.com/embed/${v.id}" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-      <div class="info"><h4>${v.titulo}</h4><p>${v.desc}</p></div>
-    </div>`).join('');
+  document.getElementById('videoGrid').innerHTML=VIDEOS.map(v=>`
+    <div class="video-card"><iframe src="https://www.youtube.com/embed/${v.id}" loading="lazy" allowfullscreen></iframe>
+    <div class="info"><h4>${v.titulo}</h4><p>${v.desc}</p></div></div>`).join('');
 }
-
-/* -------- MAPAS -------- */
 function renderMapas(idx){
-  const tabs = document.getElementById('mapTabs');
-  tabs.innerHTML = MAPAS.map((m,i)=>`<button class="${i===idx?'active':''}" onclick="renderMapas(${i})">${m.nome}</button>`).join('');
-  const m = MAPAS[idx];
-  const delta = m.zoom > 9 ? 0.06 : 2.5;
-  const bbox = `${m.lng-delta},${m.lat-delta},${m.lng+delta},${m.lat+delta}`;
-  document.getElementById('mapFrame').src = `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${m.lat},${m.lng}`;
-  document.getElementById('mapNote').innerHTML = `📍 <b>${m.nome}</b> — ${m.desc}`;
+  document.getElementById('mapTabs').innerHTML=MAPAS.map((m,i)=>`<button class="${i===idx?'active':''}" onclick="renderMapas(${i})">${m.nome}</button>`).join('');
+  const m=MAPAS[idx], delta=m.zoom>9?0.06:2.5;
+  const bbox=`${m.lng-delta},${m.lat-delta},${m.lng+delta},${m.lat+delta}`;
+  document.getElementById('mapFrame').src=`https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${m.lat},${m.lng}`;
+  document.getElementById('mapNote').innerHTML=`📍 <b>${m.nome}</b> — ${m.desc}`;
 }
-
-/* -------- PERSONAGENS -------- */
 function renderPersonagens(){
-  const g = document.getElementById('charGrid');
-  g.innerHTML = PERSONAGENS.map(p=>`
-    <div class="char-card">
-      <div class="avatar">${p.emoji}</div>
-      <div class="nome">${p.nome}</div>
-      <div class="papel">${p.papel}</div>
-    </div>`).join('');
+  document.getElementById('charGrid').innerHTML=PERSONAGENS.map(p=>`
+    <div class="char-card"><div class="avatar">${p.emoji}</div><div class="nome">${p.nome}</div><div class="papel">${p.papel}</div></div>`).join('');
 }
-
-/* -------- DICIONÁRIO -------- */
 function renderDicionario(filtro=''){
-  const g = document.getElementById('dictGrid');
-  const termos = Object.entries(DICIONARIO).filter(([k])=>!filtro||k.toLowerCase().includes(filtro.toLowerCase()));
-  g.innerHTML = termos.map(([k,v])=>`
+  const g=document.getElementById('dictGrid');
+  const termos=Object.entries(DICIONARIO).filter(([k])=>!filtro||k.toLowerCase().includes(filtro.toLowerCase()));
+  g.innerHTML=termos.map(([k,v])=>`
     <div class="dict-card" onclick="abrirPopup('${k.replace(/'/g,"\\'")}')">
-      <div class="palavra">${k}</div>
-      <div class="orig">${v.orig}</div>
-      <p>${v.sig.substring(0,110)}...</p>
-    </div>`).join('');
-  if(!termos.length) g.innerHTML = '<p style="color:var(--muted);grid-column:1/-1">Nenhuma palavra encontrada.</p>';
+    <div class="palavra">${k}</div><div class="orig">${v.orig}</div><p>${v.sig.substring(0,110)}...</p></div>`).join('');
+  if(!termos.length) g.innerHTML='<p style="color:var(--muted);grid-column:1/-1">Nenhuma palavra encontrada.</p>';
 }
-
-document.getElementById('dictSearch').addEventListener('input',e=>renderDicionario(e.target.value));
-
-/* -------- POPUP -------- */
 function abrirPopup(palavra){
-  const v = DICIONARIO[palavra];
-  if(!v) return;
-  document.getElementById('popWord').textContent = palavra;
-  document.getElementById('popOrig').textContent = v.orig;
-  document.getElementById('popMeaning').textContent = v.sig;
+  const v=DICIONARIO[palavra]; if(!v) return;
+  document.getElementById('popWord').textContent=palavra;
+  document.getElementById('popOrig').textContent=v.orig;
+  document.getElementById('popMeaning').textContent=v.sig;
   document.getElementById('popup').classList.add('show');
   document.getElementById('overlay').classList.add('show');
 }
@@ -734,55 +803,35 @@ function closePopup(){
   document.getElementById('popup').classList.remove('show');
   document.getElementById('overlay').classList.remove('show');
 }
-
-/* -------- STATS -------- */
 function renderStats(){
-  const nLidos = Object.keys(lidos).length;
-  const pct = Math.round((nLidos/TOTAL_CAPS)*100);
-  const livrosCompletos = LIVROS.filter(l=>Object.keys(lidos).filter(k=>k.startsWith(l.nome+'-')).length>=l.caps).length;
-  const livrosIniciados = new Set(Object.keys(lidos).map(k=>k.split('-')[0])).size;
-  document.getElementById('statsGrid').innerHTML = `
+  const nLidos=Object.keys(lidos).length, pct=Math.round((nLidos/TOTAL_CAPS)*100);
+  const livrosCompletos=LIVROS.filter(l=>Object.keys(lidos).filter(k=>k.startsWith(l.nome+'-')).length>=l.caps).length;
+  const livrosIniciados=new Set(Object.keys(lidos).map(k=>k.split('-')[0])).size;
+  document.getElementById('statsGrid').innerHTML=`
     <div class="stat-card"><i class="fa-solid fa-percentage"></i><div class="num">${pct}%</div><div class="lbl">Progresso Total</div></div>
     <div class="stat-card"><i class="fa-solid fa-check-double"></i><div class="num">${nLidos}</div><div class="lbl">Capítulos Lidos</div></div>
     <div class="stat-card"><i class="fa-solid fa-book"></i><div class="num">${livrosIniciados}</div><div class="lbl">Livros Iniciados</div></div>
     <div class="stat-card"><i class="fa-solid fa-trophy"></i><div class="num">${livrosCompletos}</div><div class="lbl">Livros Completos</div></div>
     <div class="stat-card"><i class="fa-solid fa-list-ol"></i><div class="num">${TOTAL_CAPS}</div><div class="lbl">Total de Capítulos</div></div>
     <div class="stat-card"><i class="fa-solid fa-users"></i><div class="num">${LIVROS.length}</div><div class="lbl">Livros (66)</div></div>`;
-
-  // Progresso por era
-  const eras = {};
-  LIVROS.forEach(l=>{
-    if(!eras[l.era]) eras[l.era] = {total:0, lido:0};
-    eras[l.era].total += l.caps;
-    eras[l.era].lido += Object.keys(lidos).filter(k=>k.startsWith(l.nome+'-')).length;
-  });
-  document.getElementById('eraProgress').innerHTML = Object.entries(eras).map(([era,d])=>{
-    const p = Math.round((d.lido/d.total)*100);
-    return `<div style="margin-bottom:12px">
-      <div style="display:flex;justify-content:space-between;font-size:.85em;margin-bottom:4px">
-        <span>${era}</span><span style="color:var(--muted)">${d.lido}/${d.total} (${p}%)</span>
-      </div>
-      <div class="pbar"><div class="pfill" style="width:${p}%;background:${corProgresso(p)}"></div></div>
-    </div>`;
+  const eras={};
+  LIVROS.forEach(l=>{ if(!eras[l.era]) eras[l.era]={total:0,lido:0}; eras[l.era].total+=l.caps; eras[l.era].lido+=Object.keys(lidos).filter(k=>k.startsWith(l.nome+'-')).length; });
+  document.getElementById('eraProgress').innerHTML=Object.entries(eras).map(([era,d])=>{
+    const p=Math.round((d.lido/d.total)*100);
+    return `<div style="margin-bottom:12px"><div style="display:flex;justify-content:space-between;font-size:.85em;margin-bottom:4px"><span>${era}</span><span style="color:var(--muted)">${d.lido}/${d.total} (${p}%)</span></div><div class="pbar"><div class="pfill" style="width:${p}%;background:${corProgresso(p)}"></div></div></div>`;
   }).join('');
 }
-
-/* -------- TOAST -------- */
 function mostrarToast(msg){
-  let t = document.createElement('div');
-  t.textContent = msg;
-  t.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:linear-gradient(90deg,#3ddc84,#1fa862);color:#06281a;padding:14px 26px;border-radius:30px;font-weight:700;z-index:999;box-shadow:0 8px 30px rgba(0,0,0,.4);animation:fadeIn .3s';
+  const t=document.createElement('div');
+  t.textContent=msg;
+  t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:linear-gradient(90deg,#3ddc84,#1fa862);color:#06281a;padding:14px 26px;border-radius:30px;font-weight:700;z-index:999;box-shadow:0 8px 30px rgba(0,0,0,.4)';
   document.body.appendChild(t);
   setTimeout(()=>{ t.style.opacity='0'; t.style.transition='opacity .4s'; setTimeout(()=>t.remove(),400); },2200);
 }
 
-/* -------- INIT -------- */
-renderSidebar();
-renderTimeline();
-renderVideos();
-renderPersonagens();
-renderDicionario();
-atualizarProgresso();
+/* ============ INIT ============ */
+document.getElementById('dictSearch').addEventListener('input',e=>renderDicionario(e.target.value));
+renderSidebar(); renderTimeline(); renderVideos(); renderPersonagens(); renderDicionario(); atualizarProgresso();
 </script>
 </body>
 </html>
