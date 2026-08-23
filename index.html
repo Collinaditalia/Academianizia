@@ -4,342 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Academia da Nizia</title>
-  <style>
-    :root{
-      --bg:#f6f8fc;
-      --card:#ffffff;
-      --primary:#4f7cac;
-      --primary-dark:#3d6490;
-      --text:#1f2937;
-      --muted:#6b7280;
-      --line:#dbe4f0;
-      --success:#16a34a;
-      --warn:#dc2626;
-      --radius:18px;
-      --shadow:0 10px 30px rgba(15,23,42,.08);
-    }
-
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family: Arial, Helvetica, sans-serif;
-      background:linear-gradient(180deg,#eef4ff 0%, var(--bg) 30%);
-      color:var(--text);
-    }
-
-    .app{
-      max-width:980px;
-      margin:0 auto;
-      min-height:100vh;
-      display:flex;
-      flex-direction:column;
-    }
-
-    .topbar{
-      padding:20px 20px 10px;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:12px;
-    }
-
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:12px;
-    }
-
-    .brand-badge{
-      width:52px;
-      height:52px;
-      border-radius:16px;
-      background:var(--primary);
-      color:#fff;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:26px;
-      box-shadow:var(--shadow);
-    }
-
-    .brand h1{
-      margin:0;
-      font-size:22px;
-      line-height:1.1;
-    }
-
-    .brand p{
-      margin:4px 0 0;
-      color:var(--muted);
-      font-size:14px;
-    }
-
-    .content{
-      padding:10px 20px 90px;
-      flex:1;
-    }
-
-    .screen{
-      display:none;
-      animation:fade .2s ease-in-out;
-    }
-
-    .screen.active{
-      display:block;
-    }
-
-    @keyframes fade{
-      from{opacity:.3; transform:translateY(4px)}
-      to{opacity:1; transform:translateY(0)}
-    }
-
-    .card{
-      background:var(--card);
-      border:1px solid var(--line);
-      border-radius:var(--radius);
-      padding:18px;
-      box-shadow:var(--shadow);
-      margin-bottom:14px;
-    }
-
-    .hero{
-      text-align:center;
-      padding:28px 18px;
-    }
-
-    .hero h2{
-      margin:0 0 10px;
-      font-size:28px;
-    }
-
-    .hero p{
-      margin:0;
-      color:var(--muted);
-      font-size:18px;
-      line-height:1.5;
-    }
-
-    .big-button{
-      width:100%;
-      border:none;
-      border-radius:16px;
-      padding:16px 18px;
-      font-size:18px;
-      font-weight:700;
-      cursor:pointer;
-      background:var(--primary);
-      color:#fff;
-      margin-top:12px;
-    }
-
-    .big-button:hover{background:var(--primary-dark)}
-
-    .ghost-button{
-      width:100%;
-      border:1px solid var(--line);
-      border-radius:16px;
-      padding:16px 18px;
-      font-size:18px;
-      font-weight:700;
-      cursor:pointer;
-      background:#fff;
-      color:var(--text);
-      margin-top:12px;
-    }
-
-    .section-title{
-      font-size:22px;
-      margin:0 0 10px;
-    }
-
-    .muted{
-      color:var(--muted);
-      margin:0 0 12px;
-      line-height:1.5;
-    }
-
-    .grid{
-      display:grid;
-      grid-template-columns:1fr;
-      gap:12px;
-    }
-
-    @media (min-width:700px){
-      .grid.two{
-        grid-template-columns:1fr 1fr;
-      }
-      .grid.three{
-        grid-template-columns:repeat(3, 1fr);
-      }
-    }
-
-    .choice{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      padding:16px;
-      border:1px solid var(--line);
-      border-radius:16px;
-      background:#fff;
-      cursor:pointer;
-      font-size:17px;
-      text-align:left;
-      width:100%;
-    }
-
-    .choice.active{
-      border-color:var(--primary);
-      background:#eef4ff;
-    }
-
-    .choice small{
-      color:var(--muted);
-      display:block;
-      margin-top:4px;
-    }
-
-    .trainer-card{
-      display:flex;
-      align-items:center;
-      gap:14px;
-      padding:16px;
-      border:1px solid var(--line);
-      border-radius:16px;
-      background:#fff;
-      cursor:pointer;
-    }
-
-    .icon-circle{
-      width:52px;
-      height:52px;
-      border-radius:16px;
-      background:#eef4ff;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:24px;
-      flex-shrink:0;
-    }
-
-    .trainer-card h3{
-      margin:0;
-      font-size:18px;
-    }
-
-    .trainer-card p{
-      margin:4px 0 0;
-      color:var(--muted);
-      font-size:14px;
-    }
-
-    .exercise-box{
-      border:1px dashed var(--line);
-      border-radius:18px;
-      background:#fafcff;
-      padding:24px;
-      text-align:center;
-      min-height:220px;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
-    }
-
-    .exercise-icon{
-      width:92px;
-      height:92px;
-      border-radius:28px;
-      background:#eef4ff;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:40px;
-      margin-bottom:14px;
-    }
-
-    .progress-row{
-      display:flex;
-      gap:8px;
-      flex-wrap:wrap;
-    }
-
-    .day{
-      width:42px;
-      height:42px;
-      border-radius:14px;
-      background:#e5e7eb;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-weight:700;
-      color:#374151;
-    }
-
-    .day.done{
-      background:var(--primary);
-      color:#fff;
-    }
-
-    .nav{
-      position:sticky;
-      bottom:0;
-      background:rgba(255,255,255,.92);
-      backdrop-filter: blur(10px);
-      border-top:1px solid var(--line);
-      display:grid;
-      grid-template-columns:repeat(4, 1fr);
-      gap:0;
-    }
-
-    .nav button{
-      border:none;
-      background:transparent;
-      padding:14px 8px;
-      font-size:14px;
-      cursor:pointer;
-      color:var(--muted);
-      font-weight:700;
-    }
-
-    .nav button.active{
-      color:var(--primary);
-    }
-
-    .row-actions{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-    }
-
-    .row-actions button{
-      flex:1;
-      min-width:140px;
-    }
-
-    .pill{
-      display:inline-block;
-      padding:7px 12px;
-      border-radius:999px;
-      background:#eef4ff;
-      color:var(--primary-dark);
-      font-size:13px;
-      font-weight:700;
-      margin-bottom:10px;
-    }
-
-    .list{
-      display:grid;
-      gap:12px;
-    }
-
-    .footer-note{
-      text-align:center;
-      color:var(--muted);
-      font-size:13px;
-      margin-top:8px;
-    }
-  </style>
+  <link rel="stylesheet" href="assets/css/style.css" />
 </head>
 <body>
   <div class="app">
@@ -354,20 +19,20 @@
     </header>
 
     <main class="content">
-      <!-- TELA 1 -->
+      <!-- HOME -->
       <section id="screen-home" class="screen active">
         <div class="card hero">
           <span class="pill">MVP inicial</span>
           <h2>Comece no seu ritmo</h2>
           <p>Escolha um treino, siga as instruções e faça movimentos com segurança.</p>
           <button class="big-button" onclick="openScreen('screen-profile')">Começar</button>
-          <button class="ghost-button" onclick="alert('Escolha um treino, siga as instruções e pare se sentir dor, tontura ou falta de ar.')">Como funciona</button>
+          <button class="ghost-button" onclick="showHowWorks()">Como funciona</button>
         </div>
 
         <div class="card">
           <h3 class="section-title">Treino do dia</h3>
           <p class="muted">Treino de pernas • 8 min • nível fácil</p>
-          <button class="big-button" onclick="openScreen('screen-workouts')">Ver treino</button>
+          <button class="big-button" onclick="startWorkout(0)">Ver treino</button>
         </div>
 
         <div class="card">
@@ -399,149 +64,89 @@
         </div>
       </section>
 
-      <!-- TELA 2 -->
+      <!-- PROFILE -->
       <section id="screen-profile" class="screen">
         <div class="card">
           <h2 class="section-title">Como você quer treinar hoje?</h2>
           <p class="muted">Escolha a opção que mais combina com você.</p>
-
           <div class="list">
-            <button class="choice" onclick="selectChoice(this, 'perfil')">Sou iniciante</button>
-            <button class="choice" onclick="selectChoice(this, 'perfil')">Faço às vezes</button>
-            <button class="choice" onclick="selectChoice(this, 'perfil')">Sou ativo</button>
+            <button class="choice" onclick="selectChoice(this)">Sou iniciante</button>
+            <button class="choice" onclick="selectChoice(this)">Faço às vezes</button>
+            <button class="choice" onclick="selectChoice(this)">Sou ativo</button>
           </div>
         </div>
 
         <div class="card">
           <h3 class="section-title">Qual é seu foco principal?</h3>
           <div class="list">
-            <button class="choice" onclick="selectChoice(this, 'foco')">Força muscular</button>
-            <button class="choice" onclick="selectChoice(this, 'foco')">Equilíbrio</button>
-            <button class="choice" onclick="selectChoice(this, 'foco')">Mobilidade</button>
-            <button class="choice" onclick="selectChoice(this, 'foco')">Treino completo</button>
+            <button class="choice" onclick="selectChoice(this)">Força muscular</button>
+            <button class="choice" onclick="selectChoice(this)">Equilíbrio</button>
+            <button class="choice" onclick="selectChoice(this)">Mobilidade</button>
+            <button class="choice" onclick="selectChoice(this)">Treino completo</button>
           </div>
-
           <button class="big-button" onclick="openScreen('screen-home')">Continuar</button>
         </div>
       </section>
 
-      <!-- TELA 3 -->
+      <!-- WORKOUTS -->
       <section id="screen-workouts" class="screen">
         <div class="card">
           <h2 class="section-title">Treinos</h2>
           <p class="muted">Escolha o treino que você quer fazer hoje.</p>
-
-          <div class="list">
-            <div class="trainer-card" onclick="openScreen('screen-exercises')">
-              <div class="icon-circle">🪑</div>
-              <div>
-                <h3>Treino de pernas</h3>
-                <p>8 min • nível fácil</p>
-              </div>
-            </div>
-
-            <div class="trainer-card" onclick="openScreen('screen-exercises')">
-              <div class="icon-circle">💪</div>
-              <div>
-                <h3>Treino de braços</h3>
-                <p>7 min • nível fácil</p>
-              </div>
-            </div>
-
-            <div class="trainer-card" onclick="openScreen('screen-exercises')">
-              <div class="icon-circle">🧍</div>
-              <div>
-                <h3>Treino completo</h3>
-                <p>12 min • nível moderado</p>
-              </div>
-            </div>
-          </div>
+          <div class="list" id="workout-list"></div>
         </div>
       </section>
 
-      <!-- TELA 4 -->
-      <section id="screen-exercises" class="screen">
-        <div class="card">
-          <h2 class="section-title">Treino de pernas</h2>
-          <p class="muted">Faça no seu ritmo, com movimentos lentos e controlados.</p>
-
-          <div class="list">
-            <div class="trainer-card" onclick="openExercise('Sentar e levantar da cadeira', '3 séries • 8 repetições', 'Sente e levante devagar, com controle.')">
-              <div class="icon-circle">1</div>
-              <div>
-                <h3>Sentar e levantar da cadeira</h3>
-                <p>3 séries • 8 repetições</p>
-              </div>
-            </div>
-
-            <div class="trainer-card" onclick="openExercise('Elevação de panturrilha', '3 séries • 10 repetições', 'Suba e desça devagar, segurando o equilíbrio.')">
-              <div class="icon-circle">2</div>
-              <div>
-                <h3>Elevação de panturrilha</h3>
-                <p>3 séries • 10 repetições</p>
-              </div>
-            </div>
-
-            <div class="trainer-card" onclick="openExercise('Extensão de joelho sentado', '2 séries • 8 repetições', 'Estenda a perna lentamente e volte.')">
-              <div class="icon-circle">3</div>
-              <div>
-                <h3>Extensão de joelho sentado</h3>
-                <p>2 séries • 8 repetições</p>
-              </div>
-            </div>
-          </div>
-
-          <button class="big-button" onclick="openExercise('Sentar e levantar da cadeira', '3 séries • 8 repetições', 'Sente e levante devagar, com controle.')">Iniciar</button>
-        </div>
-      </section>
-
-      <!-- TELA 5 -->
+      <!-- EXERCISE DETAIL -->
       <section id="screen-exercise" class="screen">
         <div class="card">
           <div class="pill" id="exercise-counter">1 de 3</div>
+
           <div class="exercise-box">
-            <div class="exercise-icon">🏋️</div>
-            <h2 id="exercise-title" class="section-title" style="margin-bottom:6px;">Sentar e levantar da cadeira</h2>
-            <p id="exercise-instruction" class="muted" style="margin-bottom:0;">Sente e levante devagar, com controle.</p>
+            <img id="exercise-media" class="exercise-media" alt="GIF do exercício" src="" style="display:none;">
+            <div class="exercise-icon" id="exercise-icon">🏋️</div>
+            <h2 id="exercise-title" class="section-title" style="margin-bottom:6px;">Exercício</h2>
+            <p id="exercise-instruction" class="muted" style="margin-bottom:0;">Instrução do exercício.</p>
           </div>
 
           <div style="margin-top:16px;">
             <p><strong>Orientação:</strong> <span id="exercise-sets">3 séries • 8 repetições</span></p>
             <p><strong>Descanso:</strong> 30 segundos</p>
+            <div class="timer" id="timer">00:30</div>
           </div>
 
           <div class="row-actions">
-            <button class="ghost-button" onclick="openScreen('screen-workouts')">Voltar</button>
+            <button class="ghost-button" onclick="prevExercise()">Voltar</button>
             <button class="ghost-button" onclick="openScreen('screen-pause')">Pausar</button>
-            <button class="big-button" onclick="openScreen('screen-finish')">Próximo</button>
+            <button class="big-button" onclick="nextExercise()">Próximo</button>
           </div>
         </div>
       </section>
 
-      <!-- TELA 6 -->
+      <!-- PAUSE -->
       <section id="screen-pause" class="screen">
         <div class="card hero">
           <h2>Pausa</h2>
-          <p>Pare se sentir dor, tontura ou falta de ar.</p>
-          <p style="margin-top:10px;">Use cadeira firme e mantenha o ambiente livre de obstáculos.</p>
+          <div class="notice">Pare se sentir dor, tontura ou falta de ar.</div>
+          <p>Use cadeira firme e mantenha o ambiente livre de obstáculos.</p>
           <button class="big-button" onclick="openScreen('screen-exercise')">Continuar treino</button>
           <button class="ghost-button" onclick="openScreen('screen-home')">Encerrar</button>
         </div>
       </section>
 
-      <!-- TELA 7 -->
+      <!-- FINISH -->
       <section id="screen-finish" class="screen">
         <div class="card hero">
           <div style="font-size:64px;">✅</div>
           <h2>Treino concluído</h2>
           <p>Você fez um bom trabalho hoje.</p>
-          <p style="margin-top:10px;">Exercícios feitos: 3 • Tempo total: 12 min</p>
-          <button class="big-button" onclick="alert('Progresso salvo!')">Salvar progresso</button>
+          <p style="margin-top:10px;">Exercícios feitos: <span id="done-count">0</span> • Tempo total: 12 min</p>
+          <button class="big-button" onclick="saveProgress()">Salvar progresso</button>
           <button class="ghost-button" onclick="openScreen('screen-workouts')">Fazer outro treino</button>
         </div>
       </section>
 
-      <!-- TELA 8 -->
+      <!-- PROGRESS -->
       <section id="screen-progress" class="screen">
         <div class="card">
           <h2 class="section-title">Progresso</h2>
@@ -549,30 +154,24 @@
 
           <div class="card" style="box-shadow:none;">
             <strong>Força muscular</strong>
-            <div style="height:14px;background:#e5e7eb;border-radius:999px;overflow:hidden;margin-top:10px;">
-              <div style="width:70%;height:100%;background:var(--primary);"></div>
-            </div>
+            <div class="bar"><div style="width:70%"></div></div>
           </div>
 
           <div class="card" style="box-shadow:none;">
             <strong>Equilíbrio</strong>
-            <div style="height:14px;background:#e5e7eb;border-radius:999px;overflow:hidden;margin-top:10px;">
-              <div style="width:45%;height:100%;background:var(--primary);"></div>
-            </div>
+            <div class="bar"><div style="width:45%"></div></div>
           </div>
 
           <div class="card" style="box-shadow:none;">
             <strong>Constância</strong>
-            <div style="height:14px;background:#e5e7eb;border-radius:999px;overflow:hidden;margin-top:10px;">
-              <div style="width:60%;height:100%;background:var(--primary);"></div>
-            </div>
+            <div class="bar"><div style="width:60%"></div></div>
           </div>
 
-          <button class="ghost-button" onclick="alert('Histórico ainda não conectado.')">Ver histórico</button>
+          <button class="ghost-button" onclick="showHistory()">Ver histórico</button>
         </div>
       </section>
 
-      <!-- TELA 9 -->
+      <!-- SETTINGS -->
       <section id="screen-settings" class="screen">
         <div class="card">
           <h2 class="section-title">Perfil</h2>
@@ -600,31 +199,6 @@
     </nav>
   </div>
 
-  <script>
-    function openScreen(id) {
-      document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active'));
-      const target = document.getElementById(id);
-      if (target) target.classList.add('active');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    function setNav(btn) {
-      document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-    }
-
-    function selectChoice(btn, group) {
-      const parent = btn.parentElement;
-      parent.querySelectorAll('.choice').forEach(c => c.classList.remove('active'));
-      btn.classList.add('active');
-    }
-
-    function openExercise(title, sets, instruction) {
-      document.getElementById('exercise-title').textContent = title;
-      document.getElementById('exercise-sets').textContent = sets;
-      document.getElementById('exercise-instruction').textContent = instruction;
-      openScreen('screen-exercise');
-    }
-  </script>
+  <script src="assets/js/script.js"></script>
 </body>
 </html>
